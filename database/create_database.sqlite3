@@ -1,0 +1,41 @@
+# TODO
+
+## tables?
+
+# datasets
+	# name
+	# type
+	# is_test
+	# opt - a serialized json object with all the opt data needed to reconstruct the dataset.
+
+# classifiers
+	# name
+	# type
+	# ordered_labels
+	# param_to_predict
+	# training_dataset -
+	# opt - serialized json object with all the data needed to recreate the classifier. This plus the training dataset opt should be enough to retrain the classifier.
+
+# generators
+	# dataset type: SISR, GM100, RAISE
+	# name
+	# parameters - serialized json object of param:value pairs
+
+# images
+	# path
+	# crop_coords
+	# psnr_vs_HR
+	# lpips_vs_HR
+
+# predictions
+	# classifier ID
+	# dataset ID
+	# image ID
+	# prediction
+	# actual
+	# probabilities
+	# feature (optional)
+
+## views
+
+# analysis, joins together all these tables. same cardinality as predictions.
