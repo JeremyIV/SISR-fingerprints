@@ -1,0 +1,19 @@
+# TODO: all_pretrained_model classifier
+# train an attribution classifier to distinguish among all the custom-trained models.
+
+# a classifier opt.
+classifier:
+  type: prnu
+
+# a single dataset opt.
+training_dataset:
+  name: raise_train
+  type: RAISE
+  is_test: false
+
+# a list of dataset opts
+evaluation_datasets:
+  -
+    name: raise_test
+    type: RAISE
+    is_test: true

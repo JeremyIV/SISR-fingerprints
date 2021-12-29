@@ -1,40 +1,95 @@
-# TODO
+create table datasets(
+    id integer primary key,
+    type text, --  SISR, GM100, RAISE
+    name text,
+    is_test boolean,
+    label_param text, -- loss, scale, seed, arch. etc.
+    ordered_labels text,  -- serialized JSON array of strings such as ['x2', 'x4']
+    test_param text, -- L1, s3, etc. Whatever value was reserved for testing.
+    opt text -- serialized JSON object with all data needed to recreate the dataset.
+);
 
-## tables?
+create table classifiers(
+    id integer primary key,
+    training_dataset_id integer,
+    name text,
+    type text, -- PRNU, Asnani, or CNN
+    opt text, -- serialized json object with all the data needed to recreate the classifier. 
+    
+    -- "version control" columns
+    last_analysis_time text,
+    is_old boolean, -- Should be true for all but the latest version
+    version text,
+    constraint unq unique(name, version)
+);
 
-# datasets
-	# name
-	# type
-	# is_test
-	# opt - a serialized json object with all the opt data needed to reconstruct the dataset.
 
-# classifiers
-	# name
-	# type
-	# ordered_labels
-	# param_to_predict
-	# training_dataset -
-	# opt - serialized json object with all the data needed to recreate the classifier. This plus the training dataset opt should be enough to retrain the classifier.
+create table generators(
+    id integer primary key,
+    type text, -- SISR, GM100, RAISE
+    name text -- this should be the same as the name of the directory in the dataset.
+);
 
-# generators
-	# dataset type: SISR, GM100, RAISE
-	# name
-	# parameters - serialized json object of param:value pairs
+-- which generators were in the dataset?
+create table generators_in_dataset(
+    dataset_id integer,
+    generator_id integer
+)
 
-# images
-	# path
-	# crop_coords
-	# psnr_vs_HR
-	# lpips_vs_HR
+create table SISR_generators(
+    id integer primary key,
+    generator_id integer,
+    sisr_model name unique,
+    architecture text,
+    dataset text,
+    scale integer,
+    loss text,
+    seed integer);
 
-# predictions
-	# classifier ID
-	# dataset ID
-	# image ID
-	# prediction
-	# actual
-	# probabilities
-	# feature (optional)
+-- all image patches in the database are cropped from the center of their respective images.
+-- by the following formula:
+-- crop_top = (height - 299) // 2
+-- crop_bottom = crop_top + 299
+-- crop_left = (width - 299) // 2
+-- crop_right = crop_left + 299
+create table image_patches(
+    image_patch_id integer primary key,
+    generator_id integer,
+    image_path text,
+    image_patch_hash integer,
+    crop_top integer,
+    crop_left integer,
+    crop_bottom integer,
+    crop_right integer,
+    acutance float,
+    psnr float,
+    lpips float,
+    constraint unq unique (
+        generator_id,
+        image_filename,
+        crop_top,
+        crop_left,
+        crop_bottom,
+        crop_right)
+);
+
+create table predictions(
+    id integer primary key,
+    classifier_id integer,
+    image_patch_id integer,
+    actual_label text,
+    predicted_label text,
+    feature_vector blob,
+    class_probabilities blob,
+    constraint unq unique (
+        classifier_name,
+        sisr_model,
+        image_name,
+        crop_top,
+        crop_left,
+        crop_bottom,
+        crop_right)
+);
 
 ## views
 

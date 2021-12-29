@@ -1,0 +1,1 @@
+Copy or symlink image classification datasets into this folder.
