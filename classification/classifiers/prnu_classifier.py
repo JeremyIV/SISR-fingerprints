@@ -4,8 +4,8 @@ import os
 import PIL.Image
 import bm3d
 import tqdm
-from utils.registry import CLASSIFIER_REGISTRY
-from utils.misc import mkdir_unique
+from classification.utils.registry import CLASSIFIER_REGISTRY
+from classification.utils.misc import mkdir_unique
 import database as db
 import gzip
 from pathlib import Path
@@ -40,16 +40,15 @@ class PRNU:
         self.ordered_fingerprints = ordered_fingerprints
         self.memoize = memoize
 
-    def __call__(self, images):
-        n = len(images)
+    def __call__(self, image):
         c = len(ordered_fingerprints)
-        noise_residuals = np.array([get_noise_residual(image, self.memoize) for image in images]) # shape (n, h, w, 3)
-        # shape (n, c, h, w, 3)
-        diff = self.ordered_fingerprints.unsqueeze(0) - self.noise_residuals.unsqueeze(1)
-        fingerprint_distances = np.sum(diff**2, axis=(2,3,4)) # shape (c, n)
-        fingerprint_predictions = fingerprint_distances.argmin(axis=1) # shape (n,)
-        one_hot_encoding = np.zeros(shape=(n,c))
-        one_hot_encoding[np.arange(n, dtype=int), fingerprint_predictions] = 1
+        noise_residual = get_noise_residual(image, self.memoize) # shape (h, w, 3)
+        # shape (c, h, w, 3)
+        diff = self.ordered_fingerprints - self.noise_residual.unsqueeze(0)
+        fingerprint_distance = np.sum(diff**2, axis=(1,2,3)) # shape (c,)
+        fingerprint_prediction = fingerprint_distance.argmin() # scalar
+        one_hot_encoding = np.zeros(shape=(c))
+        one_hot_encoding[fingerprint_prediction] = 1
         # Features are too large and burdensome, so just return None.
         return one_hot_encoding, None
 

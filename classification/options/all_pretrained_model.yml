@@ -9,11 +9,11 @@ classifier:
 training_dataset:
   name: raise_train
   type: RAISE
-  is_test: false
+  is_train: true
 
 # a list of dataset opts
 evaluation_datasets:
   -
     name: raise_test
     type: RAISE
-    is_test: true
+    is_train: false

@@ -9,10 +9,11 @@ import database
 #   trains classifier, saves it, and saves its metadata to database
 # load_classifier(path)
 #   loads the classifier and returns it.
-#   Model takes in a tensor of images of shape (n, 3, w, h)
-#   and returns class labels of shape (n, c) 
+#   Model's __call__ function should take in a PIL image.
+#   and returns class labels of shape (c,) 
 #   where c is the number of possible class labels.
-#   optionally, also returns features of shape (n, f)
+#   optionally, also returns data representing some feature embedding.
+#       This feature embedding will be stored as a binary blob in the database.
 
 def train_and_save_classifier(classifier_opt, dataset):
     dataset.add_to_database()
