@@ -4,23 +4,23 @@ from collections import namedtuple
 
 # make a namedtuple for each type of row in the database
 
-def get_image_patch(
-        image_path,
-        crop_top,
-        crop_bottom,
-        crop_left,
-        crop_right):
+def update_image_patch(
+        generator=None,
+        image_path=None,
+        crop=None,
+        acutance=None,
+        psnr=None,
+        lpips=None):
     pass
 
-def add_image_patch(
-        image_path,
-        crop_top,
-        crop_bottom,
-        crop_left,
-        crop_right,
-        acutance,
-        psnr,
-        lpips):
+def add_prediction(
+        classifier_name=None,
+        image_patch_id=None,
+        dataset_name=None,
+        actual_label=None,
+        predicted_label=None,
+        class_probabilities=None,
+        feature=None):
     pass
 
 def add_dataset_row(

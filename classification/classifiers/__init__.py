@@ -1,5 +1,6 @@
 # __init__.py
-from classificaiton.utils import CLASSIFIER_REGISTRY
+from classificaiton.utils.registry import CLASSIFIER_REGISTRY
+from classification.utils import image_patch
 import database
 
 # each classifier is a class added to the CLASSIFIER_REGISTRY
@@ -14,38 +15,28 @@ import database
 #   optionally, also returns features of shape (n, f)
 
 def train_and_save_classifier(classifier_opt, dataset):
-	classifier_opt = classifier_opt.deepcopy()
-	classifier_type = classifier_opt.pop('type')
-	return CLASSIFIER_REGISTRY.get(classifier_type).train_and_save_classifier(classifier_opt, dataset)
+    dataset.add_to_database()
+    classifier_opt = classifier_opt.deepcopy()
+    classifier_type = classifier_opt.pop('type')
+    return CLASSIFIER_REGISTRY.get(classifier_type).train_and_save_classifier(classifier_opt, dataset)
 
 def load_classifier(name):
-	classifier_row = db.get_classifier_row(name)
-	return CLASSIFIER_REGISTRY.get(classifier_row.type).load_classifier(classifier_row.path)
+    classifier_row = db.get_classifier_row(name)
+    return CLASSIFIER_REGISTRY.get(classifier_row.type).load_classifier(classifier_row.path)
 
 def evaluate(classifier, dataset, evaluation_opt):
-	# TODO: get the classifier ID
-	# TODO: get the dataset ID
-	classifier_id = None # TODO
-	# TODO: evaluate the classifier on the provided dataset.
-	# save the analysis data in the sqlite3 database.
-	# create the evaluation dataset
-	# for each image, label in the evaluation dataset:
-	for image, label, image_path in dataset:
-		# TODO:
-		# load the image
-		# get the coords needed to center crop the image
-		# look up this image patch in the database
-			# if it exists, get its ID
-			# if it doesn't exist, create it and get its ID
-		# pass the image through the classifier
-		probabilities, feature = classifier(image)
-		# get the classifier's prediction
-		predicted_label = classifier.ordered_labels[np.argmax(probabilities)]
+    # NOTE: evaluation_opt is currently unused, but may be useful in the future.
+    dataset.add_to_database()
+    for image, label, sample_metadata in dataset:
+        image_patch_id = image_patch.update_image_patch(image, sample_metadata)
+        probabilities, feature = classifier(image)
+        predicted_label = classifier.ordered_labels[np.argmax(probabilities)]
 
-		# save the following data to the analysis databse
-			# classifier ID
-			# image patch ID
-			# actual label
-			# predicted label
-			# probabilities
-			# features (optionally)
+        db.add_prediction(
+            classifier_name=classifier.name,
+            image_patch_id=image_patch_id,
+            dataset_name=dataset.name,
+            actual_label=label,
+            predicted_label=predicted_label,
+            class_probabilities=probabilities,
+            feature=feature)

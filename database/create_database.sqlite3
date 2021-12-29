@@ -3,10 +3,15 @@ create table datasets(
     type text, --  SISR, GM100, RAISE
     name text,
     is_test boolean,
-    label_param text, -- loss, scale, seed, arch. etc.
     ordered_labels text,  -- serialized JSON array of strings such as ['x2', 'x4']
-    test_param text, -- L1, s3, etc. Whatever value was reserved for testing.
     opt text -- serialized JSON object with all data needed to recreate the dataset.
+);
+
+create table SISR_datasets(
+    id integer primary key,
+    dataset_id integer unique,
+    label_param text, -- loss, scale, seed, arch. etc.
+    test_param text, -- L1, s3, etc. Whatever value was reserved for testing.
 );
 
 create table classifiers(
@@ -14,13 +19,7 @@ create table classifiers(
     training_dataset_id integer,
     name text,
     type text, -- PRNU, Asnani, or CNN
-    opt text, -- serialized json object with all the data needed to recreate the classifier. 
-    
-    -- "version control" columns
-    last_analysis_time text,
-    is_old boolean, -- Should be true for all but the latest version
-    version text,
-    constraint unq unique(name, version)
+    opt text -- serialized json object with all the data needed to recreate the classifier. 
 );
 
 
@@ -38,8 +37,7 @@ create table generators_in_dataset(
 
 create table SISR_generators(
     id integer primary key,
-    generator_id integer,
-    sisr_model name unique,
+    generator_id integer unique,
     architecture text,
     dataset text,
     scale integer,
@@ -56,7 +54,6 @@ create table image_patches(
     image_patch_id integer primary key,
     generator_id integer,
     image_path text,
-    image_patch_hash integer,
     crop_top integer,
     crop_left integer,
     crop_bottom integer,
@@ -75,11 +72,12 @@ create table image_patches(
 
 create table predictions(
     id integer primary key,
-    classifier_id integer,
     image_patch_id integer,
+    classifier_id integer,
+    dataset_id integer,
     actual_label text,
     predicted_label text,
-    feature_vector blob,
+    feature blob,
     class_probabilities blob,
     constraint unq unique (
         classifier_name,
