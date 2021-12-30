@@ -3,22 +3,30 @@ from lpips import LPIPS
 from PIL import ImageOps
 import cv2
 
+
 def get_acutance(image):
     return cv2.Laplacian(np.array(ImageOps.grayscale(img)), cv2.CV_64F).var()
+
 
 def get_psnr(image, reference):
     psnr = peak_signal_noise_ratio(img, hr_img)
 
-lpips_preprocess = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))])
 
-loss_fn_alex = LPIPS(net='alex')
+lpips_preprocess = transforms.Compose(
+    [
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)),
+    ]
+)
+
+loss_fn_alex = LPIPS(net="alex")
+
 
 def get_lpips(image, reference):
     lpips = loss_fn_alex(preprocess(image), preprocess(reference))
     lpips = float(lpips.squeeze().cpu().detach().numpy())
     return lpips
+
 
 def update_image_patch(image, metadata):
     psnr = None
@@ -35,4 +43,5 @@ def update_image_patch(image, metadata):
         crop=metadata.crop,
         acutance=acutance,
         psnr=psnr,
-        lpips=lpips)
+        lpips=lpips,
+    )

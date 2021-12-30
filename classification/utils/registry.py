@@ -1,7 +1,7 @@
 # Modified from: https://github.com/facebookresearch/fvcore/blob/master/fvcore/common/registry.py  # noqa: E501
 
 
-class Registry():
+class Registry:
     """
     The registry that provides name -> object mapping, to support third-party
     users' custom modules.
@@ -36,8 +36,10 @@ class Registry():
         self._obj_map = {}
 
     def _do_register(self, name, obj):
-        assert (name not in self._obj_map), (f"An object named '{name}' was already registered "
-                                             f"in '{self._name}' registry!")
+        assert name not in self._obj_map, (
+            f"An object named '{name}' was already registered "
+            f"in '{self._name}' registry!"
+        )
         self._obj_map[name] = obj
 
     def register(self, obj=None):
@@ -62,7 +64,9 @@ class Registry():
     def get(self, name):
         ret = self._obj_map.get(name)
         if ret is None:
-            raise KeyError(f"No object named '{name}' found in '{self._name}' registry!")
+            raise KeyError(
+                f"No object named '{name}' found in '{self._name}' registry!"
+            )
         return ret
 
     def __contains__(self, name):
@@ -75,5 +79,5 @@ class Registry():
         return self._obj_map.keys()
 
 
-DATASET_REGISTRY = Registry('dataset')
-CLASSIFIER_REGISTRY = Registry('classifier')
+DATASET_REGISTRY = Registry("dataset")
+CLASSIFIER_REGISTRY = Registry("classifier")

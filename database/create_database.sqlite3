@@ -1,8 +1,8 @@
 create table datasets(
     id integer primary key,
     type text, --  SISR, GM100, RAISE
-    name text,
-    is_test boolean,
+    name text unique,
+    is_train boolean,
     ordered_labels text,  -- serialized JSON array of strings such as ['x2', 'x4']
     opt text -- serialized JSON object with all data needed to recreate the dataset.
 );
@@ -11,7 +11,8 @@ create table SISR_datasets(
     id integer primary key,
     dataset_id integer unique,
     label_param text, -- loss, scale, seed, arch. etc.
-    test_param text, -- L1, s3, etc. Whatever value was reserved for testing.
+    reserved_param text, -- L1, s3, etc. Whatever value was reserved for testing.
+    reserved boolean -- If true, this dataset gets only generators with the reserved param. If false, gets only generators *without* the reserved param.
 );
 
 create table classifiers(
@@ -22,11 +23,10 @@ create table classifiers(
     opt text -- serialized json object with all the data needed to recreate the classifier. 
 );
 
-
 create table generators(
     id integer primary key,
     type text, -- SISR, GM100, RAISE
-    name text -- this should be the same as the name of the directory in the dataset.
+    name text unique -- this should be the same as the name of the directory in the dataset.
 );
 
 -- which generators were in the dataset?
@@ -51,19 +51,19 @@ create table SISR_generators(
 -- crop_left = (width - 299) // 2
 -- crop_right = crop_left + 299
 create table image_patches(
-    image_patch_id integer primary key,
+    id integer primary key,
     generator_id integer,
-    image_path text,
-    crop_top integer,
+    image_path text, -- relative to the root directory of the repo; SISR-fingerprints
+    patch_hash integer, -- hash(np.array(image_patch).data)
+    crop_upper integer,
     crop_left integer,
-    crop_bottom integer,
+    crop_lower integer,
     crop_right integer,
     acutance float,
     psnr float,
     lpips float,
     constraint unq unique (
-        generator_id,
-        image_filename,
+        image_path,
         crop_top,
         crop_left,
         crop_bottom,
@@ -72,21 +72,16 @@ create table image_patches(
 
 create table predictions(
     id integer primary key,
-    image_patch_id integer,
     classifier_id integer,
+    image_patch_id integer,
     dataset_id integer,
     actual_label text,
     predicted_label text,
     feature blob,
     class_probabilities blob,
     constraint unq unique (
-        classifier_name,
-        sisr_model,
-        image_name,
-        crop_top,
-        crop_left,
-        crop_bottom,
-        crop_right)
+        classifier_id,
+        image_patch_id)
 );
 
 ## views

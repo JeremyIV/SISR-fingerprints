@@ -10,20 +10,27 @@ import database
 # load_classifier(path)
 #   loads the classifier and returns it.
 #   Model's __call__ function should take in a PIL image.
-#   and returns class labels of shape (c,) 
+#   and returns class labels of shape (c,)
 #   where c is the number of possible class labels.
 #   optionally, also returns data representing some feature embedding.
 #       This feature embedding will be stored as a binary blob in the database.
 
+
 def train_and_save_classifier(classifier_opt, dataset):
     dataset.add_to_database()
     classifier_opt = classifier_opt.deepcopy()
-    classifier_type = classifier_opt.pop('type')
-    return CLASSIFIER_REGISTRY.get(classifier_type).train_and_save_classifier(classifier_opt, dataset)
+    classifier_type = classifier_opt.pop("type")
+    return CLASSIFIER_REGISTRY.get(classifier_type).train_and_save_classifier(
+        classifier_opt, dataset
+    )
+
 
 def load_classifier(name):
     classifier_row = db.get_classifier_row(name)
-    return CLASSIFIER_REGISTRY.get(classifier_row.type).load_classifier(classifier_row.path)
+    return CLASSIFIER_REGISTRY.get(classifier_row.type).load_classifier(
+        classifier_row.path
+    )
+
 
 def evaluate(classifier, dataset, evaluation_opt):
     # NOTE: evaluation_opt is currently unused, but may be useful in the future.
@@ -40,4 +47,5 @@ def evaluate(classifier, dataset, evaluation_opt):
             actual_label=label,
             predicted_label=predicted_label,
             class_probabilities=probabilities,
-            feature=feature)
+            feature=feature,
+        )
