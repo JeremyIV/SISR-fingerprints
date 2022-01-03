@@ -1,0 +1,2 @@
+-- create_views.sql
+-- analysis, joins together all these tables. same cardinality as predictions.

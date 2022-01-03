@@ -1,6 +1,6 @@
 from classification.utils.registry import DATASET_REGISTRY
 from torch.utils.data import Dataset
-import database as db
+import database.api as db
 from pathlib import Path
 from PIL import Image
 
@@ -32,12 +32,16 @@ class RAISE(Dataset):
         return len(self.samples)
 
     def add_to_database(self):
-        db.add_or_get_dataset(
-            type="RAISE",
-            name=self.name,
-            is_train=self.is_train,
-            ordered_labels=self.ordered_labels,
-            opt={"name": self.name, "type": "RAISE", "is_train": self.is_train},
+        opt = {"name": self.name, "type": "RAISE", "is_train": self.is_train}
+        db.idempotent_insert_unique_row(
+            "dataset",
+            {
+                "type": "RAISE",
+                "name": self.name,
+                "is_train": self.is_train,
+                "ordered_labels": self.ordered_labels,
+                "opt": opt,
+            },
         )
 
     def __getitem__(self, index):

@@ -6,7 +6,7 @@ import bm3d
 import tqdm
 from classification.utils.registry import CLASSIFIER_REGISTRY
 from classification.utils.misc import mkdir_unique
-import database as db
+import database.api as db
 import gzip
 from pathlib import Path
 
@@ -56,6 +56,7 @@ class PRNU:
 
     @staticmethod
     def train_and_save_classifier(classifier_opt, dataset):
+        training_dataset_id = db.get_unique_row("dataset", {"name": dataset.name}).id
         ordered_labels = dataset.ordered_labels
         memoize = classifier_opt["memoize"]
         classifier_name = classifier_opt["name"]
@@ -77,21 +78,23 @@ class PRNU:
         ordered_fingerprints_path = classifier_dir / ORDERED_FINGERPRINTS_FILENAME
         with gzip.GzipFile(ordered_fingerprints_path, "w") as f:
             np.save(f, ordered_fingerprints_path)
-        # record this classifier (and its ordered classes) in the database.
-        # TODO: record the dataset to the database.
-        # TODO: record the classifier to the database.
-        db.add_classifier_row(
-            name=classifier_name,
-            dataset_name=dataset.name,
-            type=PRNU,
-            opt=classifier_opt,
+        db.idempotent_insert_unique_row(
+            "classifier",
+            {
+                "training_dataset_id": training_dataset_id,
+                "name": classifier_name,
+                "path": ordered_fingerprints_path,
+                "type": PRNU,
+                "opt": classifier_opt,
+            },
         )
         return classifier_name
 
     @staticmethod
     def load_classifier(classifier_row):
-        ordered_labels = classifier_row.ordered_labels
-        ordered_fingerprints_path = os.path.join(path, "ordered_fingerprints.npy")
-        ordered_labels = np.load(ordered_labels_path)
+        ordered_labels = db.get_unique_row(
+            "dataset", {"id": classifier_row.training_dataset_id}
+        ).ordered_labels
+        ordered_fingerprints_path = classifier_row.path / "ordered_fingerprints.npy"
         ordered_fingerprints = np.load(ordered_fingerprints_path)
         return PRNU_classifier(ordered_labels, ordered_fingerprints)

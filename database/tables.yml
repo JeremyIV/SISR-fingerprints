@@ -1,0 +1,108 @@
+#schema.yml
+# all tables implicity have a column `id integer primary key`
+# JSON is sql type text, but it holds a JSON string.
+# PICKLE is sql type blob, but the blob holds a pickled object.
+dataset:
+  cols:
+    type: text # SISR, GM100, RAISE
+    name: text
+    is_train: boolean
+    ordered_labels: JSON # array of strings such as ['x2', 'x4']
+    opt: JSON # object with all data needed to recreate the dataset.
+  unique:
+    - name
+
+SISR_datasets:
+  extends: dataset
+  cols:
+    dataset_id: integer
+    label_param: text # loss, scale, seed, arch. etc.
+    reserved_param: text # L1, s3, etc. Whatever value was reserved for testing.
+    reserved: boolean # If true, this dataset gets only generator with the reserved param. If false, gets only generator *without* the reserved param.
+  references:
+    dataset_id: dataset
+  unique:
+    - dataset_id
+
+classifier:
+  cols:
+    training_dataset_id: integer
+    name: text
+    path: PATH # relative filepath (from the main repo directory (SISR-fingerprints)) to the saved classifier.
+    type: text # PRNU, Asnani, or CNN
+    opt: JSON # serialized json object with all the data needed to recreate the classifier. 
+  references:
+    training_dataset_id: dataset
+  unique:
+    - name
+
+generator:
+  cols:
+    type: text # SISR, GM100, RAISE
+    name: text # this should be the same as the name of the directory in the dataset.
+  unique:
+    - name
+
+SISR_generator:
+  extends: generator
+  cols:
+    generator_id: integer
+    architecture: text
+    dataset: text
+    scale: integer
+    loss: text
+    seed: integer
+  references:
+    generator_id: generator
+
+generators_in_dataset:
+  cols:
+    dataset_id: integer
+    generator_id: integer
+  references:
+    dataset_id: dataset
+    generator_id: generator
+
+image_patch:
+  cols:
+    generator_id: integer
+    image_path: PATH # relative to the root directory of the repo; SISR-fingerprints
+    patch_hash: integer # hash(np.array(image_patch).data)
+    crop_upper: integer
+    crop_left: integer
+    crop_lower: integer
+    crop_right: integer
+    acutance: float
+    psnr: float
+    lpips: float
+  references:
+    generator_id: generator
+  unique:
+    - image_path
+    - crop_upper
+    - crop_left
+    - crop_lower
+    - crop_right
+  volatile_cols:
+    - acutance
+    - psnr
+    - lpips
+
+prediction:
+  cols:
+    classifier_id: integer
+    image_patch_id: integer
+    dataset_id: integer
+    actual_label: text
+    predicted_label: text
+    feature: PICKLE
+    class_probabilities: PICKLE
+  references:
+    classifier_id: classifier
+    image_patch_id: image_patch
+  unique:
+    - classifier_id
+    - image_patch_id
+  volatile_cols:
+    - feature
+    - class_probabilities
