@@ -1,3 +1,6 @@
 BasicSR/
 classification/datasets/data/
 experiments/
+scratchwork/
+scratchwork.ipynb
+.ipynb_checkpoints/

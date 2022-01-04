@@ -20,7 +20,7 @@ def get_image_patch_row(image_path=None, crop=None, image_patch_id=None):
 
 
 def idempotent_insert_image_patch(image_patch_edict):
-    new_row = image_patch_edict.deepcopy()
+    new_row = image_patch_edict.copy()
     crop = new_row.pop("crop")
     new_row.update(
         {

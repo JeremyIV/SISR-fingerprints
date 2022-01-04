@@ -8,16 +8,19 @@ parser = argparse.ArgumentParser(
     description="Create a fresh copy of the SISR fingerprint analysis database."
 )
 parser.add_argument(
-    "-v", "--verbose"
+    "-v",
+    "--verbose",
     action="store_true",
     help="verbose mode: prints out all the sqlite commands "
     + "executed to create the database.",
 )
-args = parser.parse_args()
+opt = parser.parse_args()
+
 
 def vprint(*args, **kwargs):
-    if args.v:
+    if opt.verbose:
         print(*args, **kwargs)
+
 
 db_path = Path("database/database.sqlite3")
 if db_path.exists():
@@ -33,7 +36,7 @@ if db_path.exists():
         else:
             print(f"unrecognized response {response}. enter Y or N: ")
 
-con = sqlite3.connect(db_path)
+con = sqlite3.connect(str(db_path))
 cur = con.cursor()
 
 tables = yaml.load(open("database/tables.yml"), Loader=Loader)
