@@ -12,13 +12,15 @@ dataset:
   unique:
     - name
 
-SISR_datasets:
+SISR_dataset:
   extends: dataset
   cols:
     dataset_id: integer
-    label_param: text # loss, scale, seed, arch. etc.
-    reserved_param: text # L1, s3, etc. Whatever value was reserved for testing.
-    reserved: boolean # If true, this dataset gets only generator with the reserved param. If false, gets only generator *without* the reserved param.
+    label_param: text 
+    reserved_param: text # loss, scale, seed, arch. etc.
+    reserved_param_value: text # L1, s3, etc. Whatever value was reserved for testing.
+    include_pretrained: boolean # does this dataset include the pretrained SISR models?
+    include_custom_trained: boolean # does this dataset include the custom trained SISR models?
   references:
     dataset_id: dataset
   unique:
@@ -40,6 +42,7 @@ generator:
   cols:
     type: text # SISR, GM100, RAISE
     name: text # this should be the same as the name of the directory in the dataset.
+    parameters: JSON # a json object of parameter names to their values.
   unique:
     - name
 
@@ -67,7 +70,7 @@ image_patch:
   cols:
     generator_id: integer
     image_path: PATH # relative to the root directory of the repo; SISR-fingerprints
-    patch_hash: integer # hash(np.array(image_patch).data)
+    patch_hash: text # see classification.utils.image_patch.get_patch_hash
     crop_upper: integer
     crop_left: integer
     crop_lower: integer

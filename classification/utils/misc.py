@@ -16,11 +16,12 @@ def mkdir_unique(parent_dir, dir_template):
                             e.g. 'foobar{}'
     """
     path = parent_dir / dir_template.format("")
+    version_number = 0
     while path.exists():
         version_number += 1
         uniquifying_string = f"_v{version_number}"
         path = parent_dir / dir_template.format(uniquifying_string)
-    path.mkdir()
+    path.mkdir(parents=True)
     return path
 
 

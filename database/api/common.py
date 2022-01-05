@@ -29,8 +29,6 @@ col_type_encodings = {
 
 
 def read_sql_query(query, params=None):
-    # TODO: this turns ints into numpy ints.
-    # need to convert into regular int for sql to handle correctly.
     return pd.read_sql_query(query, con, params=params)
 
 
@@ -79,6 +77,22 @@ def get_unique_idenfiers(table, row):
 
 
 def idempotent_insert_unique_row(table, new_row):
+    table_schema = tables[table]
+    if "extends" in table_schema:
+        # recursively create a parent row first
+        parent_table = table_schema.extends
+        parent_schema = tables[parent_table]
+        parent_row = {}
+        child_row = {}
+        for col, val in new_row.items():
+            if col in parent_table:
+                parent_row[col] = val
+            else:
+                child_row[col] = val
+        parent_id = idempotent_insert_unique_row(parent_table, parent_row)
+        child_row[f"{parent_table}_id"] = parent_id
+        new_row = child_row
+
     unique_identifiers = get_unique_idenfiers(table, new_row)
     old_row = get_unique_row(table, unique_identifiers)
 

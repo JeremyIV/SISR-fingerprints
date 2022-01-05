@@ -44,11 +44,17 @@ tables = yaml.load(open("database/tables.yml"), Loader=Loader)
 special_types = {"JSON": "text", "PICKLE": "blob", "PATH": "text"}
 
 for table, data in tables.items():
+    references = data.get("references", {})
     elements = ["id integer primary key"]
+    # TODO: enforce that the table shares no column names with its parents, if it has any.
     for col, col_type in data["cols"].items():
         if col_type in special_types:
             col_type = special_types[col_type]
         elements.append(f"{col} {col_type}")
+    if "references" in data:
+        for col, foreign_table in data["references"].items():
+            elements.append(f"foreign key({col}) references {foreign_table}(id)")
+
     if "unique" in data:
         unique_cols_str = ", ".join(data["unique"])
         elements.append(f"constraint unq unique({unique_cols_str})")

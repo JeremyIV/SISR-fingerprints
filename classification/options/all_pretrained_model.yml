@@ -3,7 +3,8 @@
 
 # a classifier opt.
 classifier:
-  type: prnu
+  type: PRNU
+  name: PRNU_RAISE
 
 # a single dataset opt.
 training_dataset:

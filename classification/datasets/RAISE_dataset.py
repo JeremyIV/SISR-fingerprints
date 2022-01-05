@@ -3,19 +3,23 @@ from torch.utils.data import Dataset
 import database.api as db
 from pathlib import Path
 from PIL import Image
+from classification.datasets.image_patch_metadata import ImagePatchMetadata
 
 CROP_SIZE = 299
 RAISE_PATH = Path("classification/datasets/data/RAISE")
 
-DATASET_REGISTRY.register()
 
-
+@DATASET_REGISTRY.register()
 class RAISE(Dataset):
     def __init__(self, name=None, is_train=True):
         self.name = name
+        self.is_train = is_train
         self.samples = []
+        self.param_to_predict = None
+        self.generators = set()
         for generator_path in RAISE_PATH.iterdir():
             label = generator_path.stem
+            self.generators.add(label)
             sorted_image_paths = sorted(generator_path.iterdir())
             split_index = 412
             split_image_paths = (
@@ -24,7 +28,7 @@ class RAISE(Dataset):
                 else sorted_image_paths[split_index:]
             )
             for image_path in split_image_paths:
-                self.samples.append(image_path, label)
+                self.samples.append((image_path, label))
 
         self.ordered_labels = list(sorted(set(label for path, label in self.samples)))
 
@@ -33,7 +37,7 @@ class RAISE(Dataset):
 
     def add_to_database(self):
         opt = {"name": self.name, "type": "RAISE", "is_train": self.is_train}
-        db.idempotent_insert_unique_row(
+        dataset_id = db.idempotent_insert_unique_row(
             "dataset",
             {
                 "type": "RAISE",
@@ -43,13 +47,25 @@ class RAISE(Dataset):
                 "opt": opt,
             },
         )
+        for generator in self.generators:
+            generator_id = db.idempotent_insert_unique_row(
+                "generator", {"name": generator, "type": "RAISE", "parameters": {}}
+            )
+            db.insert_row(
+                "generators_in_dataset",
+                {
+                    "dataset_id": dataset_id,
+                    "generator_id": generator_id,
+                },
+            )
+        return dataset_id
 
     def __getitem__(self, index):
         image_path, label = self.samples[index]
-        image = PIL.image.open(image_path)
+        image = Image.open(image_path)
         width, height = image.size
         crop_upper = (height - CROP_SIZE) // 2
-        crop_lower = crop_top + CROP_SIZE
+        crop_lower = crop_upper + CROP_SIZE
         crop_left = (width - CROP_SIZE) // 2
         crop_right = crop_left + CROP_SIZE
         crop = db.CropCoords(

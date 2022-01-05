@@ -3,6 +3,7 @@ from database.api.common import (
     cur,
     read_sql_query,
     get_unique_row,
+    insert_row,
     idempotent_insert_unique_row,
 )
 from database.api.image_patch import (

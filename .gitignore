@@ -1,5 +1,7 @@
 BasicSR/
 classification/datasets/data/
+classification/classifiers/experiments
+classification/classifiers/saved_noise_residuals
 experiments/
 scratchwork/
 scratchwork.ipynb

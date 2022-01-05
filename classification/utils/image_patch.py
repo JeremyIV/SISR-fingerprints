@@ -3,14 +3,24 @@ from lpips import LPIPS
 from PIL import ImageOps
 import cv2
 import database.api as db
+import numpy as np
+from torchvision import transforms
+import hashlib
+
+
+def get_patch_hash(image):
+    image = np.array(image)
+    # we have about 100k images to hash.
+    # 64 bits guarantees about 1e-9 probability of collision.
+    return hashlib.shake_128(image.data.tobytes()).hexdigest(64)
 
 
 def get_acutance(image):
-    return cv2.Laplacian(np.array(ImageOps.grayscale(img)), cv2.CV_64F).var()
+    return cv2.Laplacian(np.array(ImageOps.grayscale(image)), cv2.CV_64F).var()
 
 
 def get_psnr(image, reference):
-    psnr = peak_signal_noise_ratio(img, hr_img)
+    psnr = peak_signal_noise_ratio(image, reference)
 
 
 lpips_preprocess = transforms.Compose(
@@ -36,7 +46,7 @@ def get_generator_id(image_path):
 
 
 def update_image_patch(image, metadata):
-    patch_hash = hash(np.array(image_patch).data)
+    patch_hash = get_patch_hash(image)
 
     # If the image patch already exists, don't re-process it.
     old_patch = db.get_image_patch_row(
@@ -55,7 +65,6 @@ def update_image_patch(image, metadata):
     psnr = None
     lpips = None
     acutance = get_acutance(image)
-    generator_id = db.get_unique_row("generator", {"name": generator.name})
     if metadata.ground_truth_path is not None:
         ground_truth = Image.open(metadata.ground_truth_path)
         ground_truth = ground_truth.crop(metadata.crop)
@@ -64,7 +73,7 @@ def update_image_patch(image, metadata):
     return db.idempotent_insert_image_patch(
         {
             "generator_id": generator_id,
-            "image_path": image_path,
+            "image_path": metadata.image_path,
             "patch_hash": patch_hash,
             "crop": metadata.crop,
             "acutance": acutance,

@@ -1,12 +1,13 @@
 # __init__.py
-from utils.registry import DATASET_REGISTRY
+from classification.utils.registry import DATASET_REGISTRY
+import classification.datasets.RAISE_dataset  # , classification.datasets.sisr_dataset
 
 # each dataset should fulfill the following interface:
 # constructor takes in its args from the options
 # the dataset has attributes
-# 	ordered_labels
-# 	name
-# 	add_to_database(self)
+#   ordered_labels
+#   name
+#   add_to_database(self)
 # the dataset yeilds triples of (image, label, metadata)
 # image: a PIL image
 # label: a string label. should be a string from ordered_labels
