@@ -1,6 +1,7 @@
 # __init__.py
 from classification.utils.registry import CLASSIFIER_REGISTRY
 import classification.classifiers.prnu_classifier
+import classification.classifiers.cnn_classifier
 from classification.utils import image_patch
 import database.api as db
 import numpy as np
@@ -19,12 +20,14 @@ from tqdm import tqdm
 #       This feature embedding will be stored as a binary blob in the database.
 
 
-def train_and_save_classifier(classifier_opt, dataset):
-    dataset.add_to_database()
+def train_and_save_classifier(classifier_opt, train_dataset, val_dataset=None):
+    train_dataset.add_to_database()
+    if val_dataset is not None:
+        val_dataset.add_to_database()
     classifier_opt = classifier_opt.copy()
-    classifier_type = classifier_opt.pop("type")
+    classifier_type = classifier_opt["type"]
     result = CLASSIFIER_REGISTRY.get(classifier_type).train_and_save_classifier(
-        classifier_opt, dataset
+        classifier_opt, train_dataset, val_dataset
     )
     db.con.commit()
     return result
@@ -50,8 +53,8 @@ def evaluate(classifier, dataset, evaluation_opt):
                 "classifier_id": classifier_id,
                 "image_patch_id": image_patch_id,
                 "dataset_id": dataset_id,
-                "actual_label": label,
-                "predicted_label": predicted_label,
+                "actual": label,
+                "predicted": predicted_label,
                 "class_probabilities": probabilities,
                 "feature": feature,
             },

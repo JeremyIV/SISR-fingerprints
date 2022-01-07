@@ -1,6 +1,6 @@
 # __init__.py
 from classification.utils.registry import DATASET_REGISTRY
-import classification.datasets.RAISE_dataset  # , classification.datasets.sisr_dataset
+import classification.datasets.RAISE_dataset, classification.datasets.sisr_dataset
 
 # each dataset should fulfill the following interface:
 # constructor takes in its args from the options

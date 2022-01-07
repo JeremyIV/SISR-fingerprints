@@ -1,7 +1,11 @@
 BasicSR/
 classification/datasets/data/
-classification/classifiers/experiments
-classification/classifiers/saved_noise_residuals
+classification/classifiers/experiments/
+classification/classifiers/saved_noise_residuals/
+__pycache__/
+*.pyc
+*.pth
+*.sqlite3
 experiments/
 scratchwork/
 scratchwork.ipynb

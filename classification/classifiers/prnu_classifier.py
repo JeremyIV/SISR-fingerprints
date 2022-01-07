@@ -56,13 +56,14 @@ class PRNU:
         # Features are too large and burdensome, so just return None.
         return one_hot_encoding, None
 
+    # third argument is val_dataset, which is unused.
     @staticmethod
-    def train_and_save_classifier(classifier_opt, dataset):
+    def train_and_save_classifier(classifier_opt, dataset, _=None):
         training_dataset_id = db.get_unique_row("dataset", {"name": dataset.name}).id
         ordered_labels = dataset.ordered_labels
         memoize = classifier_opt.get("memoize", True)
         classifier_name = classifier_opt["name"]
-        param_to_predict = dataset.param_to_predict
+        label_param = dataset.label_param  # TODO: do someting with this label param?
         noise_residuals_sum = [0] * len(ordered_labels)
         noise_residuals_count = [0] * len(ordered_labels)
         print("Training PRNU classifier!")

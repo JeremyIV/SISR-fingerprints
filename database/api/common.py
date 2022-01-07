@@ -41,7 +41,7 @@ def decode_row(table, row):
     row_edict["id"] = row["id"]
     for col, col_type in cols.items():
         value = row[col]
-        if col_type in col_type_encodings:
+        if col_type in col_type_encodings and value is not None:
             value = col_type_encodings[col_type].decode(value)
         row_edict[col] = value
     return row_edict
@@ -85,7 +85,7 @@ def idempotent_insert_unique_row(table, new_row):
         parent_row = {}
         child_row = {}
         for col, val in new_row.items():
-            if col in parent_table:
+            if col in parent_schema.cols:
                 parent_row[col] = val
             else:
                 child_row[col] = val
@@ -121,7 +121,7 @@ def encode_row(table, row):
             encoded_row["id"] = int(value)
             continue
         col_type = table_cols[col]
-        if col_type in col_type_encodings:
+        if col_type in col_type_encodings and value is not None:
             value = col_type_encodings[col_type].encode(value)
         encoded_row[col] = value
     return encoded_row

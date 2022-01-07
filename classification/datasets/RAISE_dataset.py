@@ -11,11 +11,16 @@ RAISE_PATH = Path("classification/datasets/data/RAISE")
 
 @DATASET_REGISTRY.register()
 class RAISE(Dataset):
-    def __init__(self, name=None, is_train=True):
+    def __init__(self, name=None, phase=None):
+        # TODO: replace is_train with phase
         self.name = name
-        self.is_train = is_train
+        assert phase in {
+            "train",
+            "test",
+        }, f"phase must be either 'train' or 'test', not {phase}"
+        self.is_train = phase == "train"
         self.samples = []
-        self.param_to_predict = None
+        self.label_param = None
         self.generators = set()
         for generator_path in RAISE_PATH.iterdir():
             label = generator_path.stem
@@ -36,13 +41,14 @@ class RAISE(Dataset):
         return len(self.samples)
 
     def add_to_database(self):
-        opt = {"name": self.name, "type": "RAISE", "is_train": self.is_train}
+        phase = "train" if self.is_train else "test"
+        opt = {"name": self.name, "type": "RAISE", "phase": phase}
         dataset_id = db.idempotent_insert_unique_row(
             "dataset",
             {
                 "type": "RAISE",
                 "name": self.name,
-                "is_train": self.is_train,
+                "phase": phase,
                 "ordered_labels": self.ordered_labels,
                 "opt": opt,
             },
@@ -51,7 +57,7 @@ class RAISE(Dataset):
             generator_id = db.idempotent_insert_unique_row(
                 "generator", {"name": generator, "type": "RAISE", "parameters": {}}
             )
-            db.insert_row(
+            db.idempotent_insert_unique_row(
                 "generators_in_dataset",
                 {
                     "dataset_id": dataset_id,

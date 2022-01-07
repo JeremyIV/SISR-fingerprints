@@ -6,7 +6,7 @@ dataset:
   cols:
     type: text # SISR, GM100, RAISE
     name: text
-    is_train: boolean
+    phase: text # train, val, test
     ordered_labels: JSON # array of strings such as ['x2', 'x4']
     opt: JSON # object with all data needed to recreate the dataset.
   unique:
@@ -29,12 +29,14 @@ SISR_dataset:
 classifier:
   cols:
     training_dataset_id: integer
+    validation_dataset_id: integer
     name: text
     path: PATH # relative filepath (from the main repo directory (SISR-fingerprints)) to the saved classifier.
     type: text # PRNU, Asnani, or CNN
     opt: JSON # serialized json object with all the data needed to recreate the classifier. 
   references:
     training_dataset_id: dataset
+    validation_dataset_id: dataset
   unique:
     - name
 
@@ -57,6 +59,8 @@ SISR_generator:
     seed: integer
   references:
     generator_id: generator
+  unique:
+    - generator_id
 
 generators_in_dataset:
   cols:
@@ -65,6 +69,9 @@ generators_in_dataset:
   references:
     dataset_id: dataset
     generator_id: generator
+  unique:
+    - dataset_id
+    - generator_id
 
 image_patch:
   cols:
@@ -96,8 +103,8 @@ prediction:
     classifier_id: integer
     image_patch_id: integer
     dataset_id: integer
-    actual_label: text
-    predicted_label: text
+    actual: text
+    predicted: text
     feature: PICKLE
     class_probabilities: PICKLE
   references:

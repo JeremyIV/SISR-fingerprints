@@ -1,13 +1,22 @@
 # sisr.py
-from utils.registry import DATASET_REGISTRY
+from classification.utils.registry import DATASET_REGISTRY
 from torch.utils.data import Dataset
 from pathlib import Path
 from easydict import EasyDict as edict
+import pdb
+import re
+import database.api as db
+from PIL import Image
+from classification.datasets.image_patch_metadata import ImagePatchMetadata
+import random
+
+seed_regex = re.compile(r"s(\d+)")
+scale_regex = re.compile(r"x(\d+)")
 
 
 def is_in_dataset(
     model_params,
-    is_train,
+    is_test,
     reserved_param,
     reserved_param_value,
     include_pretrained,
@@ -17,18 +26,25 @@ def is_in_dataset(
         return False
     if not include_custom_trained and not model_params.pretrained:
         return False
-    if is_train and reserved_param is not None:
+    if not is_test and reserved_param is not None:
         return model_params[reserved_param] == reserved_param_value
     return True
 
 
 def get_params(sisr_model):
     pretrained = False
-    if sisr_model.startswith("pretrained-"):
+    pretrained_suffix = "-pretrained"
+    if sisr_model.endswith(pretrained_suffix):
         pretrained = True
-        first_hyphen_index = sisr_model.index("-")
-        sisr_model = sisr_model[first_hyphen_index + 1 :]
-    architecture, scale, dataset, loss, seed = sisr_model.split("-")
+        sisr_model = sisr_model[: -len(pretrained_suffix)]
+    split = sisr_model.split("-")
+    if len(split) != 5:
+        return None  # not a valid sisr_model directory!
+    architecture, dataset, scale, loss, seed = split
+    seed_match = seed_regex.match(seed)
+    seed = None if seed_match is None else int(seed_match.group(1))
+    scale_match = scale_regex.match(scale)
+    scale = None if scale_match is None else int(scale_match.group(1))
     return edict(
         {
             "pretrained": pretrained,
@@ -42,8 +58,12 @@ def get_params(sisr_model):
 
 
 SISR_DATASET_PATH = Path("classification/datasets/data/SISR")
-TRAIN_SPLIT_PATH = Path("classification/datasets/data/SISR/train_split.txt")
-TEST_SPLIT_PATH = Path("classification/datasets/data/SISR/test_split.txt")
+
+SPLIT_PATHS = {
+    "train": SISR_DATASET_PATH / "train-split.txt",
+    "val": SISR_DATASET_PATH / "val-split.txt",
+    "test": SISR_DATASET_PATH / "test-split.txt",
+}
 
 
 @DATASET_REGISTRY.register()
@@ -52,27 +72,29 @@ class SISR(Dataset):
         self,
         name=None,
         label_param=None,
-        is_train=True,
+        phase=None,
         patch_size=299,
         random_crop=True,
         reserved_param=None,
         reserved_param_value=None,
         include_pretrained=False,
         include_custom_trained=True,
+        data_retention=1,
     ):
-        if is_reserved:
-            assert not is_train, "Reserved SISR models cannot be used for training."
         self.samples = []
         self.name = name
         self.label_param = label_param
         self.patch_size = patch_size
         self.random_crop = random_crop
-        self.is_train = is_train
+        self.phase = phase
         self.reserved_param = reserved_param
         self.reserved_param_value = reserved_param_value
+        self.include_pretrained = include_pretrained
         self.include_custom_trained = include_custom_trained
+        self.data_retention = data_retention
+        self.generators = {}
 
-        split_filepath = TRAIN_SPLIT_PATH if is_train else TEST_SPLIT_PATH
+        split_filepath = SPLIT_PATHS[phase]
         split = {line.rstrip() for line in open(split_filepath).readlines()}
 
         for sisr_model_dir in SISR_DATASET_PATH.iterdir():
@@ -80,9 +102,12 @@ class SISR(Dataset):
                 continue
             sisr_model = sisr_model_dir.stem
             params = get_params(sisr_model)
+            if params is None:  # indicates not a valid SISR model directory
+                continue
+            self.generators[sisr_model] = params
             if not is_in_dataset(
                 params,
-                is_train,
+                phase == "test",
                 reserved_param,
                 reserved_param_value,
                 include_pretrained,
@@ -91,11 +116,15 @@ class SISR(Dataset):
                 continue
             label = sisr_model if label_param is None else params[label_param]
             for image_path in sisr_model_dir.iterdir():
-                if image_path not in split:
+                if image_path.name not in split:
                     continue
                 self.samples.append((image_path, label))
 
         self.ordered_labels = list(sorted(set(label for path, label in self.samples)))
+        random.shuffle(self.samples)
+        if self.data_retention < 1:
+            cutoff_index = int(len(self.samples) * self.data_retention)
+            self.samples = self.samples[:cutoff_index]
 
     def __len__(self):
         return len(self.samples)
@@ -128,19 +157,20 @@ class SISR(Dataset):
             "name": self.name,
             "type": "SISR",
             "label_param": self.label_param,
-            "is_train": self.is_train,
+            "phase": self.phase,
             "random_crop": self.random_crop,
             "reserved_param": self.reserved_param,
             "reserved_param_value": self.reserved_param_value,
             "include_pretrained": self.include_pretrained,
             "include_custom_trained": self.include_custom_trained,
+            "data_retention": self.data_retention,
         }
-        db.idempotent_insert_unique_row(
+        dataset_id = db.idempotent_insert_unique_row(
             "SISR_dataset",
             {
                 "type": "SISR",
                 "name": self.name,
-                "is_train": self.is_train,
+                "phase": self.phase,
                 "ordered_labels": self.ordered_labels,
                 "opt": opt,
                 "label_param": self.label_param,
@@ -150,3 +180,24 @@ class SISR(Dataset):
                 "include_custom_trained": self.include_custom_trained,
             },
         )
+
+        for sisr_model, params in self.generators.items():
+            generator_id = db.idempotent_insert_unique_row(
+                "SISR_generator",
+                {
+                    "type": "SISR",
+                    "name": sisr_model,
+                    "parameters": params,
+                    "architecture": params.architecture,
+                    "dataset": params.dataset,
+                    "scale": params.scale,
+                    "loss": params.loss,
+                    "seed": params.seed,
+                },
+            )
+            db.idempotent_insert_unique_row(
+                "generators_in_dataset",
+                {"dataset_id": dataset_id, "generator_id": generator_id},
+            )
+
+        return dataset_id

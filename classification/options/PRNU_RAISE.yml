@@ -1,0 +1,12 @@
+classifier:
+  type: PRNU
+  name: PRNU_RAISE
+
+training_dataset:
+  name: raise_train
+  type: RAISE
+
+evaluation_datasets:
+  -
+    name: raise_test
+    type: RAISE
