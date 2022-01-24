@@ -21,6 +21,9 @@ from tqdm import tqdm
 
 
 def train_and_save_classifier(classifier_opt, train_dataset, val_dataset=None):
+    """Trains a classifier, saves the model to experiments/, and saves all the
+    data needed to recreate the classifier to the database.
+    """
     train_dataset.add_to_database()
     if val_dataset is not None:
         val_dataset.add_to_database()
@@ -39,6 +42,9 @@ def load_classifier(name):
 
 
 def evaluate(classifier, dataset, evaluation_opt):
+    # TODO: this feels cluttery here. Is there a better place for it?
+    if hasattr(classifier, "patch_size"):
+        dataset.patch_size = classifier.patch_size
     dataset_id = dataset.add_to_database()
     classifier_id = db.get_unique_row("classifier", {"name": classifier.name}).id
     print(f"Evaluating on dataset {dataset.name}")

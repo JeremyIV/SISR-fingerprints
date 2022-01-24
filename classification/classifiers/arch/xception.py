@@ -27,24 +27,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
 from torch.nn import init
-from classification.utils.registry import ARCH_REGISTRY
 from torchvision import transforms
 from pathlib import Path
-
-pretrained_settings = {
-    "xception": {
-        "imagenet": {
-            "url": "http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth",
-            "input_space": "RGB",
-            "input_size": [3, 299, 299],
-            "input_range": [0, 1],
-            "mean": [0.5, 0.5, 0.5],
-            "std": [0.5, 0.5, 0.5],
-            "num_classes": 1000,
-            "scale": 0.8975,  # The resize parameter of the validation transform should be 333, and make sure to center crop at 299x299
-        }
-    }
-}
 
 
 class SeparableConv2d(nn.Module):
@@ -150,30 +134,14 @@ class Block(nn.Module):
         return x
 
 
-preprocessor = transforms.Compose(
-    [
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
-    ]
-)
-
-imagenet_pretrained_weights_path = Path(
-    "classification/classifiers/arch/xception-b5690688.pth"
-)
+XCEPTION_URL = "http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth"
 
 
-@ARCH_REGISTRY.register()
 class Xception(nn.Module):
     """
     Xception optimized for the ImageNet dataset, as specified in
     https://arxiv.org/pdf/1610.02357.pdf
     """
-
-    @staticmethod
-    def preprocess(image):
-        """Takes in a PIL image and
-        returns a torch tensor ready to pass in to the module's __call__."""
-        return preprocessor(image)
 
     def __init__(self, num_classes=1000):
         """Constructor
@@ -221,33 +189,7 @@ class Xception(nn.Module):
             if "pointwise" in name:
                 state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
 
-        self.transfer_state_dict(state_dict)
-        # #------- init weights --------
-        # for m in self.modules():
-        #     if isinstance(m, nn.Conv2d):
-        #         n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-        #         m.weight.data.normal_(0, math.sqrt(2. / n))
-        #     elif isinstance(m, nn.BatchNorm2d):
-        #         m.weight.data.fill_(1)
-        #         m.bias.data.zero_()
-        # #-----------------------------
-
-    def transfer_state_dict(self, state_dict):
-        if self.fc.weight.shape != state_dict["fc.weight"].shape:
-            state_dict = state_dict.copy()
-            state_dict["fc.weight"] = self.fc.weight.detach()
-            state_dict["fc.bias"] = self.fc.bias.detach()
-        self.load_state_dict(state_dict)
-
-    def freeze_all_but_last_layer(self):
-        for i, param in self.named_parameters():
-            param.requires_grad = False
-        for i, param in self.fc.named_parameters():
-            param.requires_grad = True
-
-    def unfreeze_all(self):
-        for i, param in self.named_parameters():
-            param.requires_grad = True
+        self.load_state_dict(model_zoo.load_url(XCEPTION_URL))
 
     def features(self, input):
         x = self.conv1(input)

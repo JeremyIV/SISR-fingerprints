@@ -5,14 +5,13 @@ from pathlib import Path
 from PIL import Image
 from classification.datasets.image_patch_metadata import ImagePatchMetadata
 
-CROP_SIZE = 299
+DEFAULT_PATCH_SIZE = 299
 RAISE_PATH = Path("classification/datasets/data/RAISE")
 
 
 @DATASET_REGISTRY.register()
 class RAISE(Dataset):
     def __init__(self, name=None, phase=None):
-        # TODO: replace is_train with phase
         self.name = name
         assert phase in {
             "train",
@@ -22,6 +21,7 @@ class RAISE(Dataset):
         self.samples = []
         self.label_param = None
         self.generators = set()
+        self.patch_size = DEFAULT_PATCH_SIZE
         for generator_path in RAISE_PATH.iterdir():
             label = generator_path.stem
             self.generators.add(label)
@@ -70,10 +70,10 @@ class RAISE(Dataset):
         image_path, label = self.samples[index]
         image = Image.open(image_path)
         width, height = image.size
-        crop_upper = (height - CROP_SIZE) // 2
-        crop_lower = crop_upper + CROP_SIZE
-        crop_left = (width - CROP_SIZE) // 2
-        crop_right = crop_left + CROP_SIZE
+        crop_upper = (height - self.patch_size) // 2
+        crop_lower = crop_upper + self.patch_size
+        crop_left = (width - self.patch_size) // 2
+        crop_right = crop_left + self.patch_size
         crop = db.CropCoords(
             left=crop_left, upper=crop_upper, right=crop_right, lower=crop_lower
         )

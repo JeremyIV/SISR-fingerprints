@@ -32,6 +32,30 @@ def read_sql_query(query, params=None):
     return pd.read_sql_query(query, con, params=params)
 
 
+default_col_types = {}
+
+for table_schema in tables.values():
+    for col, col_type in table_schema.cols.items():
+        default_col_types[col] = col_type
+
+
+def read_sql_query_and_decode(query, params=None, col_types=default_col_types):
+    raw_result = read_sql_query(query, params)
+    # TODO: for each column in the raw result
+    for column in raw_result:
+        if column in col_types:
+            col_type = col_types[column]
+            # TODO
+        # see if this column is in decoders
+        # if so, decode it appropriately
+
+
+def decode_value(value, col_type):
+    if col_type in col_type_encodings and value is not None:
+        return col_type_encodings[col_type].decode(value)
+    return value
+
+
 def decode_row(table, row):
     """Decodes the special column types into pythonic objects.
     Returns the database row as an EasyDict.
@@ -41,9 +65,7 @@ def decode_row(table, row):
     row_edict["id"] = row["id"]
     for col, col_type in cols.items():
         value = row[col]
-        if col_type in col_type_encodings and value is not None:
-            value = col_type_encodings[col_type].decode(value)
-        row_edict[col] = value
+        row_edict[col] = decode_value(value, col_type)
     return row_edict
 
 

@@ -17,6 +17,21 @@ import classification.datasets.RAISE_dataset, classification.datasets.sisr_datas
 # image_path
 
 
-def get_dataset(opt):
+def get_dataset(opt, phase=None):
+    """Returns a dataset created from the given options dictionary.
+
+    args:
+    opt: the dictionary of options
+    phase (optional): one of {'train', 'val', 'test'}.
+        Specifies which role this dataset will play.
+    """
+    opt = opt.copy()
+    if phase is not None:
+        if "phase" in opt:
+            assert opt["phase"] == phase, (
+                f"dataset of phase type {opt['phase']} "
+                + f"cannot be used for phase {phase}"
+            )
+        opt["phase"] = phase
     dataset_type = opt.pop("type")
     return DATASET_REGISTRY.get(dataset_type)(**opt)

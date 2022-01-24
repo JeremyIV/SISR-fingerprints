@@ -77,10 +77,8 @@ def train(cnn, train_dataset, val_dataset, num_epochs, train_opt, save_dir):
             # Iterate over data.
             print(phase)
 
-            # TODO: understand why this gets 3x slower after first epoch
             for inputs, labels in tqdm.tqdm(dataloaders[phase]):
                 criterion = nn.CrossEntropyLoss()
-                # TODO: why is this 3x slower in the second epoch?
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -148,6 +146,7 @@ class CNN:
         self.name = name
         self.ordered_labels = ordered_labels
         self.cnn = cnn
+        self.patch_size = cnn.patch_size
 
     def __call__(self, image):
         img = self.cnn.preprocess(image).unsqueeze(0)
@@ -161,6 +160,8 @@ class CNN:
         cnn_opt = opt["cnn"].copy()
         cnn_opt["num_classes"] = len(train_dataset.ordered_labels)
         cnn = arch.get_cnn(cnn_opt)
+        train_dataset.patch_size = cnn.patch_size
+        val_dataset.patch_size = cnn.patch_size
         if "pretrained_path" in opt:
             state_dict = torch.load(opt["pretrained_path"])
             cnn.transfer_state_dict(state_dict)
@@ -188,7 +189,7 @@ class CNN:
             train_opt=train_opt,
             save_dir=save_dir,
         )
-        # TODO: write the classifier to the database
+
         classifier_name = opt["name"]
         training_dataset_id = db.get_unique_row(
             "dataset", {"name": train_dataset.name}
@@ -210,7 +211,6 @@ class CNN:
 
     @staticmethod
     def load_classifier(classifier_row):
-        # TODO: get num_classes from the dataset
         training_dataset_row = db.get_unique_row(
             "dataset", {"id": classifier_row.training_dataset_id}
         )

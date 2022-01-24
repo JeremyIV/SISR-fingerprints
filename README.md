@@ -42,6 +42,30 @@ This repo reproduces all experiments and results presented in the paper, from tr
 
 ### 1. Download the SISR training datasets
 
+### 5. generate the super-resolved image dataset
+
+```bash
+cd BasicSR
+python scripts/custom_sisr_dataset/make_train_test_configs.py --generate_SISR_dataset
+```
+
+Then run 
+
+```bash
+python basicsr/test.py -opt options/test/generate_sisr_dataset/<config.yml>
+```
+
+for each config in options/test/generate_sisr_dataset.
+
+Then cd back into the main SISR-fingerprints directory.
+Then run
+
+```bash
+python classification/datasets/data/move_sisr_datasets.py
+``` 
+
+To move the datasets where they need to be.
+
 ### 6. Train the model attribution/parsing classifiers
 
 To train all the classifiers with a single command, run
