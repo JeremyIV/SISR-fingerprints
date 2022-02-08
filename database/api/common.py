@@ -32,22 +32,33 @@ def read_sql_query(query, params=None):
     return pd.read_sql_query(query, con, params=params)
 
 
-default_col_types = {}
+default_col_types = {
+    "generator_name": "text",
+    "classifier_name": "text",
+    "classifier_path": "PATH",
+    "classifier_type": "text",
+    "classifier_opt": "JSON",
+    "dataset_type": "text",
+    "dataset_name": "text",
+}
 
 for table_schema in tables.values():
     for col, col_type in table_schema.cols.items():
         default_col_types[col] = col_type
 
 
-def read_sql_query_and_decode(query, params=None, col_types=default_col_types):
+def read_and_decode_sql_query(query, params=None, col_types=default_col_types):
     raw_result = read_sql_query(query, params)
-    # TODO: for each column in the raw result
-    for column in raw_result:
+
+    decoded_result = {}
+    for column, value in raw_result.items():
         if column in col_types:
             col_type = col_types[column]
-            # TODO
-        # see if this column is in decoders
-        # if so, decode it appropriately
+            decode = col_type_encodings[col_type].decode
+            value = decode(value)
+        decoded_result[column] = value
+
+    return decoded_result
 
 
 def decode_value(value, col_type):

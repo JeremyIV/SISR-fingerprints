@@ -3,7 +3,7 @@ from torch import nn
 
 class Identity(nn.Module):
     def __init__(self):
-        pass
+        super().__init__()
 
-    def forward(x):
+    def forward(self, x):
         return x

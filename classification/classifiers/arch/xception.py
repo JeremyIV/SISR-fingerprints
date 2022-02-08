@@ -29,6 +29,7 @@ import torch.utils.model_zoo as model_zoo
 from torch.nn import init
 from torchvision import transforms
 from pathlib import Path
+from classification.utils.registry import ARCH_REGISTRY
 
 
 class SeparableConv2d(nn.Module):
@@ -135,8 +136,19 @@ class Block(nn.Module):
 
 
 XCEPTION_URL = "http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth"
+# XCEPTION_URL = (
+#    "https://www.dropbox.com/s/1hplpzet9d7dv29/xception-c0a72b38.pth.tar?dl=1"
+# )
+
+preprocessor = transforms.Compose(
+    [
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ]
+)
 
 
+@ARCH_REGISTRY.register()
 class Xception(nn.Module):
     """
     Xception optimized for the ImageNet dataset, as specified in
@@ -149,6 +161,7 @@ class Xception(nn.Module):
             num_classes: number of classes
         """
         super(Xception, self).__init__()
+        self.patch_size = 299
         self.num_classes = num_classes
 
         self.conv1 = nn.Conv2d(3, 32, 3, 2, 0, bias=False)
@@ -184,12 +197,17 @@ class Xception(nn.Module):
 
         self.fc = nn.Linear(2048, num_classes)
 
-        state_dict = torch.load(imagenet_pretrained_weights_path)
+        state_dict = model_zoo.load_url(XCEPTION_URL)
         for name, weights in state_dict.items():
             if "pointwise" in name:
                 state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
+        state_dict["fc.weight"] = self.fc.weight
+        state_dict["fc.bias"] = self.fc.bias
+        self.load_state_dict(state_dict)
 
-        self.load_state_dict(model_zoo.load_url(XCEPTION_URL))
+    @staticmethod
+    def preprocess(image):
+        return preprocessor(image)
 
     def features(self, input):
         x = self.conv1(input)
@@ -220,6 +238,23 @@ class Xception(nn.Module):
         x = self.conv4(x)
         x = self.bn4(x)
         return x
+
+    def transfer_state_dict(self, state_dict):
+        if self.fc.weight.shape != state_dict["fc.weight"].shape:
+            state_dict = state_dict.copy()
+            state_dict["fc.weight"] = self.fc.weight.detach()
+            state_dict["fc.bias"] = self.fc.bias.detach()
+        self.load_state_dict(state_dict)
+
+    def freeze_all_but_last_layer(self):
+        for i, param in self.named_parameters():
+            param.requires_grad = False
+        for i, param in self.fc.named_parameters():
+            param.requires_grad = True
+
+    def unfreeze_all(self):
+        for i, param in self.named_parameters():
+            param.requires_grad = True
 
     def logits(self, features):
         x = self.relu(features)

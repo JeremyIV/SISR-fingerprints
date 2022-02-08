@@ -5,6 +5,7 @@ from pathlib import Path
 from easydict import EasyDict as edict
 import pdb
 import re
+import numpy as np
 import database.api as db
 from PIL import Image
 from classification.datasets.image_patch_metadata import ImagePatchMetadata
@@ -22,6 +23,9 @@ def is_in_dataset(
     include_pretrained,
     include_custom_trained,
 ):
+    # Ignore the HR directory.
+    if model_params.architecture == "HR":
+        return False
     if not include_pretrained and model_params.pretrained:
         return False
     if not include_custom_trained and not model_params.pretrained:
@@ -29,6 +33,10 @@ def is_in_dataset(
     if not is_test and reserved_param is not None:
         return model_params[reserved_param] == reserved_param_value
     return True
+
+
+def NA_to_None(string):
+    return None if string == "NA" else string
 
 
 def get_params(sisr_model):
@@ -48,11 +56,11 @@ def get_params(sisr_model):
     return edict(
         {
             "pretrained": pretrained,
-            "architecture": architecture,
-            "scale": scale,
-            "dataset": dataset,
-            "loss": loss,
-            "seed": seed,
+            "architecture": NA_to_None(architecture),
+            "scale": NA_to_None(scale),
+            "dataset": NA_to_None(dataset),
+            "loss": NA_to_None(loss),
+            "seed": NA_to_None(seed),
         }
     )
 
@@ -147,9 +155,11 @@ class SISR(Dataset):
             left=crop_left, upper=crop_upper, right=crop_right, lower=crop_lower
         )
         image = image.crop(crop)
+        ground_truth_path = SISR_DATASET_PATH / "HR-HR-HR-HR-HR" / image_path.name
         metadata = ImagePatchMetadata(
-            image_path=image_path, crop=crop, ground_truth_path=None
+            image_path=image_path, crop=crop, ground_truth_path=ground_truth_path
         )
+        # pdb.set_trace()  # TODO: remove
         return image, label, metadata
 
     def add_to_database(self):

@@ -1,11 +1,11 @@
 classifier:
   type: CNN
-  name: Xception_CNN_SISR_all_models
+  name: ViT_CNN_SISR_all_models
   cnn:
-    type: 'Xception'
+    type: 'ViT'
   train:
-    num_pretrain_epochs: 3
-    num_full_train_epochs: 15
+    num_pretrain_epochs: 3 
+    num_full_train_epochs: 15 
     batch_size: 16
     learning_rate_start: 0.0005
     learning_rate_end: 0.000004

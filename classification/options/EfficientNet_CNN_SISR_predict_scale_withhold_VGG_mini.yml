@@ -1,0 +1,52 @@
+# EfficientNet_CNN_SISR_predict_scale_withhold_VGG
+classifier:
+  type: CNN
+  name: EfficientNet_CNN_SISR_predict_scale_withhold_VGG_mini
+  cnn:
+    type: 'EfficientNet'
+  train:
+    num_pretrain_epochs: 1
+    num_full_train_epochs: 1
+    batch_size: 16
+    learning_rate_start: 0.0005
+    learning_rate_end: 0.000004
+
+training_dataset:
+  type: SISR
+  name: SISR_predict_scale_withhold_VGG_train_mini
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+  label_param: scale
+  reserved_param: loss
+  reserved_param_value: VGG
+  data_retention: 0.01
+
+
+validation_dataset:
+  type: SISR
+  name: SISR_predict_scale_withhold_VGG_val_mini
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+  label_param: scale
+  reserved_param: loss
+  reserved_param_value: VGG
+  data_retention: 0.01
+
+evaluation_datasets:
+  -
+    type: SISR
+    name: SISR_predict_scale_test_mini
+    random_crop: false
+    include_pretrained: false
+    include_custom_trained: true
+    label_param: scale
+    data_retention: 0.01
+  -
+    name: SISR_pretrained_models_test
+    label_param: scale
+    type: SISR
+    random_crop: false
+    include_pretrained: true
+    include_custom_trained: false

@@ -1,4 +1,5 @@
 from classification.utils.registry import ARCH_REGISTRY
+import classification.classifiers.arch.backbones
 import classification.classifiers.arch.xception
 
 # common interface supplied by all cnnes:

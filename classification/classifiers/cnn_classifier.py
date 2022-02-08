@@ -53,7 +53,7 @@ def train(cnn, train_dataset, val_dataset, num_epochs, train_opt, save_dir):
 
     since = time.time()
 
-    best_acc = 0.0
+    best_acc = -1  # handles edge case where best acc is zero
 
     for epoch in range(num_epochs):
         if optimizer.param_groups[0]["lr"] < learning_rate_end:
@@ -147,11 +147,12 @@ class CNN:
         self.ordered_labels = ordered_labels
         self.cnn = cnn
         self.patch_size = cnn.patch_size
+        self.softmax = nn.Softmax(dim=1)
 
     def __call__(self, image):
-        img = self.cnn.preprocess(image).unsqueeze(0)
+        img = self.cnn.preprocess(image).unsqueeze(0).to(device)
         probabilities, feature = self.cnn(img)
-        probabilities = probabilities.detach().cpu().numpy().squeeze()
+        probabilities = self.softmax(probabilities).detach().cpu().numpy().squeeze()
         feature = feature.detach().cpu().numpy().squeeze()
         return probabilities, feature
 
@@ -218,7 +219,9 @@ class CNN:
         cnn_opt = classifier_row.opt["cnn"].copy()
         cnn_opt["num_classes"] = num_classes
         cnn = arch.get_cnn(cnn_opt)
+        cnn.eval()
         state_dict_path = classifier_row.path
         state_dict = torch.load(state_dict_path)
         cnn.load_state_dict(state_dict)
+        cnn = cnn.to(device)
         return CNN(classifier_row.name, training_dataset_row.ordered_labels, cnn)

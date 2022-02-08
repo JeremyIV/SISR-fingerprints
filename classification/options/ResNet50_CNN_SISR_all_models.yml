@@ -1,8 +1,8 @@
 classifier:
   type: CNN
-  name: Xception_CNN_SISR_all_models
+  name: ResNet50_CNN_SISR_all_models
   cnn:
-    type: 'Xception'
+    type: 'ResNet50'
   train:
     num_pretrain_epochs: 3
     num_full_train_epochs: 15

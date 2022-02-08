@@ -6,6 +6,7 @@ import database.api as db
 import numpy as np
 from torchvision import transforms
 import hashlib
+from PIL import Image
 
 
 def get_patch_hash(image):
@@ -20,7 +21,7 @@ def get_acutance(image):
 
 
 def get_psnr(image, reference):
-    psnr = peak_signal_noise_ratio(image, reference)
+    return peak_signal_noise_ratio(np.array(image), np.array(reference))
 
 
 lpips_preprocess = transforms.Compose(
@@ -34,7 +35,7 @@ loss_fn_alex = LPIPS(net="alex")
 
 
 def get_lpips(image, reference):
-    lpips = loss_fn_alex(preprocess(image), preprocess(reference))
+    lpips = loss_fn_alex(lpips_preprocess(image), lpips_preprocess(reference))
     lpips = float(lpips.squeeze().cpu().detach().numpy())
     return lpips
 

@@ -10,3 +10,6 @@ experiments/
 scratchwork/
 scratchwork.ipynb
 .ipynb_checkpoints/
+redo_analysis.py
+batch_crop_images.py
+*.sqlite3-journal

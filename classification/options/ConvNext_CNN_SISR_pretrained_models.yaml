@@ -1,8 +1,9 @@
 classifier:
   type: CNN
-  name: Xception_CNN_SISR_all_models
+  name: ConvNext_CNN_SISR_pretrained_models
+  pretrained_path: classification/classifiers/experiments/CNN/ConvNext_CNN_SISR_custom_models/model_best.pt
   cnn:
-    type: 'Xception'
+    type: 'ConvNext'
   train:
     num_pretrain_epochs: 3
     num_full_train_epochs: 15
@@ -12,22 +13,22 @@ classifier:
 
 training_dataset:
   type: SISR
-  name: SISR_all_models_train
-  random_crop: false
+  name: SISR_pretrained_models_train
+  random_crop: true
   include_pretrained: true
-  include_custom_trained: true
+  include_custom_trained: false
 
 validation_dataset:
-  name: SISR_all_models_val
+  name: SISR_pretrained_models_val
   type: SISR
   random_crop: false
   include_pretrained: true
-  include_custom_trained: true
+  include_custom_trained: false
 
 evaluation_datasets:
   -
-    name: SISR_all_models_test
+    name: SISR_pretrained_models_test
     type: SISR
     random_crop: false
     include_pretrained: true
-    include_custom_trained: true
+    include_custom_trained: false
