@@ -27,7 +27,7 @@ class preprocessed_dataset(Dataset):
 
 device = torch.device("cuda")
 
-have_printed = False
+# have_printed = False
 
 
 def train(cnn, train_dataset, val_dataset, num_epochs, train_opt, save_dir):
@@ -82,13 +82,13 @@ def train(cnn, train_dataset, val_dataset, num_epochs, train_opt, save_dir):
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
-                global have_printed
-                if not have_printed:
-                    print("Input format::")
-                    print(inputs.shape)
-                    print(inputs.min(), inputs.max())
-                    print(labels)
-                    have_printed = True
+                # global have_printed
+                # if not have_printed:
+                #    print("Input format::")
+                #    print(inputs.shape)
+                #    print(inputs.min(), inputs.max())
+                #    print(labels)
+                #    have_printed = True
 
                 # zero the parameter gradients
                 optimizer.zero_grad()
@@ -140,6 +140,59 @@ def train(cnn, train_dataset, val_dataset, num_epochs, train_opt, save_dir):
 CNN_CLASSIFIER_EXPERIMENTS_PATH = Path("classification/classifiers/experiments/CNN")
 
 
+def train_classifier(opt, train_dataset, val_dataset, save_dir):
+    cnn_opt = opt["cnn"].copy()
+    cnn_opt["num_classes"] = len(train_dataset.ordered_labels)
+    cnn = arch.get_cnn(cnn_opt)
+    train_dataset.patch_size = cnn.patch_size
+    val_dataset.patch_size = cnn.patch_size
+    if "pretrained_path" in opt:
+        state_dict = torch.load(opt["pretrained_path"])
+        cnn.transfer_state_dict(state_dict)
+
+    train_opt = opt["train"]
+    num_pretrain_epochs = train_opt["num_pretrain_epochs"]
+    num_full_train_epochs = train_opt["num_full_train_epochs"]
+
+    cnn.freeze_all_but_last_layer()
+    train(
+        cnn=cnn,
+        train_dataset=train_dataset,
+        val_dataset=val_dataset,
+        num_epochs=num_pretrain_epochs,
+        train_opt=train_opt,
+        save_dir=save_dir,
+    )
+    cnn.unfreeze_all()
+    train(
+        cnn=cnn,
+        train_dataset=train_dataset,
+        val_dataset=val_dataset,
+        num_epochs=num_full_train_epochs,
+        train_opt=train_opt,
+        save_dir=save_dir,
+    )
+
+
+def save_classifier_to_database(
+    classifier_name, train_dataset, val_dataset, save_dir, opt
+):
+    training_dataset_id = db.get_unique_row("dataset", {"name": train_dataset.name}).id
+    val_dataset_id = db.get_unique_row("dataset", {"name": val_dataset.name}).id
+
+    db.idempotent_insert_unique_row(
+        "classifier",
+        {
+            "training_dataset_id": training_dataset_id,
+            "validation_dataset_id": val_dataset_id,
+            "name": classifier_name,
+            "path": save_dir / "model_best.pt",
+            "type": "CNN",
+            "opt": opt,
+        },
+    )
+
+
 @CLASSIFIER_REGISTRY.register()
 class CNN:
     def __init__(self, name, ordered_labels, cnn):
@@ -157,57 +210,16 @@ class CNN:
         return probabilities, feature
 
     @staticmethod
-    def train_and_save_classifier(opt, train_dataset, val_dataset):
-        cnn_opt = opt["cnn"].copy()
-        cnn_opt["num_classes"] = len(train_dataset.ordered_labels)
-        cnn = arch.get_cnn(cnn_opt)
-        train_dataset.patch_size = cnn.patch_size
-        val_dataset.patch_size = cnn.patch_size
-        if "pretrained_path" in opt:
-            state_dict = torch.load(opt["pretrained_path"])
-            cnn.transfer_state_dict(state_dict)
-
-        train_opt = opt["train"]
+    def train_and_save_classifier(opt, train_dataset, val_dataset, mode="both"):
         save_dir = CNN_CLASSIFIER_EXPERIMENTS_PATH / opt["name"]
-        num_pretrain_epochs = train_opt["num_pretrain_epochs"]
-        num_full_train_epochs = train_opt["num_full_train_epochs"]
-
-        cnn.freeze_all_but_last_layer()
-        train(
-            cnn=cnn,
-            train_dataset=train_dataset,
-            val_dataset=val_dataset,
-            num_epochs=num_pretrain_epochs,
-            train_opt=train_opt,
-            save_dir=save_dir,
-        )
-        cnn.unfreeze_all()
-        train(
-            cnn=cnn,
-            train_dataset=train_dataset,
-            val_dataset=val_dataset,
-            num_epochs=num_full_train_epochs,
-            train_opt=train_opt,
-            save_dir=save_dir,
-        )
-
         classifier_name = opt["name"]
-        training_dataset_id = db.get_unique_row(
-            "dataset", {"name": train_dataset.name}
-        ).id
-        val_dataset_id = db.get_unique_row("dataset", {"name": val_dataset.name}).id
 
-        db.idempotent_insert_unique_row(
-            "classifier",
-            {
-                "training_dataset_id": training_dataset_id,
-                "validation_dataset_id": val_dataset_id,
-                "name": classifier_name,
-                "path": save_dir / "model_best.pt",
-                "type": "CNN",
-                "opt": opt,
-            },
-        )
+        if mode != "test":
+            train_classifier(opt, train_dataset, val_dataset, save_dir)
+        if mode != "train":
+            save_classifier_to_database(
+                classifier_name, train_dataset, val_dataset, save_dir, opt
+            )
         return classifier_name
 
     @staticmethod

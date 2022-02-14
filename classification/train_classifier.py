@@ -22,6 +22,14 @@ parser.add_argument(
     + "train and evaluate the classifier. e.g. "
     + "classificaiton/options/Xception_CNN_SISR_all_models.yml",
 )
+parser.add_argument(
+    "--mode",
+    default="both",
+    help="One of ['train','test','both']."
+    " If train, then train the model but don't save anything to the database."
+    " If test, then evaluate the trained model on the evaluation dataset, and save everything to the database."
+    " If both, train the model, evaluate it, and save everything to the database.",
+)
 
 args = parser.parse_args()
 opt = yaml.load(open(args.opt), Loader=Loader)
@@ -39,7 +47,7 @@ def train_and_save_classifier(
     )
 
     classifier_name = classifiers.train_and_save_classifier(
-        classifier_opt, training_dataset, val_dataset
+        classifier_opt, training_dataset, val_dataset, mode=args.mode
     )
     return classifier_name
 
@@ -57,8 +65,9 @@ classifier_name = train_and_save_classifier(
     validation_dataset_opt=opt.get("validation_dataset"),
 )
 
-evaluate_classifier(
-    classifier_name,
-    evaluation_dataset_opts=opt["evaluation_datasets"],
-    evaluation_opt=opt.get("evaluation"),
-)
+if args.mode != "train":
+    evaluate_classifier(
+        classifier_name,
+        evaluation_dataset_opts=opt["evaluation_datasets"],
+        evaluation_opt=opt.get("evaluation"),
+    )

@@ -13,7 +13,7 @@ classifier:
 training_dataset:
   type: SISR
   name: SISR_all_models_train
-  random_crop: false
+  random_crop: true
   include_pretrained: true
   include_custom_trained: true
 

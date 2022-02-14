@@ -20,15 +20,19 @@ create view analysis as
         c.path as classifier_path,
         c.type as classifier_type,
         c.opt as classifier_opt,
-        d.type as dataset_type
-        d.name as dataset_name
-        d.ordered_labels as ordered_labels
+        d.type as dataset_type,
+        d.name as dataset_name,
         d.opt as dataset_opt
+        td.type as training_dataset_type,
+        td.name as training_dataset_name,
+        td.opt as training_dataset_opt
+        td.ordered_labels as ordered_labels,
     from prediction p
         inner join image_patch i on i.id = p.image_patch_id
         inner join generator g on g.id = i.generator_id
         inner join classifier c on c.id = p.classifier_id
-        inner join dataset d on d.id = p.dataset_id;
+        inner join dataset d on d.id = p.dataset_id
+        inner join dataset td on td.id = c.training_dataset_id;
 
 create view sisr_analysis as
     select 
@@ -57,17 +61,22 @@ create view sisr_analysis as
         c.opt as classifier_opt,
         d.type as dataset_type,
         d.name as dataset_name,
-        d.ordered_labels as ordered_labels,
         d.opt as dataset_opt,
         sd.label_param as label_param,
         sd.reserved_param as reserved_param,
         sd.reserved_param_value as reserved_param_value,
         sd.include_pretrained as include_pretrained,
-        sd.include_custom_trained as include_custom_trained,
+        sd.include_custom_trained as include_custom_trained
+        td.type as training_dataset_type,
+        td.name as training_dataset_name,
+        td.opt as training_dataset_opt
+        td.ordered_labels as ordered_labels,
     from prediction p
         inner join image_patch i on i.id = p.image_patch_id
         inner join generator g on g.id = i.generator_id
         inner join classifier c on c.id = p.classifier_id
         inner join dataset d on d.id = p.dataset_id
         inner join SISR_generator sg on sg.generator_id = g.id
-        inner join SISR_dataset sd on sd.dataset_id = d.id;
+        inner join SISR_dataset sd on sd.dataset_id = d.id
+        inner join dataset td on td.id = c.training_dataset_id;
+        # TODO: join on training dataset.

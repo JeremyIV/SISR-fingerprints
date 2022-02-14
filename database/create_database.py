@@ -65,5 +65,5 @@ for table, data in tables.items():
     cur.execute(command)
 create_views_sql = open("database/create_views.sql").read()
 vprint(create_views_sql)
-cur.execute(create_views_sql)
+cur.executescript(create_views_sql)
 con.commit()
