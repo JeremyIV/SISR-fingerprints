@@ -13,3 +13,4 @@ scratchwork.ipynb
 redo_analysis.py
 batch_crop_images.py
 *.sqlite3-journal
+wandb/*

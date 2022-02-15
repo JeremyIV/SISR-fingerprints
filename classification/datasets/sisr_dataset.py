@@ -30,8 +30,8 @@ def is_in_dataset(
         return False
     if not include_custom_trained and not model_params.pretrained:
         return False
-    if not is_test and reserved_param is not None:
-        return model_params[reserved_param] == reserved_param_value
+    if reserved_param is not None:
+        return model_params[reserved_param] != reserved_param_value
     return True
 
 

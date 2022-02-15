@@ -1,0 +1,36 @@
+classifier:
+  cnn:
+    type: ConvNext
+  name: ConvNext_CNN_SISR_architecture_parser_withholding_3
+  train:
+    batch_size: 16
+    learning_rate_end: 4.0e-06
+    learning_rate_start: 0.0005
+    num_full_train_epochs: 15
+    num_pretrain_epochs: 3
+  type: CNN
+evaluation_datasets:
+- include_custom_trained: true
+  include_pretrained: true
+  label_param: architecture
+  name: SISR_architecture_parser_test
+  random_crop: false
+  type: SISR
+training_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: architecture
+  name: SISR_architecture_parser_withholding_3_train
+  random_crop: true
+  reserved_param: seed
+  reserved_param_value: 3
+  type: SISR
+validation_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: architecture
+  name: SISR_architecture_parser_withholding_3_val
+  random_crop: false
+  reserved_param: seed
+  reserved_param_value: 3
+  type: SISR

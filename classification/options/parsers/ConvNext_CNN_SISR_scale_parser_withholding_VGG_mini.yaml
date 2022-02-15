@@ -1,0 +1,43 @@
+classifier:
+  type: CNN
+  name: ConvNext_CNN_SISR_scale_parser_withholding_VGG_quick_test
+  cnn:
+    type: 'ConvNext'
+  train:
+    num_pretrain_epochs: 1
+    num_full_train_epochs: 1
+    batch_size: 16
+    learning_rate_start: 0.0005
+    learning_rate_end: 0.000004
+
+training_dataset:
+  type: SISR
+  name: SISR_scale_parser_withholding_VGG_train_quick_test
+  label_param: scale
+  reserved_param: loss
+  reserved_param_value: VGG_GAN
+  random_crop: true
+  include_pretrained: false
+  include_custom_trained: true
+  data_retention: 0.01
+
+validation_dataset:
+  name: SISR_scale_parser_withholding_VGG_val_quick_test
+  type: SISR
+  label_param: scale
+  reserved_param: loss
+  reserved_param_value: VGG_GAN
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+  data_retention: 0.01
+
+evaluation_datasets:
+  -
+    name: SISR_scale_parser_test_quick_test
+    type: SISR
+    label_param: scale
+    random_crop: false
+    include_pretrained: true
+    include_custom_trained: true
+    data_retention: 0.01
