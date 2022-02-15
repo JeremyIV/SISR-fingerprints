@@ -118,28 +118,26 @@ def make_parser_opts(label_param, reserved_param, reserved_param_val):
     make_parser_opt_quick_test(label_param, reserved_param, reserved_param_val)
 
 
-# scale predictor withholding:
 make_parser_opts("scale", "loss", "L1")
 make_parser_opts("scale", "loss", "VGG_GAN")
 make_parser_opts("scale", "architecture", "RCAN")
 make_parser_opts("scale", "architecture", "SwinIR")
 make_parser_opts("scale", "dataset", "flickr2k")
 make_parser_opts("scale", "seed", 3)
-# loss predictor withholding:
+
 make_parser_opts("loss", "architecture", "RCAN")
 make_parser_opts("loss", "architecture", "SwinIR")
 make_parser_opts("loss", "dataset", "flickr2k")
 make_parser_opts("loss", "seed", 3)
-# arch predictor withholding:
+
 make_parser_opts("architecture", "loss", "L1")
 make_parser_opts("architecture", "loss", "VGG_GAN")
 make_parser_opts("architecture", "dataset", "flickr2k")
 make_parser_opts("architecture", "seed", 3)
 
-# dataset predictor withholding:
-make_parser_opt("dataset", "loss", "L1")
-make_parser_opt("dataset", "loss", "VGG")
-make_parser_opt("dataset", "architecture", "RCAN")
-make_parser_opt("dataset", "architecture", "SwinIR")
-make_parser_opt("dataset", "dataset", "flickr2k")
-make_parser_opt("dataset", "seed", 3)
+make_parser_opts("dataset", "loss", "L1")
+make_parser_opts("dataset", "loss", "VGG")
+make_parser_opts("dataset", "architecture", "RCAN")
+make_parser_opts("dataset", "architecture", "SwinIR")
+make_parser_opts("dataset", "dataset", "flickr2k")
+make_parser_opts("dataset", "seed", 3)
