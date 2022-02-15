@@ -1,20 +1,27 @@
-program: TODO.py
+program: sweep/run_agent.py
 method: grid
 parameters:
   opt:
-    # TODO: list all the parser opts.
     values:
-      - ConvNext_CNN_SISR_architecture_parser_withholding_3_quick_test.yaml
-      - ConvNext_CNN_SISR_architecture_parser_withholding_flickr2k_quick_test.yaml
-      - ConvNext_CNN_SISR_architecture_parser_withholding_L1_quick_test.yaml
-      - ConvNext_CNN_SISR_architecture_parser_withholding_VGG_GAN_quick_test.yaml
-      - ConvNext_CNN_SISR_loss_parser_withholding_3_quick_test.yaml
-      - ConvNext_CNN_SISR_loss_parser_withholding_flickr2k_quick_test.yaml
-      - ConvNext_CNN_SISR_loss_parser_withholding_RCAN_quick_test.yaml
-      - ConvNext_CNN_SISR_loss_parser_withholding_SwinIR_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_3_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_flickr2k_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_L1_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_RCAN_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_SwinIR_quick_test.yaml
-      - ConvNext_CNN_SISR_scale_parser_withholding_VGG_GAN_quick_test.yaml
+      - ConvNext_CNN_SISR_architecture_parser_withholding_3.yaml
+      - ConvNext_CNN_SISR_architecture_parser_withholding_flickr2k.yaml
+      - ConvNext_CNN_SISR_architecture_parser_withholding_L1.yaml
+      - ConvNext_CNN_SISR_architecture_parser_withholding_VGG_GAN.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_3.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_flickr2k.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_L1.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_RCAN.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_SwinIR.yaml
+      - ConvNext_CNN_SISR_dataset_parser_withholding_VGG.yaml
+      - ConvNext_CNN_SISR_loss_parser_withholding_3.yaml
+      - ConvNext_CNN_SISR_loss_parser_withholding_flickr2k.yaml
+      - ConvNext_CNN_SISR_loss_parser_withholding_RCAN.yaml
+      - ConvNext_CNN_SISR_loss_parser_withholding_SwinIR.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_3.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_flickr2k.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_L1.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_RCAN.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_SwinIR.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_VGG_GAN.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_VGG_mini.yaml
+      - ConvNext_CNN_SISR_scale_parser_withholding_VGG.yaml
