@@ -1,0 +1,28 @@
+classifier:
+  type: FEN
+  name: PRNU_SISR_all_models
+  train:
+    num_epochs: 2
+    learning_rate: 0.0001
+
+training_dataset:
+  type: SISR
+  name: SISR_pretrained_models_train_center_crop
+  random_crop: false
+  include_pretrained: true
+  include_custom_trained: false
+
+validation_dataset:
+  name: SISR_pretrained_models_val
+  type: SISR
+  random_crop: false
+  include_pretrained: true
+  include_custom_trained: false
+
+evaluation_datasets:
+  -
+    name: SISR_pretrained_models_test
+    type: SISR
+    random_crop: false
+    include_pretrained: true
+    include_custom_trained: false

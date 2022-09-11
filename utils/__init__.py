@@ -1,3 +1,6 @@
+from itertools import product
+import utils.registry
+
 EDSR = "EDSR"
 RDN = "RDN"
 RCAN = "RCAN"
@@ -17,8 +20,11 @@ scale_options = [2, 4]
 seed_options = [1, 2, 3]
 
 
+loss_codes = {L1: "L1", VGG: "VGG_GAN", ResNet: "ResNet_GAN"}
+
+
 def get_sisr_model_name(arch, scale, loss, dataset, seed):
-    raise NotImplementedError()
+    return f"{arch}-{dataset}-x{scale}-{loss_codes[loss]}-s{seed}"
 
 
 def get_sisr_model_names(
@@ -29,7 +35,7 @@ def get_sisr_model_names(
     seed=seed_options,
 ):
 
-    all_combos = list(product(architecture, scale, loss, dataset, seed))
+    all_combos = list(product(arch, scale, loss, dataset, seed))
     all_combos = [
         (arch, scale, loss, dataset, seed)
         for arch, scale, loss, dataset, seed in all_combos

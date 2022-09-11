@@ -107,6 +107,7 @@ prediction:
     predicted: text
     feature: PICKLE
     class_probabilities: PICKLE
+    generator_in_training_set: boolean
   references:
     classifier_id: classifier
     image_patch_id: image_patch

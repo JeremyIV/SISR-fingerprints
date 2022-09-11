@@ -1,0 +1,38 @@
+classifier:
+  type: PRNU
+  name: PRNU_EDSR-div2k-x4-VGG_GAN-seed_distinction
+
+training_dataset:
+  type: SISR
+  name: EDSR-div2k-x4-VGG_GAN-seed_distinction_train
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+  sisr_model_list:
+    - EDSR-div2k-x4-VGG_GAN-s1
+    - EDSR-div2k-x4-VGG_GAN-s2
+    - EDSR-div2k-x4-VGG_GAN-s3
+
+validation_dataset:
+  name: EDSR-div2k-x4-VGG_GAN-seed_distinction_val
+  type: SISR
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+  sisr_model_list:
+    - EDSR-div2k-x4-VGG_GAN-s1
+    - EDSR-div2k-x4-VGG_GAN-s2
+    - EDSR-div2k-x4-VGG_GAN-s3
+
+evaluation_datasets:
+  -
+    name: EDSR-div2k-x4-VGG_GAN-seed_distinction_test
+    type: SISR
+    random_crop: false
+    include_pretrained: false
+    include_custom_trained: true
+    sisr_model_list:
+      - EDSR-div2k-x4-VGG_GAN-s1
+      - EDSR-div2k-x4-VGG_GAN-s2
+      - EDSR-div2k-x4-VGG_GAN-s3
+

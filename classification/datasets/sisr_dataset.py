@@ -88,6 +88,7 @@ class SISR(Dataset):
         include_pretrained=False,
         include_custom_trained=True,
         data_retention=1,
+        sisr_model_list=None,
     ):
         self.samples = []
         self.name = name
@@ -99,6 +100,7 @@ class SISR(Dataset):
         self.reserved_param_value = reserved_param_value
         self.include_pretrained = include_pretrained
         self.include_custom_trained = include_custom_trained
+        self.sisr_model_list = sisr_model_list
         self.data_retention = data_retention
         self.generators = {}
 
@@ -113,22 +115,28 @@ class SISR(Dataset):
             if params is None:  # indicates not a valid SISR model directory
                 continue
             self.generators[sisr_model] = params
-            if not is_in_dataset(
-                params,
-                phase == "test",
-                reserved_param,
-                reserved_param_value,
-                include_pretrained,
-                include_custom_trained,
-            ):
-                continue
+            if sisr_model_list is None:
+                if not is_in_dataset(
+                    params,
+                    phase == "test",
+                    reserved_param,
+                    reserved_param_value,
+                    include_pretrained,
+                    include_custom_trained,
+                ):
+                    continue
+            else:
+                if sisr_model not in sisr_model_list:
+                    continue
             label = sisr_model if label_param is None else params[label_param]
             for image_path in sisr_model_dir.iterdir():
                 if image_path.name not in split:
                     continue
                 self.samples.append((image_path, label))
 
-        self.ordered_labels = list(sorted(set(label for path, label in self.samples)))
+        self.ordered_labels = list(
+            sorted(set(label for path, label in self.samples if label is not None))
+        )
         random.shuffle(self.samples)
         if self.data_retention < 1:
             cutoff_index = int(len(self.samples) * self.data_retention)
@@ -159,7 +167,6 @@ class SISR(Dataset):
         metadata = ImagePatchMetadata(
             image_path=image_path, crop=crop, ground_truth_path=ground_truth_path
         )
-        # pdb.set_trace()  # TODO: remove
         return image, label, metadata
 
     def add_to_database(self):
@@ -174,6 +181,7 @@ class SISR(Dataset):
             "include_pretrained": self.include_pretrained,
             "include_custom_trained": self.include_custom_trained,
             "data_retention": self.data_retention,
+            "sisr_model_list": self.sisr_model_list,
         }
         dataset_id = db.idempotent_insert_unique_row(
             "SISR_dataset",
@@ -185,7 +193,11 @@ class SISR(Dataset):
                 "opt": opt,
                 "label_param": self.label_param,
                 "reserved_param": self.reserved_param,
-                "reserved_param_value": self.reserved_param_value,
+                "reserved_param_value": (
+                    str(self.reserved_param_value)
+                    if self.reserved_param_value is not None
+                    else None
+                ),
                 "include_pretrained": self.include_pretrained,
                 "include_custom_trained": self.include_custom_trained,
             },

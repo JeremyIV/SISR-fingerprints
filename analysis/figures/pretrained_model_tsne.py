@@ -1,31 +1,80 @@
 import database.api as db
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+from matplotlib import colors, cm, lines
+import numpy as np
+import argparse
+import torch
 
-
-pretrained_clsfr_data = db.read_sql_query(
-    """
-	select actual, predicted, feature
-	from sisr_analysis
-	where classifier_name = TODO"""
+parser = argparse.ArgumentParser(
+    description="Create the figure with the pretrained model TSNE plots."
 )
-
-accuracy = (pretrained_clsfr_data.actual == pretrained_clsfr_data.predicted).mean()
-embedding = TSNE(n_components=2).fit_transform(pretrained_clsfr_data.feature)
-del pretrained_clsfr_data.feature
-
-custom_clsfr_data = db.read_sql_query(
-    '''
-	select actual, predicted, feature
-	from sisr_analysis
-	where classifier_name = TODO
-	and generator_name like "%-pretrained"'''
+parser.add_argument(
+    "--use_saved_data",
+    action="store_true",
+    help="Don't recompute the data to scatter plot. Instead, load it from a pickle.",
 )
-ood_embedding = TSNE(n_components=2).fit_transform(custom_clsfr_data.feature)
-del custom_clsfr_data.feature
+parser.add_argument(
+    "--data_path",
+    default="analysis/figures/pretrained_model_tsne_data.pt",
+    help="Where to save and load the computed scatter plot data",
+)
+args = parser.parse_args()
 
-# TODO: update these lists.
+if args.use_saved_data:
+    (
+        accuracy,
+        embedding,
+        pretrained_clsfr_data_labels,
+        ood_embedding,
+        custom_clsfr_data_labels,
+    ) = torch.load(args.data_path)
+else:
+    pretrained_clsfr_data = db.read_and_decode_sql_query(
+        """
+        select actual, predicted, feature
+        from sisr_analysis
+        where classifier_name = 'ConvNext_CNN_SISR_pretrained_models'"""
+    )
+
+    accuracy = (pretrained_clsfr_data.actual == pretrained_clsfr_data.predicted).mean()
+    features = np.array(list(pretrained_clsfr_data.feature))
+    embedding = TSNE(n_components=2, learning_rate="auto", init="pca").fit_transform(
+        features
+    )
+    del features
+
+    custom_clsfr_data = db.read_and_decode_sql_query(
+        '''
+        select actual, predicted, feature
+        from sisr_analysis
+        where classifier_name = 'ConvNext_CNN_SISR_custom_models'
+        and generator_name like "%-pretrained"'''
+    )
+    features = np.array(list(custom_clsfr_data.feature))
+    ood_embedding = TSNE(
+        n_components=2, learning_rate="auto", init="pca"
+    ).fit_transform(features)
+    del features
+    pretrained_clsfr_data_labels = pretrained_clsfr_data.actual
+    custom_clsfr_data_labels = custom_clsfr_data.actual
+    with open(args.data_path, "wb") as f:
+        torch.save(
+            (
+                accuracy,
+                embedding,
+                pretrained_clsfr_data_labels,
+                ood_embedding,
+                custom_clsfr_data_labels,
+            ),
+            f,
+        )
+
+
 classes_by_scale_then_loss_then_name = [
     "EDSR-div2k-x2-L1-NA-pretrained",
     "LIIF-div2k-x2-L1-NA-pretrained",
+    "NLSN-div2k-x2-L1-NA-pretrained",
     "RCAN-div2k-x2-L1-NA-pretrained",
     "RDN-div2k-x2-L1-NA-pretrained",
     "SRFBN-NA-x2-L1-NA-pretrained",
@@ -34,6 +83,7 @@ classes_by_scale_then_loss_then_name = [
     "DRN-div2k-x4-L1-NA-pretrained",
     "EDSR-div2k-x4-L1-NA-pretrained",
     "LIIF-div2k-x4-L1-NA-pretrained",
+    "NLSN-div2k-x4-L1-NA-pretrained",
     "RCAN-div2k-x4-L1-NA-pretrained",
     "RDN-div2k-x4-L1-NA-pretrained",
     "SAN-div2k-x4-L1-NA-pretrained",
@@ -52,6 +102,7 @@ classes_by_scale_then_loss_then_name = [
 class_markers = {
     "EDSR-div2k-x2-L1-NA-pretrained": "o",
     "LIIF-div2k-x2-L1-NA-pretrained": "o",
+    "NLSN-div2k-x2-L1-NA-pretrained": "o",
     "RCAN-div2k-x2-L1-NA-pretrained": "o",
     "RDN-div2k-x2-L1-NA-pretrained": "o",
     "SRFBN-NA-x2-L1-NA-pretrained": "o",
@@ -60,6 +111,7 @@ class_markers = {
     "DRN-div2k-x4-L1-NA-pretrained": "^",
     "EDSR-div2k-x4-L1-NA-pretrained": "^",
     "LIIF-div2k-x4-L1-NA-pretrained": "^",
+    "NLSN-div2k-x4-L1-NA-pretrained": "^",
     "RCAN-div2k-x4-L1-NA-pretrained": "^",
     "RDN-div2k-x4-L1-NA-pretrained": "^",
     "SAN-div2k-x4-L1-NA-pretrained": "^",
@@ -91,6 +143,7 @@ for group in marker_groups.values():
 to_nice_names = {
     "EDSR-div2k-x2-L1-NA-pretrained": "EDSR-2x",
     "LIIF-div2k-x2-L1-NA-pretrained": "LIIF-2x",
+    "NLSN-div2k-x2-L1-NA-pretrained": "NLSN-2x",
     "RCAN-div2k-x2-L1-NA-pretrained": "RCAN-2x",
     "RDN-div2k-x2-L1-NA-pretrained": "RDN-2x",
     "SRFBN-NA-x2-L1-NA-pretrained": "SRFBN-2x",
@@ -99,6 +152,7 @@ to_nice_names = {
     "DRN-div2k-x4-L1-NA-pretrained": "DRN-4x",
     "EDSR-div2k-x4-L1-NA-pretrained": "EDSR-4x",
     "LIIF-div2k-x4-L1-NA-pretrained": "LIIF-4x",
+    "NLSN-div2k-x4-L1-NA-pretrained": "NLSN-4x",
     "RCAN-div2k-x4-L1-NA-pretrained": "RCAN-4x",
     "RDN-div2k-x4-L1-NA-pretrained": "RDN-4x",
     "SAN-div2k-x4-L1-NA-pretrained": "SAN-4x",
@@ -134,19 +188,64 @@ def plot_pretrained_tnse(ax, embedding, actual_class):
 
 
 fig, axs = plt.subplots(1, 2)
-plt.rcParams.update({"font.size": 15})
-fig.set_size_inches(10, 5)
+plt.rcParams.update({"font.size": 17})
+fig.set_size_inches(15, 7.5)
 axs[0].set_title("Pretrained model classifier")
-plot_pretrained_tnse(axs[0], embedding, pretrained_clsfr_data.actual)
-axs[0].text(0.01, 0.05, f"{accuracy*100:.01f}%", transform=axs[0].transAxes)
+plot_pretrained_tnse(axs[0], embedding, pretrained_clsfr_data_labels)
+axs[0].text(0.02, 0.02, f"{accuracy*100:.01f}%", transform=axs[0].transAxes)
 axs[1].set_title("Custom model classifier")
-plot_pretrained_tnse(axs[1], ood_embedding, custom_clsfr_data.actual)
+plot_pretrained_tnse(axs[1], ood_embedding, custom_clsfr_data_labels)
 plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.0, hspace=0.0)
+# TODO: need to manually set the markers, text in the legend,
+# so I can include explanation of the shapes.
 axs[1].legend(
-    loc="upper center", fancybox=True, bbox_to_anchor=(0, 0.05), ncol=4, shadow=True
+    loc="upper center",
+    fancybox=True,
+    bbox_to_anchor=(0, 0.01),
+    ncol=5,
+    shadow=True,
+    markerscale=2,
+    fontsize=13,
+    columnspacing=0.2,
+    handletextpad=0,
 )
+
+
+def marker_artist(marker):
+    # very hacky
+    return lines.Line2D(
+        [],
+        [],
+        marker=marker,
+        markerfacecolor=(0, 0, 0, 0),
+        markeredgecolor="black",
+        markeredgewidth=1,
+        markersize=4,
+        linestyle="None",
+    )
+
+
+circle = marker_artist("o")
+diamond = marker_artist("D")
+triangle = marker_artist("^")
+square = marker_artist("s")
+
+axs[0].legend(
+    handles=[circle, diamond, triangle, square],  # TODO
+    labels=["L₁-2X", "Adv-2X", "L₁-4X", "Adv-4X"],  # TODO
+    loc="upper center",
+    fancybox=True,
+    bbox_to_anchor=(0.2, -0.01),
+    ncol=1,
+    shadow=True,
+    markerscale=2,
+    fontsize=13,
+    columnspacing=0.2,
+    handletextpad=0,
+)
+
 plt.savefig(
-    "closed-vs-open-pretrained-tsne.pdf",
+    "paper/figures/pretrained-tsne.pdf",
     format="pdf",
     bbox_inches="tight",
     pad_inches=0,

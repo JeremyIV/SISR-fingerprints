@@ -59,6 +59,93 @@ def make_parser_opt_quick_test(label_param, reserved_param, reserved_param_val):
         yaml.dump(opt, f)
 
 
+def make_prnu_baseline_parser_opt(label_param, reserved_param, reserved_param_val):
+    classifier_name = f"PRNU_SISR_{label_param}_parser_withholding_{reserved_param_val}"
+    opt = {
+        "classifier": {
+            "name": classifier_name,
+            "type": "PRNU",
+        },
+        "evaluation_datasets": [
+            {
+                "include_custom_trained": True,
+                "include_pretrained": True,
+                "label_param": label_param,
+                "name": f"SISR_{label_param}_parser_test",
+                "random_crop": False,
+                "type": "SISR",
+            }
+        ],
+        "training_dataset": {
+            "include_custom_trained": True,
+            "include_pretrained": False,
+            "label_param": label_param,
+            "name": f"SISR_{label_param}_parser_withholding_{reserved_param_val}_train_center_crop",
+            "random_crop": False,
+            "reserved_param": reserved_param,
+            "reserved_param_value": reserved_param_val,
+            "type": "SISR",
+        },
+        "validation_dataset": {
+            "include_custom_trained": True,
+            "include_pretrained": False,
+            "label_param": label_param,
+            "name": f"SISR_{label_param}_parser_withholding_{reserved_param_val}_val",
+            "random_crop": False,
+            "reserved_param": reserved_param,
+            "reserved_param_value": reserved_param_val,
+            "type": "SISR",
+        },
+    }
+    opt_path = parser_opt_dir / f"{classifier_name}.yaml"
+    with open(opt_path, "w") as f:
+        yaml.dump(opt, f)
+
+
+def make_fen_parser_opt(label_param, reserved_param, reserved_param_val):
+    classifier_name = f"FEN_SISR_{label_param}_parser_withholding_{reserved_param_val}"
+    opt = {
+        "classifier": {
+            "type": "FEN",
+            "name": classifier_name,
+            "train": {"num_epochs": 2, "learning_rate": 0.0001},
+        },
+        "evaluation_datasets": [
+            {
+                "include_custom_trained": True,
+                "include_pretrained": True,
+                "label_param": label_param,
+                "name": f"SISR_{label_param}_parser_test",
+                "random_crop": False,
+                "type": "SISR",
+            }
+        ],
+        "training_dataset": {
+            "include_custom_trained": True,
+            "include_pretrained": False,
+            "label_param": label_param,
+            "name": f"SISR_{label_param}_parser_withholding_{reserved_param_val}_train_center_crop",
+            "random_crop": False,
+            "reserved_param": reserved_param,
+            "reserved_param_value": reserved_param_val,
+            "type": "SISR",
+        },
+        "validation_dataset": {
+            "include_custom_trained": True,
+            "include_pretrained": False,
+            "label_param": label_param,
+            "name": f"SISR_{label_param}_parser_withholding_{reserved_param_val}_val",
+            "random_crop": False,
+            "reserved_param": reserved_param,
+            "reserved_param_value": reserved_param_val,
+            "type": "SISR",
+        },
+    }
+    opt_path = parser_opt_dir / f"{classifier_name}.yaml"
+    with open(opt_path, "w") as f:
+        yaml.dump(opt, f)
+
+
 def make_parser_opt(label_param, reserved_param, reserved_param_val):
     classifier_name = (
         f"ConvNext_CNN_SISR_{label_param}_parser_withholding_{reserved_param_val}"
@@ -115,6 +202,8 @@ def make_parser_opt(label_param, reserved_param, reserved_param_val):
 def make_parser_opts(label_param, reserved_param, reserved_param_val):
     make_parser_opt(label_param, reserved_param, reserved_param_val)
     make_parser_opt_quick_test(label_param, reserved_param, reserved_param_val)
+    make_prnu_baseline_parser_opt(label_param, reserved_param, reserved_param_val)
+    make_fen_parser_opt(label_param, reserved_param, reserved_param_val)
 
 
 make_parser_opts("scale", "loss", "L1")
@@ -135,8 +224,7 @@ make_parser_opts("architecture", "dataset", "flickr2k")
 make_parser_opts("architecture", "seed", 3)
 
 make_parser_opts("dataset", "loss", "L1")
-make_parser_opts("dataset", "loss", "VGG")
+make_parser_opts("dataset", "loss", "VGG_GAN")
 make_parser_opts("dataset", "architecture", "RCAN")
 make_parser_opts("dataset", "architecture", "SwinIR")
-make_parser_opts("dataset", "dataset", "flickr2k")
 make_parser_opts("dataset", "seed", 3)

@@ -51,14 +51,14 @@ def read_and_decode_sql_query(query, params=None, col_types=default_col_types):
     raw_result = read_sql_query(query, params)
 
     decoded_result = {}
-    for column, value in raw_result.items():
+    for column, values in raw_result.iteritems():
         if column in col_types:
             col_type = col_types[column]
             decode = col_type_encodings[col_type].decode
-            value = decode(value)
-        decoded_result[column] = value
+            values = values.apply(decode)
+        decoded_result[column] = values
 
-    return decoded_result
+    return pd.DataFrame(data=decoded_result)
 
 
 def decode_value(value, col_type):
@@ -100,7 +100,7 @@ def rows_are_equivalent(table, old_row, new_values):
     cols_to_ignore = tables[table].get("volatile_cols", set())
     cols_to_compare = set(tables[table].cols) - set(cols_to_ignore)
     for col in cols_to_compare:
-        if old_row[col] != new_values[col]:
+        if old_row[col] != new_values.get(col):
             return False
     return True
 

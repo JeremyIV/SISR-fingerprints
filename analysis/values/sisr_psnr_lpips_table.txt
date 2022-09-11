@@ -1,0 +1,205 @@
+DRN-div2k-x4-L1-NA-pretrained & $28.31 (\pm 6.26)$ & $0.284 (\pm 0.151)$ \\
+EDSR-div2k-x2-L1-NA-pretrained & $32.56 (\pm 7.03)$ & $0.134 (\pm 0.115)$ \\
+EDSR-div2k-x2-L1-s1 & $32.27 (\pm 6.90)$ & $0.132 (\pm 0.115)$ \\
+EDSR-div2k-x2-L1-s2 & $32.54 (\pm 7.06)$ & $0.133 (\pm 0.115)$ \\
+EDSR-div2k-x2-L1-s3 & $32.49 (\pm 7.03)$ & $0.134 (\pm 0.115)$ \\
+EDSR-div2k-x2-ResNet+Adv.-s1 & $31.33 (\pm 6.60)$ & $0.074 (\pm 0.102)$ \\
+EDSR-div2k-x2-ResNet+Adv.-s2 & $32.25 (\pm 7.01)$ & $0.086 (\pm 0.103)$ \\
+EDSR-div2k-x2-ResNet+Adv.-s3 & $31.90 (\pm 6.90)$ & $0.078 (\pm 0.102)$ \\
+EDSR-div2k-x2-VGG+Adv.-s1 & $31.91 (\pm 6.78)$ & $0.080 (\pm 0.103)$ \\
+EDSR-div2k-x2-VGG+Adv.-s2 & $31.91 (\pm 6.79)$ & $0.080 (\pm 0.102)$ \\
+EDSR-div2k-x2-VGG+Adv.-s3 & $32.01 (\pm 6.91)$ & $0.082 (\pm 0.102)$ \\
+EDSR-div2k-x4-L1-NA-pretrained & $28.08 (\pm 6.26)$ & $0.293 (\pm 0.152)$ \\
+EDSR-div2k-x4-L1-s1 & $27.95 (\pm 6.22)$ & $0.296 (\pm 0.151)$ \\
+EDSR-div2k-x4-L1-s2 & $27.95 (\pm 6.22)$ & $0.299 (\pm 0.151)$ \\
+EDSR-div2k-x4-L1-s3 & $27.92 (\pm 6.22)$ & $0.307 (\pm 0.151)$ \\
+EDSR-div2k-x4-ResNet+Adv.-s1 & $26.96 (\pm 5.58)$ & $0.188 (\pm 0.112)$ \\
+EDSR-div2k-x4-ResNet+Adv.-s2 & $26.51 (\pm 5.82)$ & $0.192 (\pm 0.107)$ \\
+EDSR-div2k-x4-ResNet+Adv.-s3 & $25.08 (\pm 5.49)$ & $0.205 (\pm 0.115)$ \\
+EDSR-div2k-x4-VGG+Adv.-s1 & $26.57 (\pm 5.61)$ & $0.188 (\pm 0.109)$ \\
+EDSR-div2k-x4-VGG+Adv.-s2 & $26.66 (\pm 5.43)$ & $0.185 (\pm 0.107)$ \\
+EDSR-div2k-x4-VGG+Adv.-s3 & $26.54 (\pm 5.69)$ & $0.182 (\pm 0.105)$ \\
+EDSR-flickr2k-x2-L1-s1 & $32.46 (\pm 7.04)$ & $0.133 (\pm 0.115)$ \\
+EDSR-flickr2k-x2-ResNet+Adv.-s1 & $31.98 (\pm 6.86)$ & $0.086 (\pm 0.103)$ \\
+EDSR-flickr2k-x2-VGG+Adv.-s1 & $31.38 (\pm 6.60)$ & $0.083 (\pm 0.103)$ \\
+EDSR-flickr2k-x4-L1-s1 & $27.90 (\pm 6.21)$ & $0.307 (\pm 0.152)$ \\
+EDSR-flickr2k-x4-ResNet+Adv.-s1 & $26.51 (\pm 5.65)$ & $0.195 (\pm 0.102)$ \\
+EDSR-flickr2k-x4-VGG+Adv.-s1 & $26.83 (\pm 5.64)$ & $0.207 (\pm 0.114)$ \\
+EDSR-quarter div2k-x2-L1-s1 & $32.46 (\pm 6.99)$ & $0.126 (\pm 0.113)$ \\
+EDSR-quarter div2k-x2-ResNet+Adv.-s1 & $32.00 (\pm 6.95)$ & $0.075 (\pm 0.102)$ \\
+EDSR-quarter div2k-x2-VGG+Adv.-s1 & $32.22 (\pm 6.99)$ & $0.081 (\pm 0.103)$ \\
+EDSR-quarter div2k-x4-L1-s1 & $27.94 (\pm 6.22)$ & $0.301 (\pm 0.151)$ \\
+EDSR-quarter div2k-x4-ResNet+Adv.-s1 & $26.39 (\pm 5.83)$ & $0.185 (\pm 0.106)$ \\
+EDSR-quarter div2k-x4-VGG+Adv.-s1 & $26.45 (\pm 5.52)$ & $0.184 (\pm 0.107)$ \\
+EDSR-quarter flickr2k-x2-L1-s1 & $32.45 (\pm 7.03)$ & $0.135 (\pm 0.116)$ \\
+EDSR-quarter flickr2k-x2-ResNet+Adv.-s1 & $31.20 (\pm 6.31)$ & $0.093 (\pm 0.104)$ \\
+EDSR-quarter flickr2k-x2-VGG+Adv.-s1 & $31.86 (\pm 6.79)$ & $0.089 (\pm 0.102)$ \\
+EDSR-quarter flickr2k-x4-L1-s1 & $27.89 (\pm 6.18)$ & $0.305 (\pm 0.152)$ \\
+EDSR-quarter flickr2k-x4-ResNet+Adv.-s1 & $26.82 (\pm 6.00)$ & $0.187 (\pm 0.105)$ \\
+EDSR-quarter flickr2k-x4-VGG+Adv.-s1 & $27.11 (\pm 5.89)$ & $0.199 (\pm 0.112)$ \\
+ESRGAN-NA-x4-ESRGAN-NA-pretrained & $27.48 (\pm 6.09)$ & $0.161 (\pm 0.106)$ \\
+EnhanceNet-NA-x4-EnhanceNet-NA-pretrained & $26.48 (\pm 5.83)$ & $0.206 (\pm 0.113)$ \\
+LIIF-div2k-x2-L1-NA-pretrained & $32.35 (\pm 6.77)$ & $0.130 (\pm 0.115)$ \\
+LIIF-div2k-x4-L1-NA-pretrained & $28.34 (\pm 6.34)$ & $0.283 (\pm 0.151)$ \\
+NCSR-div2k-x4-NCSR GAN-NA-pretrained & $27.76 (\pm 6.24)$ & $0.178 (\pm 0.112)$ \\
+NLSN-div2k-x2-L1-NA-pretrained & $34.31 (\pm 5.20)$ & $0.103 (\pm 0.073)$ \\
+NLSN-div2k-x2-L1-s1 & $32.59 (\pm 7.06)$ & $0.133 (\pm 0.115)$ \\
+NLSN-div2k-x2-L1-s2 & $32.22 (\pm 6.77)$ & $0.134 (\pm 0.115)$ \\
+NLSN-div2k-x2-L1-s3 & $32.54 (\pm 7.06)$ & $0.130 (\pm 0.115)$ \\
+NLSN-div2k-x2-ResNet+Adv.-s1 & $32.08 (\pm 6.83)$ & $0.086 (\pm 0.103)$ \\
+NLSN-div2k-x2-ResNet+Adv.-s2 & $31.64 (\pm 6.59)$ & $0.085 (\pm 0.102)$ \\
+NLSN-div2k-x2-ResNet+Adv.-s3 & $31.88 (\pm 6.70)$ & $0.090 (\pm 0.103)$ \\
+NLSN-div2k-x2-VGG+Adv.-s1 & $31.95 (\pm 6.74)$ & $0.091 (\pm 0.103)$ \\
+NLSN-div2k-x2-VGG+Adv.-s2 & $32.00 (\pm 6.82)$ & $0.091 (\pm 0.103)$ \\
+NLSN-div2k-x2-VGG+Adv.-s3 & $31.57 (\pm 6.54)$ & $0.095 (\pm 0.103)$ \\
+NLSN-div2k-x4-L1-NA-pretrained & $29.51 (\pm 5.23)$ & $0.259 (\pm 0.137)$ \\
+NLSN-div2k-x4-L1-s1 & $27.91 (\pm 6.03)$ & $0.289 (\pm 0.150)$ \\
+NLSN-div2k-x4-L1-s2 & $28.06 (\pm 6.18)$ & $0.294 (\pm 0.150)$ \\
+NLSN-div2k-x4-L1-s3 & $28.15 (\pm 6.28)$ & $0.291 (\pm 0.149)$ \\
+NLSN-div2k-x4-ResNet+Adv.-s1 & $26.49 (\pm 5.54)$ & $0.170 (\pm 0.105)$ \\
+NLSN-div2k-x4-ResNet+Adv.-s2 & $27.17 (\pm 5.82)$ & $0.193 (\pm 0.111)$ \\
+NLSN-div2k-x4-ResNet+Adv.-s3 & $26.53 (\pm 5.78)$ & $0.164 (\pm 0.104)$ \\
+NLSN-div2k-x4-VGG+Adv.-s1 & $26.05 (\pm 4.92)$ & $0.180 (\pm 0.106)$ \\
+NLSN-div2k-x4-VGG+Adv.-s2 & $26.24 (\pm 5.22)$ & $0.179 (\pm 0.108)$ \\
+NLSN-div2k-x4-VGG+Adv.-s3 & $26.56 (\pm 5.22)$ & $0.196 (\pm 0.113)$ \\
+NLSN-flickr2k-x2-L1-s1 & $32.29 (\pm 6.90)$ & $0.136 (\pm 0.116)$ \\
+NLSN-flickr2k-x2-ResNet+Adv.-s1 & $24.44 (\pm 3.75)$ & $0.117 (\pm 0.106)$ \\
+NLSN-flickr2k-x2-VGG+Adv.-s1 & $31.93 (\pm 6.78)$ & $0.095 (\pm 0.104)$ \\
+NLSN-flickr2k-x4-L1-s1 & $27.89 (\pm 6.05)$ & $0.291 (\pm 0.151)$ \\
+NLSN-flickr2k-x4-ResNet+Adv.-s1 & $26.72 (\pm 5.61)$ & $0.169 (\pm 0.108)$ \\
+NLSN-flickr2k-x4-VGG+Adv.-s1 & $25.97 (\pm 4.85)$ & $0.185 (\pm 0.110)$ \\
+NLSN-quarter div2k-x2-L1-s1 & $32.50 (\pm 6.95)$ & $0.132 (\pm 0.115)$ \\
+NLSN-quarter div2k-x2-ResNet+Adv.-s1 & $31.62 (\pm 6.62)$ & $0.073 (\pm 0.102)$ \\
+NLSN-quarter div2k-x2-VGG+Adv.-s1 & $31.57 (\pm 6.51)$ & $0.090 (\pm 0.104)$ \\
+NLSN-quarter div2k-x4-L1-s1 & $28.10 (\pm 6.25)$ & $0.294 (\pm 0.151)$ \\
+NLSN-quarter div2k-x4-ResNet+Adv.-s1 & $25.91 (\pm 5.27)$ & $0.175 (\pm 0.106)$ \\
+NLSN-quarter div2k-x4-VGG+Adv.-s1 & $26.16 (\pm 5.01)$ & $0.186 (\pm 0.106)$ \\
+NLSN-quarter flickr2k-x2-L1-s1 & $32.46 (\pm 7.01)$ & $0.136 (\pm 0.116)$ \\
+NLSN-quarter flickr2k-x2-ResNet+Adv.-s1 & $31.30 (\pm 6.76)$ & $0.089 (\pm 0.104)$ \\
+NLSN-quarter flickr2k-x2-VGG+Adv.-s1 & $31.32 (\pm 6.44)$ & $0.091 (\pm 0.103)$ \\
+NLSN-quarter flickr2k-x4-L1-s1 & $27.87 (\pm 6.01)$ & $0.299 (\pm 0.151)$ \\
+NLSN-quarter flickr2k-x4-ResNet+Adv.-s1 & $26.81 (\pm 5.62)$ & $0.172 (\pm 0.108)$ \\
+NLSN-quarter flickr2k-x4-VGG+Adv.-s1 & $26.66 (\pm 5.42)$ & $0.189 (\pm 0.110)$ \\
+RCAN-div2k-x2-L1-NA-pretrained & $32.79 (\pm 7.06)$ & $0.126 (\pm 0.114)$ \\
+RCAN-div2k-x2-L1-s1 & $32.59 (\pm 7.07)$ & $0.135 (\pm 0.116)$ \\
+RCAN-div2k-x2-L1-s2 & $32.46 (\pm 7.03)$ & $0.139 (\pm 0.117)$ \\
+RCAN-div2k-x2-L1-s3 & $32.67 (\pm 7.13)$ & $0.132 (\pm 0.116)$ \\
+RCAN-div2k-x2-ResNet+Adv.-s1 & $31.88 (\pm 6.80)$ & $0.079 (\pm 0.102)$ \\
+RCAN-div2k-x2-ResNet+Adv.-s2 & $32.14 (\pm 6.95)$ & $0.080 (\pm 0.103)$ \\
+RCAN-div2k-x2-ResNet+Adv.-s3 & $32.07 (\pm 6.90)$ & $0.079 (\pm 0.102)$ \\
+RCAN-div2k-x2-VGG+Adv.-s1 & $31.51 (\pm 6.58)$ & $0.091 (\pm 0.102)$ \\
+RCAN-div2k-x2-VGG+Adv.-s2 & $31.99 (\pm 6.81)$ & $0.083 (\pm 0.102)$ \\
+RCAN-div2k-x2-VGG+Adv.-s3 & $32.06 (\pm 6.83)$ & $0.090 (\pm 0.103)$ \\
+RCAN-div2k-x4-L1-NA-pretrained & $28.32 (\pm 6.26)$ & $0.282 (\pm 0.152)$ \\
+RCAN-div2k-x4-L1-s1 & $28.17 (\pm 6.25)$ & $0.290 (\pm 0.151)$ \\
+RCAN-div2k-x4-L1-s2 & $28.00 (\pm 6.23)$ & $0.302 (\pm 0.151)$ \\
+RCAN-div2k-x4-L1-s3 & $28.08 (\pm 6.26)$ & $0.299 (\pm 0.152)$ \\
+RCAN-div2k-x4-ResNet+Adv.-s1 & $26.58 (\pm 5.44)$ & $0.174 (\pm 0.113)$ \\
+RCAN-div2k-x4-ResNet+Adv.-s2 & $27.41 (\pm 6.03)$ & $0.199 (\pm 0.117)$ \\
+RCAN-div2k-x4-ResNet+Adv.-s3 & $27.13 (\pm 5.90)$ & $0.187 (\pm 0.099)$ \\
+RCAN-div2k-x4-VGG+Adv.-s1 & $27.33 (\pm 5.90)$ & $0.176 (\pm 0.107)$ \\
+RCAN-div2k-x4-VGG+Adv.-s2 & $27.26 (\pm 5.85)$ & $0.176 (\pm 0.110)$ \\
+RCAN-div2k-x4-VGG+Adv.-s3 & $27.06 (\pm 5.82)$ & $0.176 (\pm 0.106)$ \\
+RCAN-flickr2k-x2-L1-s1 & $32.64 (\pm 7.09)$ & $0.132 (\pm 0.116)$ \\
+RCAN-flickr2k-x2-ResNet+Adv.-s1 & $31.87 (\pm 6.74)$ & $0.092 (\pm 0.104)$ \\
+RCAN-flickr2k-x2-VGG+Adv.-s1 & $32.13 (\pm 6.91)$ & $0.083 (\pm 0.102)$ \\
+RCAN-flickr2k-x4-L1-s1 & $28.06 (\pm 6.25)$ & $0.300 (\pm 0.151)$ \\
+RCAN-flickr2k-x4-ResNet+Adv.-s1 & $26.21 (\pm 5.30)$ & $0.168 (\pm 0.105)$ \\
+RCAN-flickr2k-x4-VGG+Adv.-s1 & $27.55 (\pm 6.08)$ & $0.167 (\pm 0.107)$ \\
+RCAN-quarter div2k-x2-L1-s1 & $32.55 (\pm 6.96)$ & $0.128 (\pm 0.116)$ \\
+RCAN-quarter div2k-x2-ResNet+Adv.-s1 & $32.21 (\pm 6.90)$ & $0.083 (\pm 0.103)$ \\
+RCAN-quarter div2k-x2-VGG+Adv.-s1 & $32.08 (\pm 6.81)$ & $0.093 (\pm 0.104)$ \\
+RCAN-quarter div2k-x4-L1-s1 & $28.15 (\pm 6.25)$ & $0.289 (\pm 0.151)$ \\
+RCAN-quarter div2k-x4-ResNet+Adv.-s1 & $27.04 (\pm 5.91)$ & $0.173 (\pm 0.101)$ \\
+RCAN-quarter div2k-x4-VGG+Adv.-s1 & $27.38 (\pm 5.99)$ & $0.170 (\pm 0.112)$ \\
+RCAN-quarter flickr2k-x2-L1-s1 & $32.55 (\pm 7.08)$ & $0.135 (\pm 0.117)$ \\
+RCAN-quarter flickr2k-x2-ResNet+Adv.-s1 & $32.02 (\pm 6.89)$ & $0.090 (\pm 0.103)$ \\
+RCAN-quarter flickr2k-x2-VGG+Adv.-s1 & $31.90 (\pm 6.79)$ & $0.091 (\pm 0.103)$ \\
+RCAN-quarter flickr2k-x4-L1-s1 & $28.03 (\pm 6.25)$ & $0.302 (\pm 0.151)$ \\
+RCAN-quarter flickr2k-x4-ResNet+Adv.-s1 & $27.24 (\pm 6.09)$ & $0.180 (\pm 0.105)$ \\
+RCAN-quarter flickr2k-x4-VGG+Adv.-s1 & $27.34 (\pm 5.88)$ & $0.197 (\pm 0.118)$ \\
+RDN-div2k-x2-L1-NA-pretrained & $32.34 (\pm 6.77)$ & $0.131 (\pm 0.116)$ \\
+RDN-div2k-x2-L1-s1 & $32.47 (\pm 6.96)$ & $0.128 (\pm 0.115)$ \\
+RDN-div2k-x2-L1-s2 & $31.75 (\pm 6.49)$ & $0.133 (\pm 0.116)$ \\
+RDN-div2k-x2-L1-s3 & $32.51 (\pm 7.06)$ & $0.136 (\pm 0.117)$ \\
+RDN-div2k-x2-ResNet+Adv.-s1 & $30.76 (\pm 5.94)$ & $0.088 (\pm 0.103)$ \\
+RDN-div2k-x2-ResNet+Adv.-s2 & $32.19 (\pm 6.97)$ & $0.088 (\pm 0.103)$ \\
+RDN-div2k-x2-ResNet+Adv.-s3 & $32.04 (\pm 6.81)$ & $0.081 (\pm 0.103)$ \\
+RDN-div2k-x2-VGG+Adv.-s1 & $31.77 (\pm 6.55)$ & $0.079 (\pm 0.102)$ \\
+RDN-div2k-x2-VGG+Adv.-s2 & $31.83 (\pm 6.58)$ & $0.089 (\pm 0.103)$ \\
+RDN-div2k-x2-VGG+Adv.-s3 & $31.88 (\pm 6.70)$ & $0.087 (\pm 0.102)$ \\
+RDN-div2k-x4-L1-NA-pretrained & $28.25 (\pm 6.35)$ & $0.290 (\pm 0.152)$ \\
+RDN-div2k-x4-L1-s1 & $28.05 (\pm 6.22)$ & $0.292 (\pm 0.150)$ \\
+RDN-div2k-x4-L1-s2 & $28.11 (\pm 6.27)$ & $0.287 (\pm 0.152)$ \\
+RDN-div2k-x4-L1-s3 & $27.90 (\pm 6.12)$ & $0.295 (\pm 0.152)$ \\
+RDN-div2k-x4-ResNet+Adv.-s1 & $24.41 (\pm 4.22)$ & $0.211 (\pm 0.109)$ \\
+RDN-div2k-x4-ResNet+Adv.-s2 & $25.81 (\pm 5.52)$ & $0.184 (\pm 0.106)$ \\
+RDN-div2k-x4-ResNet+Adv.-s3 & $26.12 (\pm 5.29)$ & $0.187 (\pm 0.102)$ \\
+RDN-div2k-x4-VGG+Adv.-s1 & $26.96 (\pm 5.78)$ & $0.179 (\pm 0.109)$ \\
+RDN-div2k-x4-VGG+Adv.-s2 & $27.21 (\pm 5.92)$ & $0.189 (\pm 0.108)$ \\
+RDN-div2k-x4-VGG+Adv.-s3 & $26.92 (\pm 5.71)$ & $0.184 (\pm 0.109)$ \\
+RDN-flickr2k-x2-L1-s1 & $32.47 (\pm 7.02)$ & $0.136 (\pm 0.116)$ \\
+RDN-flickr2k-x2-ResNet+Adv.-s1 & $29.80 (\pm 5.63)$ & $0.092 (\pm 0.103)$ \\
+RDN-flickr2k-x2-VGG+Adv.-s1 & $31.82 (\pm 6.67)$ & $0.090 (\pm 0.103)$ \\
+RDN-flickr2k-x4-L1-s1 & $28.09 (\pm 6.31)$ & $0.300 (\pm 0.151)$ \\
+RDN-flickr2k-x4-ResNet+Adv.-s1 & $26.81 (\pm 5.86)$ & $0.187 (\pm 0.104)$ \\
+RDN-flickr2k-x4-VGG+Adv.-s1 & $27.11 (\pm 5.91)$ & $0.186 (\pm 0.106)$ \\
+RDN-quarter div2k-x2-L1-s1 & $32.59 (\pm 7.11)$ & $0.136 (\pm 0.117)$ \\
+RDN-quarter div2k-x2-ResNet+Adv.-s1 & $31.07 (\pm 6.22)$ & $0.094 (\pm 0.104)$ \\
+RDN-quarter div2k-x2-VGG+Adv.-s1 & $32.05 (\pm 6.74)$ & $0.086 (\pm 0.103)$ \\
+RDN-quarter div2k-x4-L1-s1 & $28.11 (\pm 6.30)$ & $0.288 (\pm 0.149)$ \\
+RDN-quarter div2k-x4-ResNet+Adv.-s1 & $26.52 (\pm 5.73)$ & $0.174 (\pm 0.104)$ \\
+RDN-quarter div2k-x4-VGG+Adv.-s1 & $26.95 (\pm 5.76)$ & $0.175 (\pm 0.108)$ \\
+RDN-quarter flickr2k-x2-L1-s1 & $32.57 (\pm 7.06)$ & $0.135 (\pm 0.117)$ \\
+RDN-quarter flickr2k-x2-ResNet+Adv.-s1 & $31.34 (\pm 6.59)$ & $0.084 (\pm 0.102)$ \\
+RDN-quarter flickr2k-x2-VGG+Adv.-s1 & $32.18 (\pm 6.94)$ & $0.091 (\pm 0.103)$ \\
+RDN-quarter flickr2k-x4-L1-s1 & $27.99 (\pm 6.19)$ & $0.299 (\pm 0.152)$ \\
+RDN-quarter flickr2k-x4-ResNet+Adv.-s1 & $26.30 (\pm 5.81)$ & $0.208 (\pm 0.112)$ \\
+RDN-quarter flickr2k-x4-VGG+Adv.-s1 & $27.16 (\pm 5.78)$ & $0.184 (\pm 0.110)$ \\
+Real ESRGAN-div2k-x2-GAN-NA-pretrained & $27.79 (\pm 6.10)$ & $0.129 (\pm 0.107)$ \\
+Real ESRGAN-div2k-x4-GAN-NA-pretrained & $24.84 (\pm 5.53)$ & $0.206 (\pm 0.109)$ \\
+SAN-div2k-x4-L1-NA-pretrained & $28.31 (\pm 6.27)$ & $0.284 (\pm 0.152)$ \\
+SPSR-div2k-x4-SPSR GAN-NA-pretrained & $27.44 (\pm 6.00)$ & $0.166 (\pm 0.111)$ \\
+SRFBN-NA-x2-L1-NA-pretrained & $32.69 (\pm 7.06)$ & $0.129 (\pm 0.115)$ \\
+SRFBN-NA-x4-L1-NA-pretrained & $28.20 (\pm 6.25)$ & $0.292 (\pm 0.152)$ \\
+SwinIR-div2k-x2-L1-NA-pretrained & $32.85 (\pm 7.06)$ & $0.124 (\pm 0.114)$ \\
+SwinIR-div2k-x2-L1-s1 & $32.23 (\pm 6.72)$ & $0.134 (\pm 0.115)$ \\
+SwinIR-div2k-x2-L1-s2 & $32.53 (\pm 7.07)$ & $0.130 (\pm 0.114)$ \\
+SwinIR-div2k-x2-L1-s3 & $31.77 (\pm 6.43)$ & $0.129 (\pm 0.114)$ \\
+SwinIR-div2k-x2-ResNet+Adv.-s1 & $30.05 (\pm 5.86)$ & $0.093 (\pm 0.102)$ \\
+SwinIR-div2k-x2-ResNet+Adv.-s2 & $29.35 (\pm 5.16)$ & $0.097 (\pm 0.102)$ \\
+SwinIR-div2k-x2-ResNet+Adv.-s3 & $30.85 (\pm 6.19)$ & $0.083 (\pm 0.102)$ \\
+SwinIR-div2k-x2-VGG+Adv.-s1 & $31.60 (\pm 6.64)$ & $0.086 (\pm 0.103)$ \\
+SwinIR-div2k-x2-VGG+Adv.-s2 & $31.38 (\pm 6.33)$ & $0.095 (\pm 0.104)$ \\
+SwinIR-div2k-x2-VGG+Adv.-s3 & $30.94 (\pm 6.08)$ & $0.092 (\pm 0.104)$ \\
+SwinIR-div2k-x4-GAN-NA-pretrained & $24.74 (\pm 5.54)$ & $0.203 (\pm 0.108)$ \\
+SwinIR-div2k-x4-L1-NA-pretrained & $28.39 (\pm 6.27)$ & $0.279 (\pm 0.152)$ \\
+SwinIR-div2k-x4-L1-s1 & $27.61 (\pm 5.74)$ & $0.295 (\pm 0.149)$ \\
+SwinIR-div2k-x4-L1-s2 & $27.98 (\pm 6.15)$ & $0.294 (\pm 0.149)$ \\
+SwinIR-div2k-x4-L1-s3 & $27.97 (\pm 6.13)$ & $0.295 (\pm 0.149)$ \\
+SwinIR-div2k-x4-ResNet+Adv.-s1 & $25.45 (\pm 5.15)$ & $0.217 (\pm 0.107)$ \\
+SwinIR-div2k-x4-ResNet+Adv.-s2 & $26.30 (\pm 5.34)$ & $0.194 (\pm 0.108)$ \\
+SwinIR-div2k-x4-ResNet+Adv.-s3 & $24.20 (\pm 4.75)$ & $0.240 (\pm 0.111)$ \\
+SwinIR-div2k-x4-VGG+Adv.-s1 & $26.51 (\pm 5.47)$ & $0.195 (\pm 0.106)$ \\
+SwinIR-div2k-x4-VGG+Adv.-s2 & $24.97 (\pm 4.45)$ & $0.216 (\pm 0.109)$ \\
+SwinIR-div2k-x4-VGG+Adv.-s3 & $26.39 (\pm 5.35)$ & $0.194 (\pm 0.112)$ \\
+SwinIR-flickr2k-x2-L1-s1 & $32.01 (\pm 6.71)$ & $0.132 (\pm 0.115)$ \\
+SwinIR-flickr2k-x2-ResNet+Adv.-s1 & $31.03 (\pm 6.37)$ & $0.094 (\pm 0.104)$ \\
+SwinIR-flickr2k-x2-VGG+Adv.-s1 & $31.14 (\pm 6.28)$ & $0.090 (\pm 0.104)$ \\
+SwinIR-flickr2k-x4-L1-s1 & $28.13 (\pm 6.18)$ & $0.286 (\pm 0.149)$ \\
+SwinIR-flickr2k-x4-ResNet+Adv.-s1 & $25.88 (\pm 5.15)$ & $0.228 (\pm 0.103)$ \\
+SwinIR-flickr2k-x4-VGG+Adv.-s1 & $24.99 (\pm 4.28)$ & $0.215 (\pm 0.109)$ \\
+SwinIR-quarter div2k-x2-L1-s1 & $32.26 (\pm 6.79)$ & $0.133 (\pm 0.115)$ \\
+SwinIR-quarter div2k-x2-ResNet+Adv.-s1 & $31.43 (\pm 6.63)$ & $0.087 (\pm 0.102)$ \\
+SwinIR-quarter div2k-x2-VGG+Adv.-s1 & $31.52 (\pm 6.59)$ & $0.088 (\pm 0.103)$ \\
+SwinIR-quarter div2k-x4-L1-s1 & $27.94 (\pm 6.09)$ & $0.285 (\pm 0.148)$ \\
+SwinIR-quarter div2k-x4-ResNet+Adv.-s1 & $25.67 (\pm 5.07)$ & $0.217 (\pm 0.107)$ \\
+SwinIR-quarter div2k-x4-VGG+Adv.-s1 & $26.10 (\pm 5.19)$ & $0.201 (\pm 0.109)$ \\
+SwinIR-quarter flickr2k-x2-L1-s1 & $32.52 (\pm 7.00)$ & $0.132 (\pm 0.115)$ \\
+SwinIR-quarter flickr2k-x2-ResNet+Adv.-s1 & $28.88 (\pm 5.04)$ & $0.081 (\pm 0.101)$ \\
+SwinIR-quarter flickr2k-x2-VGG+Adv.-s1 & $31.56 (\pm 6.52)$ & $0.096 (\pm 0.105)$ \\
+SwinIR-quarter flickr2k-x4-L1-s1 & $27.97 (\pm 6.15)$ & $0.296 (\pm 0.150)$ \\
+SwinIR-quarter flickr2k-x4-ResNet+Adv.-s1 & $25.38 (\pm 4.89)$ & $0.219 (\pm 0.108)$ \\
+SwinIR-quarter flickr2k-x4-VGG+Adv.-s1 & $26.06 (\pm 5.00)$ & $0.222 (\pm 0.118)$ \\
+proSR-div2k-x4-L1-NA-pretrained & $28.16 (\pm 6.20)$ & $0.292 (\pm 0.151)$ \\
+proSR-div2k-x4-ProSRGAN-NA-pretrained & $27.58 (\pm 6.17)$ & $0.167 (\pm 0.109)$ \\

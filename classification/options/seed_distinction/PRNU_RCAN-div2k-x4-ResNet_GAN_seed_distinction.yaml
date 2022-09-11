@@ -1,0 +1,33 @@
+classifier:
+  name: PRNU_RCAN-div2k-x4-ResNet_GAN_seed_distinction
+  type: PRNU
+evaluation_datasets:
+- include_custom_trained: true
+  include_pretrained: false
+  name: PRNU_RCAN-div2k-x4-ResNet_GAN_seed_distinction_test
+  random_crop: false
+  sisr_model_list:
+  - RCAN-div2k-x4-ResNet_GAN-s1
+  - RCAN-div2k-x4-ResNet_GAN-s2
+  - RCAN-div2k-x4-ResNet_GAN-s3
+  type: SISR
+training_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  name: PRNU_RCAN-div2k-x4-ResNet_GAN_seed_distinction_train
+  random_crop: false
+  sisr_model_list:
+  - RCAN-div2k-x4-ResNet_GAN-s1
+  - RCAN-div2k-x4-ResNet_GAN-s2
+  - RCAN-div2k-x4-ResNet_GAN-s3
+  type: SISR
+validation_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  name: PRNU_RCAN-div2k-x4-ResNet_GAN_seed_distinction_val
+  random_crop: false
+  sisr_model_list:
+  - RCAN-div2k-x4-ResNet_GAN-s1
+  - RCAN-div2k-x4-ResNet_GAN-s2
+  - RCAN-div2k-x4-ResNet_GAN-s3
+  type: SISR

@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 *.pt
 *.sqlite3
+*.npy
 experiments/
 scratchwork/
 scratchwork.ipynb
@@ -14,3 +15,4 @@ redo_analysis.py
 batch_crop_images.py
 *.sqlite3-journal
 wandb/*
+paper/

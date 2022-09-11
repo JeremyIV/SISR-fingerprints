@@ -5,6 +5,7 @@ from database.api.common import (
     get_unique_row,
     insert_row,
     idempotent_insert_unique_row,
+    read_and_decode_sql_query,
 )
 from database.api.image_patch import (
     CropCoords,

@@ -1,11 +1,11 @@
-# prnu_classifier.py
 import numpy as np
 import os
 import PIL.Image
+import pdb
 import bm3d
 from tqdm import tqdm
 from classification.utils.registry import CLASSIFIER_REGISTRY
-from classification.utils.misc import mkdir_unique
+from classification.utils.misc import mkdir_and_rename
 import database.api as db
 import gzip
 from pathlib import Path
@@ -34,6 +34,12 @@ def get_noise_residual(image, memoize=True):
     return residual
 
 
+def dist_to_prob(logits):
+    normed = logits - logits.min() + 1
+    inv = 1 / normed
+    return inv / inv.sum()
+
+
 @CLASSIFIER_REGISTRY.register()
 class PRNU:
     def __init__(self, name, ordered_labels, ordered_fingerprints, memoize=True):
@@ -50,49 +56,57 @@ class PRNU:
         # shape (c, h, w, 3)
         diff = self.ordered_fingerprints - noise_residual[np.newaxis, :, :, :]
         fingerprint_distance = np.sum(diff ** 2, axis=(1, 2, 3))  # shape (c,)
-        fingerprint_prediction = fingerprint_distance.argmin()  # scalar
-        one_hot_encoding = np.zeros(shape=(c))
-        one_hot_encoding[fingerprint_prediction] = 1
+        # Simple way to convert distances into a "probability distrubiton"
+        # all that matters is that smaller distances are more likely, and it sums to 1
+        fingerprint_probs = dist_to_prob(fingerprint_distance)
         # Features are too large and burdensome, so just return None.
-        return one_hot_encoding, None
+        return fingerprint_probs, None
 
     # third argument is val_dataset, which is unused.
     @staticmethod
-    def train_and_save_classifier(classifier_opt, dataset, _=None):
-        training_dataset_id = db.get_unique_row("dataset", {"name": dataset.name}).id
-        ordered_labels = dataset.ordered_labels
-        memoize = classifier_opt.get("memoize", True)
+    def train_and_save_classifier(
+        classifier_opt, dataset, val_dataset=None, mode="both"
+    ):
         classifier_name = classifier_opt["name"]
-        label_param = dataset.label_param  # TODO: do someting with this label param?
-        noise_residuals_sum = [0] * len(ordered_labels)
-        noise_residuals_count = [0] * len(ordered_labels)
-        print("Training PRNU classifier!")
-        for image, label, metadata in tqdm(dataset):
-            residual = get_noise_residual(image, memoize=memoize)
-            label_index = ordered_labels.index(label)
-            noise_residuals_sum[label_index] += residual
-            noise_residuals_count[label_index] += 1
-
-        ordered_fingerprints = (
-            np.array(noise_residuals_sum)
-            / np.array(noise_residuals_count)[:, np.newaxis, np.newaxis, np.newaxis]
-        )
-
         classifier_dir = PRNU_CLASSIFIER_EXPERIMENTS_PATH / classifier_name
-        mkdir_unique(PRNU_CLASSIFIER_EXPERIMENTS_PATH, classifier_name + "{}")
         ordered_fingerprints_path = classifier_dir / ORDERED_FINGERPRINTS_FILENAME
-        with gzip.GzipFile(ordered_fingerprints_path, "w") as f:
-            np.save(f, ordered_fingerprints)
-        db.idempotent_insert_unique_row(
-            "classifier",
-            {
-                "training_dataset_id": training_dataset_id,
-                "name": classifier_name,
-                "path": ordered_fingerprints_path,
-                "type": "PRNU",
-                "opt": classifier_opt,
-            },
-        )
+        if mode != "test":
+            ordered_labels = dataset.ordered_labels
+            memoize = classifier_opt.get("memoize", True)
+            label_param = (
+                dataset.label_param
+            )  # TODO: do someting with this label param?
+            noise_residuals_sum = [0] * len(ordered_labels)
+            noise_residuals_count = [0] * len(ordered_labels)
+            print("Training PRNU classifier!")
+            for image, label, metadata in tqdm(dataset):
+                residual = get_noise_residual(image, memoize=memoize)
+                label_index = ordered_labels.index(label)
+                noise_residuals_sum[label_index] += residual
+                noise_residuals_count[label_index] += 1
+
+            ordered_fingerprints = (
+                np.array(noise_residuals_sum)
+                / np.array(noise_residuals_count)[:, np.newaxis, np.newaxis, np.newaxis]
+            )
+
+            mkdir_and_rename(classifier_dir)
+            with gzip.GzipFile(ordered_fingerprints_path, "w") as f:
+                np.save(f, ordered_fingerprints)
+        if mode != "train":
+            training_dataset_id = db.get_unique_row(
+                "dataset", {"name": dataset.name}
+            ).id
+            db.idempotent_insert_unique_row(
+                "classifier",
+                {
+                    "training_dataset_id": training_dataset_id,
+                    "name": classifier_name,
+                    "path": ordered_fingerprints_path,
+                    "type": "PRNU",
+                    "opt": classifier_opt,
+                },
+            )
         return classifier_name
 
     @staticmethod

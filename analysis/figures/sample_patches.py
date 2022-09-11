@@ -2,11 +2,13 @@ from PIL import Image
 from pathlib import Path
 import utils
 
-dataset_dir = Path("BasicSR/sisr_dataset")
+dataset_dir = Path("classification/datasets/data/SISR")
 img_filename = "3644634744_56aa1c7d32.png"
 
-destination_dir = path("paper/figures/SISR_patch_samples")
+destination_dir = Path("paper/figures/SISR_patch_samples")
 destination_dir.mkdir(parents=True, exist_ok=True)
+
+# TODO: copy over LR_2x and LR_4x patches as well
 
 width = 64
 height = width
@@ -20,6 +22,7 @@ custom_sisr_models = utils.get_sisr_model_names(
     dataset=["div2k"],
     seed=[1],
 )
+print(custom_sisr_models)
 
 pretrained_sisr_models = []
 for sisr_model_dir in dataset_dir.iterdir():

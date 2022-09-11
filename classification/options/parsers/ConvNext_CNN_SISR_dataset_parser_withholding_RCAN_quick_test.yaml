@@ -1,0 +1,39 @@
+classifier:
+  cnn:
+    type: ConvNext
+  name: ConvNext_CNN_SISR_dataset_parser_withholding_RCAN_quick_test
+  train:
+    batch_size: 16
+    learning_rate_end: 4.0e-06
+    learning_rate_start: 0.0005
+    num_full_train_epochs: 1
+    num_pretrain_epochs: 1
+  type: CNN
+evaluation_datasets:
+- data_retention: 0.01
+  include_custom_trained: true
+  include_pretrained: true
+  label_param: dataset
+  name: SISR_dataset_parser_test_quick_test
+  random_crop: false
+  type: SISR
+training_dataset:
+  data_retention: 0.01
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: dataset
+  name: SISR_dataset_parser_withholding_RCAN_train_quick_test
+  random_crop: true
+  reserved_param: architecture
+  reserved_param_value: RCAN
+  type: SISR
+validation_dataset:
+  data_retention: 0.01
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: dataset
+  name: SISR_dataset_parser_withholding_RCAN_val_quick_test
+  random_crop: false
+  reserved_param: architecture
+  reserved_param_value: RCAN
+  type: SISR
