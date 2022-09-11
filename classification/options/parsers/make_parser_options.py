@@ -146,10 +146,9 @@ def make_fen_parser_opt(label_param, reserved_param, reserved_param_val):
         yaml.dump(opt, f)
 
 
-def make_parser_opt(label_param, reserved_param, reserved_param_val):
-    classifier_name = (
-        f"ConvNext_CNN_SISR_{label_param}_parser_withholding_{reserved_param_val}"
-    )
+def make_parser_opt(label_param, reserved_param, reserved_param_val, seed=None):
+    seed_prefix = "" if seed is None else f"seed_{seed}_"
+    classifier_name = f"{seed_prefix}ConvNext_CNN_SISR_{label_param}_parser_withholding_{reserved_param_val}"
     opt = {
         "classifier": {
             "cnn": {"type": "ConvNext"},
@@ -200,7 +199,8 @@ def make_parser_opt(label_param, reserved_param, reserved_param_val):
 
 
 def make_parser_opts(label_param, reserved_param, reserved_param_val):
-    make_parser_opt(label_param, reserved_param, reserved_param_val)
+    for seed in [None, 2, 3]:
+        make_parser_opt(label_param, reserved_param, reserved_param_val, seed=seed)
     make_parser_opt_quick_test(label_param, reserved_param, reserved_param_val)
     make_prnu_baseline_parser_opt(label_param, reserved_param, reserved_param_val)
     make_fen_parser_opt(label_param, reserved_param, reserved_param_val)

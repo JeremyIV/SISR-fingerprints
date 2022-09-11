@@ -1,0 +1,36 @@
+classifier:
+  cnn:
+    type: ConvNext
+  name: seed_2_ConvNext_CNN_SISR_scale_parser_withholding_SwinIR
+  train:
+    batch_size: 16
+    learning_rate_end: 4.0e-06
+    learning_rate_start: 0.0005
+    num_full_train_epochs: 15
+    num_pretrain_epochs: 3
+  type: CNN
+evaluation_datasets:
+- include_custom_trained: true
+  include_pretrained: true
+  label_param: scale
+  name: SISR_scale_parser_test
+  random_crop: false
+  type: SISR
+training_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: scale
+  name: SISR_scale_parser_withholding_SwinIR_train
+  random_crop: true
+  reserved_param: architecture
+  reserved_param_value: SwinIR
+  type: SISR
+validation_dataset:
+  include_custom_trained: true
+  include_pretrained: false
+  label_param: scale
+  name: SISR_scale_parser_withholding_SwinIR_val
+  random_crop: false
+  reserved_param: architecture
+  reserved_param_value: SwinIR
+  type: SISR

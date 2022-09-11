@@ -1,0 +1,34 @@
+classifier:
+  type: CNN
+  name: seed_3_ConvNext_CNN_SISR_pretrained_models
+  pretrained_path: classification/classifiers/experiments/CNN/seed_3_ConvNext_CNN_SISR_custom_models/model_best.pt
+  cnn:
+    type: 'ConvNext'
+  train:
+    num_pretrain_epochs: 3
+    num_full_train_epochs: 15
+    batch_size: 16
+    learning_rate_start: 0.0005
+    learning_rate_end: 0.000004
+
+training_dataset:
+  type: SISR
+  name: SISR_pretrained_models_train
+  random_crop: true
+  include_pretrained: true
+  include_custom_trained: false
+
+validation_dataset:
+  name: SISR_pretrained_models_val
+  type: SISR
+  random_crop: false
+  include_pretrained: true
+  include_custom_trained: false
+
+evaluation_datasets:
+  -
+    name: SISR_pretrained_models_test
+    type: SISR
+    random_crop: false
+    include_pretrained: true
+    include_custom_trained: false
