@@ -1,6 +1,12 @@
 import database.api as db
 from analysis.values.values_registry import VALUES_REGISTRY
-from analysis.values.val_utils import fmt, unfmt, latexify, get_acc_val
+from analysis.values.val_utils import (
+    fmt,
+    unfmt,
+    latexify,
+    get_acc_val,
+    aggregate_across_seeds,
+)
 import utils
 import numpy as np
 
@@ -80,6 +86,17 @@ def acc_by_param_val():
 
 
 @VALUES_REGISTRY.register()
+def acc_by_param_val_across_seeds():
+    return aggregate_across_seeds(
+        [
+            acc_by_param_val_for("ConvNext_CNN_SISR_custom_models"),
+            acc_by_param_val_for("seed_2_ConvNext_CNN_SISR_custom_models"),
+            acc_by_param_val_for("seed_3_ConvNext_CNN_SISR_custom_models"),
+        ]
+    )
+
+
+@VALUES_REGISTRY.register()
 def prnu_acc_by_param_val():
     values = acc_by_param_val_for("PRNU_SISR_custom_models")
     return {f"PRNU{key}": val for key, val in values.items()}
@@ -88,6 +105,17 @@ def prnu_acc_by_param_val():
 @VALUES_REGISTRY.register()
 def pretrained_acc():
     return pretrained_acc_for("ConvNext_CNN_SISR_pretrained_models")
+
+
+@VALUES_REGISTRY.register()
+def pretrained_acc_across_seeds():
+    return aggregate_across_seeds(
+        [
+            pretrained_acc_for("ConvNext_CNN_SISR_pretrained_models"),
+            pretrained_acc_for("seed_2_ConvNext_CNN_SISR_pretrained_models"),
+            pretrained_acc_for("seed_3_ConvNext_CNN_SISR_pretrained_models"),
+        ]
+    )
 
 
 @VALUES_REGISTRY.register()
@@ -110,6 +138,17 @@ def get_seed_triplets():
 @VALUES_REGISTRY.register()
 def seed_distinction_acc_ConvNext():
     return seed_distinction_acc("ConvNext_CNN")
+
+
+@VALUES_REGISTRY.register()
+def seed_distinction_acc_ConvNext_across_seeds():
+    return aggregate_across_seeds(
+        [
+            seed_distinction_acc("ConvNext_CNN"),
+            seed_distinction_acc("seed_2_ConvNext_CNN"),
+            seed_distinction_acc("seed_3_ConvNext_CNN"),
+        ]
+    )
 
 
 @VALUES_REGISTRY.register()

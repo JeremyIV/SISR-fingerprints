@@ -30,3 +30,18 @@ def latexify(string):
 
 def get_acc_val(query):
     return fmt(db.read_sql_query(query).acc[0])
+
+
+def aggregate_across_seeds(values_list):
+    all_values = {}
+    for seed_values in values_list:
+        for key, value in seed_values.items():
+            if key not in aggregated_values:
+                all_values[key] = []
+            all_values[key].append(unfmt(value))
+
+    aggregated_values = {}
+    for key, vals in all_values.items():
+        aggregated_values[f"{key}Mean"] = fmt(np.mean(vals))
+        aggregated_values[f"{key}Std"] = fmt(np.std(vals))
+    return aggregated_values

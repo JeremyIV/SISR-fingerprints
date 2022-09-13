@@ -1,7 +1,13 @@
 import database.api as db
 import numpy as np
 from analysis.values.values_registry import VALUES_REGISTRY
-from analysis.values.val_utils import fmt, unfmt, latexify, get_acc_val
+from analysis.values.val_utils import (
+    fmt,
+    unfmt,
+    latexify,
+    get_acc_val,
+    aggregate_across_seeds,
+)
 
 parameters = ["scale", "loss", "architecture", "dataset", "seed"]
 params_to_predict = ["scale", "loss", "architecture", "dataset"]
@@ -77,8 +83,10 @@ def filtered_model_parsing_table(classifier_type, clause):
             parser_results = db.read_sql_query(prediction_query, params)
             if len(parser_results) == 0:
                 continue
-            if param == 'dataset':
-                print(f"withholding-{reserved_param_val} where {clause}: {len(parser_results)}")
+            if param == "dataset":
+                print(
+                    f"withholding-{reserved_param_val} where {clause}: {len(parser_results)}"
+                )
             parser_accuracy = (parser_results.predicted == parser_results.actual).mean()
             reserved_param_latex_friendly = latexify(reserved_param_val)
             parser_acc_value_name = f"{param}Withholding{reserved_param_latex_friendly}"
@@ -125,7 +133,7 @@ def model_parsing_table_for(classifier_type):
                 "reserved_param_val": reserved_param_val,
             }
             parser_results = db.read_sql_query(prediction_query, params)
-            if param == 'dataset':
+            if param == "dataset":
                 print(f"withholding-{reserved_param_val}: {len(parser_results)}")
             assert len(parser_results) > 0, f"{prediction_query}, {params}"
             parser_accuracy = (parser_results.predicted == parser_results.actual).mean()
@@ -428,6 +436,16 @@ def model_parsing_table():
     return model_parsing_table_for("ConvNext_CNN")
 
 
+def model_parsing_table_across_seeds():
+    return aggregate_across_seeds(
+        [
+            model_parsing_table_for("ConvNext_CNN"),
+            model_parsing_table_for("seed_2_ConvNext_CNN"),
+            model_parsing_table_for("seed_3_ConvNext_CNN"),
+        ]
+    )
+
+
 @VALUES_REGISTRY.register()
 def disaggregated_model_parsing_tables():
     values = {}
@@ -454,8 +472,7 @@ def disaggregated_model_parsing_tables():
     return values
 
 
-@VALUES_REGISTRY.register()
-def pretrained_parser_vals():
+def get_pretrained_parser_vals(classifier_name):
     values = {}
     pretrained_generators_with_known_arch = ", ".join(
         [
@@ -475,10 +492,26 @@ def pretrained_parser_vals():
     values["PretrainedArchParsingAccuracy"] = get_acc_val(
         "select avg(predicted = actual) as acc"
         " from analysis "
-        "where classifier_name = 'ConvNext_CNN_SISR_architecture_parser'"
+        f" where classifier_name = '{classifier_name}'"
         f" and generator_name in ({pretrained_generators_with_known_arch})"
     )
     return values
+
+
+@VALUES_REGISTRY.register()
+def pretrained_parser_vals():
+    return get_pretrained_parser_vals("ConvNext_CNN_SISR_architecture_parser")
+
+
+@VALUES_REGISTRY.register()
+def pretrained_parser_vals_across_seeds():
+    return aggregate_across_seeds(
+        [
+            get_pretrained_parser_vals("ConvNext_CNN_SISR_architecture_parser"),
+            get_pretrained_parser_vals("seed_2_ConvNext_CNN_SISR_architecture_parser"),
+            get_pretrained_parser_vals("seed_3_ConvNext_CNN_SISR_architecture_parser"),
+        ]
+    )
 
 
 @VALUES_REGISTRY.register()
