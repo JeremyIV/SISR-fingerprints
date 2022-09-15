@@ -31,6 +31,8 @@ pip install -r requirements.txt
 
 This repo reproduces all experiments and results presented in the paper, from training the SISR models, to generating (almost) all figures and values presented in the paper, to generating the paper itself. This is a complex, many-step process. Reproducing some steps will require considerable effort. To make things easier, you can quickly start anywhere in the process by downloading the prerequisite data from the previous steps.
 
+TODO: create links to each section. Also add links whever sections reference previous sections for prerequisites
+
 1. Download the SISR trainining datasets
 2. Train the custom-trained SISR models
 3. Download the Flickr1k dataset
@@ -45,22 +47,24 @@ This repo reproduces all experiments and results presented in the paper, from tr
 
 ### 2. Train the custom-trained SISR models
 
-To skip this and download the results:
-[Google Drive](TODO) (TODO GB). Extract contents to `BasicSR/finished_models/`.
+To skip this step and download the results:
+[Google Drive](TODO) (60 GB). Extract contents to `BasicSR/finished_models/`.
 
 Otherwise, first complete step 1
 
 ### 3. Download the Flickr1k dataset
-[Google Drive](TODO) (TODO GB). Extract contents to `BasicSR/datasets/`.
+[Google Drive](TODO) (1.3  GB). Extract contents to `BasicSR/datasets/`.
 
 
-### 4. generate the super-resolved image dataset
-To skip this and download the results:
-[Google Drive](TODO) (168 GB (TODO: compress!)). Extract contents to `classification/datasets/data`.
+### 4. Generate the super-resolved image dataset
+This step takes a significant amount of time and effort. To make things easier, we provide the super-resolved images from the 25 pretrained models on [Google Drive](TODO) (20 GB). Extract contents to `classification/datasets/data/SISR/`.
+You can also generate this data yourself following the instructions below, but it is a lot of work. 
 
-Otherwise, first complete steps 2 and 3. Then:
+You will have to generate the super-resolved images for the 180 custom-trained models yourself, following the instructions below:
 
-To download and run the pretrained models, follow the instructions from their respective GitHub repos:
+First complete steps 2 and 3. Then:
+
+If you want to generate the data for the pretrained models yourself, follow the instructions from their respective GitHub repos:
 
 | Model         | Github Link |
 |---------------|-------------|
@@ -76,7 +80,7 @@ To download and run the pretrained models, follow the instructions from their re
 |Real-ESRGAN    | https://github.com/xinntao/Real-ESRGAN |
 |NLSN           | https://github.com/HarukiYqM/Non-Local-Sparse-Attention |
 
-Use each of these repositires to super-resolve the Flickr1K dataset. Place the resulting images in `classification/datasets/data/SISR/{pretrained model name}` where `{pretrained model name}` in directories named:
+Use each of these repositories to super-resolve the Flickr1K dataset. Place the resulting images in `classification/datasets/data/SISR/{pretrained model name}` where `{pretrained model name}` in directories named:
 
 | Model |
 --------
@@ -106,6 +110,7 @@ Use each of these repositires to super-resolve the Flickr1K dataset. Place the r
 | proSR-div2k-x4-ProSRGAN-NA-pretrained |
 | SPSR-div2k-x4-SPSR_GAN-NA-pretrained |
 
+To generate the super-resolved images for the custom-trained models, run:
 
 ```bash
 cd BasicSR
@@ -118,7 +123,7 @@ Then run
 python basicsr/test.py -opt options/test/generate_sisr_dataset/<config.yml>
 ```
 
-for each config in options/test/generate_sisr_dataset.
+for each config in `options/test/generate_sisr_dataset/`.
 
 Then cd back into the main SISR-fingerprints directory.
 Then run
@@ -129,7 +134,10 @@ python classification/datasets/data/move_sisr_datasets.py
 
 To move the datasets where they need to be.
 
-### 6. Train and evaluate the model attribution/parsing classifiers
+### 5. Train and evaluate the model attribution/parsing classifiers
+To skip training, you can get the pretrained classifiers from [Google Drive](TODO) (25 GB). Extract contents to `classification/classifiers/`. You will still need to evaluate the classifiers.
+
+Otherwise, first complete Step 4.
 
 To train all the classifiers with a single command, run
 
@@ -147,14 +155,14 @@ To generate the numerical values used in the paper, run
 python results/values/generate_values.py
 ```
 
-Expect run time around an hour. This will generate `paper/computed_values.tex`.
+Expect run time around twenty minutes. This will generate `paper/computed_values.tex`.
 
 To generate the figures used in this paper, run
 
 ```bash
 bash results/figures/generate_all.sh
 ```
-Expect run time around an hour. This will generate almost all figures used in the paper and save them to `paper/figures`.
+Expect run time around twenty minutes. This will generate almost all figures used in the paper and save them to `paper/figures`.
 
 ### 9. Generate the paper itself.
 Finally, to generate a copy of our published paper, run

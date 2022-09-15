@@ -1,4 +1,5 @@
 import database.api as db
+import numpy as np
 
 
 def fmt(acc):
@@ -36,7 +37,7 @@ def aggregate_across_seeds(values_list):
     all_values = {}
     for seed_values in values_list:
         for key, value in seed_values.items():
-            if key not in aggregated_values:
+            if key not in all_values:
                 all_values[key] = []
             all_values[key].append(unfmt(value))
 

@@ -96,11 +96,44 @@ def get_unique_row(table, unique_identifiers):
         return decode_row(table, row)
 
 
+def equality_operator(a, b):
+    return a == b
+
+
+def filter_none_vals(d):
+    d2 = {}
+    for k, v in d.items():
+        if v is None:
+            continue
+        if isinstance(v, dict):
+            d2[k] = filter_none_vals[v]
+        else:
+            d2[k] = v
+    return d2
+
+
+def dict_equality_operator_ignoring_none_vals(a, b):
+    if a == b:
+        return True
+    filtered_a = filter_none_vals(a)
+    filtered_b = filter_none_vals(b)
+    return filtered_a == filtered_b
+
+
+def get_equality_operator_for(table, col):
+    if col == "opt":
+        return dict_equality_operator_ignoring_none_vals
+    else:
+        return equality_operator
+
+
 def rows_are_equivalent(table, old_row, new_values):
     cols_to_ignore = tables[table].get("volatile_cols", set())
     cols_to_compare = set(tables[table].cols) - set(cols_to_ignore)
     for col in cols_to_compare:
-        if old_row[col] != new_values.get(col):
+        equal = get_equality_operator_for(table, col)
+        if not equal(old_row[col], new_values.get(col)):
+            print(f"{col} did not match")
             return False
     return True
 
