@@ -16,3 +16,4 @@ batch_crop_images.py
 *.sqlite3-journal
 wandb/*
 paper/
+analysis/values/computed_values.yaml
