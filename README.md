@@ -83,7 +83,7 @@ If you want to generate the data for the pretrained models yourself, follow the 
 Use each of these repositories to super-resolve the Flickr1K dataset. Place the resulting images in `classification/datasets/data/SISR/{pretrained model name}` where `{pretrained model name}` in directories named:
 
 | Model |
---------
+|--------|
 | EDSR-div2k-x2-L1-NA-pretrained |
 | LIIF-div2k-x2-L1-NA-pretrained |
 | NLSN-div2k-x2-L1-NA-pretrained |
