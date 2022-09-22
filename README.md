@@ -2,7 +2,7 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This is the official implementation of our paper *fingerprints of super resolution networks*
+This is the official implementation of our paper [fingerprints of super resolution networks](TODO).
 
 ## Installation
 
@@ -16,7 +16,7 @@ Requriements are the same as for BasicSR:
 
 ### Setup
 
-Clone this Github repo, and clone [my fork of BasicSR](https://github.com/xinntao/BasicSR) inside of it. Install the Python package requirements for both projects.
+Clone this Github repo, and clone [our fork of BasicSR](https://github.com/xinntao/BasicSR) inside of it. Install the Python package requirements for both projects.
     
 ```bash
 git clone git@github.com:JeremyIV/SISR-fingerprints.git
@@ -35,30 +35,33 @@ TODO: create links to each section. Also add links whever sections reference pre
 
 1. Download the SISR trainining datasets
 2. Train the custom-trained SISR models
-3. Download the Flickr1k dataset
-4. Generate the super-resolved image dataset
-5. Train the model attribution/parsing classifiers
-6. Generate the figures and numerical values used in the paper.
-7. Generate the paper itself.
+3. Generate the super-resolved image dataset
+4. Train the model attribution/parsing classifiers
+5. Generate the figures and numerical values used in the paper.
+6. Generate the paper itself.
 
 ### 1. Download the SISR training datasets
 
-[Google Drive](TODO) (TODO GB). Extract contents to `BasicSR/datasets/`.
+[Google Drive](TODO) (40 GB). Extract contents to `BasicSR/datasets/`.
 
 ### 2. Train the custom-trained SISR models
 
 To skip this step and download the results:
 [Google Drive](TODO) (60 GB). Extract contents to `BasicSR/finished_models/`.
 
-Otherwise, first complete step 1
+Otherwise, first complete step 1.
 
-### 3. Download the Flickr1k dataset
-[Google Drive](TODO) (1.3  GB). Extract contents to `BasicSR/datasets/`.
+first, `cd` into `BasicSR/`.
 
+Then for each `.yml` file in `Basicsr/options/train/custom`, run
+```bash
+python basicsr/train.py -opt options/train/custom/<.yml filename>
+```
+Note that this will take a very long time, so it's recommended that you distribute the work across many GPUs. This will produce the weights of trained models in `BasicSR/experiments/<name of the model>/models/net_g_latest.pth`. 
 
-### 4. Generate the super-resolved image dataset
+### 3. Generate the super-resolved image dataset
 This step takes a significant amount of time and effort. To make things easier, we provide the super-resolved images from the 25 pretrained models on [Google Drive](TODO) (20 GB). Extract contents to `classification/datasets/data/SISR/`.
-You can also generate this data yourself following the instructions below, but it is a lot of work. 
+You can also generate this data yourself following the instructions below, but it is a lot of work, since these 25 pretrained models come from 10 different Github repos. 
 
 You will have to generate the super-resolved images for the 180 custom-trained models yourself, following the instructions below:
 
@@ -134,7 +137,7 @@ python classification/datasets/data/move_sisr_datasets.py
 
 To move the datasets where they need to be.
 
-### 5. Train and evaluate the model attribution/parsing classifiers
+### 4. Train and evaluate the model attribution/parsing classifiers
 To skip training, you can get the pretrained classifiers from [Google Drive](TODO) (25 GB). Extract contents to `classification/classifiers/`. You will still need to evaluate the classifiers.
 
 Otherwise, first complete Step 4.
@@ -147,7 +150,7 @@ bash classification/scripts/train_all_classifiers.sh
 
 Be warned that while this approach is simple, it will take a very long time to finish: about 90 GPU-days using Titan X GPUs. We reccommend distributing the work across a large number of GPUs. 
 
-### 8. Generate the figures and numerical values used in the paper.
+### 5. Generate the figures and numerical values used in the paper.
 
 To generate the numerical values used in the paper, run
 
@@ -164,7 +167,7 @@ bash results/figures/generate_all.sh
 ```
 Expect run time around twenty minutes. This will generate almost all figures used in the paper and save them to `paper/figures`.
 
-### 9. Generate the paper itself.
+### 6. Generate the paper itself.
 Finally, to generate a copy of our published paper, run
 
 ```
