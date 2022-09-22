@@ -39,13 +39,13 @@ classifiers = db.read_sql_query(
 #####################################################################
 
 # TODO: change this so that we output a list of three dicts, one for each random seed.
-all_data = []
 if args.data_file is None:
+    all_data = []
     # data is a dictionary from classifier names to that classifier's predictions
     # the predictions are a dictionary from SISR model to prediction counts
     # prediction counts are a dict from predicted label to the the counts of that prediction for this true SISR model for this classifier.
-    data = {}
     for classifier_prefix in ["ConvNext", "seed_2_ConvNext", "seed_3_ConvNext"]:
+        data = {}
         classifiers = db.read_sql_query(
             "select c.name as name, sd.label_param as label_param"
             " from classifier c"
@@ -89,7 +89,7 @@ if args.data_file is None:
 ## Plot the figure and save it as a PDF
 #####################################################################
 if args.data_file is None:
-    args.data_file = "pretrained_model_parsing_table_data.json"
+    args.data_file = "analysis/figures/pretrained_model_parsing_table_data.json"
 data = json.load(open(args.data_file))
 rows = [
     ("EDSR-2x", "EDSR-div2k-x2-L1-NA-pretrained"),

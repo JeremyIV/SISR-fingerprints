@@ -14,6 +14,10 @@ parser.add_argument(
     default="TSNE",
     help="Either TSNE or UMAP. UMAP is faster but less visually appealing.",
 )
+parser.add_argument(
+    "--classifier_prefix", default="", help="Either {'', 'seed_2_', or 'seed_3_'}"
+)
+
 
 args = parser.parse_args()
 
@@ -32,7 +36,7 @@ elif args.reduction == "UMAP":
 else:
     raise Exception(f"unrecognized reduction type: {args.reduction}")
 
-classifier_name = "ConvNext_CNN_SISR_custom_models"
+classifier_name = f"{args.classifier_prefix}ConvNext_CNN_SISR_custom_models"
 
 data = db.read_and_decode_sql_query(
     f"""
@@ -82,7 +86,7 @@ for ax in fig.get_axes():
 plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.02, hspace=0.02)
 
 plt.savefig(
-    "paper/figures/model-tsne.pdf",
+    f"paper/figures/{args.classifier_prefix}model-tsne.pdf",
     format="pdf",
     bbox_inches="tight",
     pad_inches=0,

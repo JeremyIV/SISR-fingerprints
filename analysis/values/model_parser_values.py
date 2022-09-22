@@ -317,116 +317,116 @@ def model_parsing_table_for(classifier_type):
     # )
 
     ## NEW in-text parsing values!
-    swinIR_split_loss_parser = [
-        f"{classifier_type}_SISR_loss_parser_withholding_SwinIR"
-    ]
-    record_parser_acc_val(
-        "SwinIRSplitLoneLossParsingAccuracy", swinIR_split_loss_parser, "sg.loss = 'L1'"
-    )
-    record_parser_acc_val(
-        "SwinIRSplitVGGLossParsingAccuracy",
-        swinIR_split_loss_parser,
-        "sg.loss = 'VGG_GAN'",
-    )
-    record_parser_acc_val(
-        "SwinIRSplitResNetLossParsingAccuracy",
-        swinIR_split_loss_parser,
-        "sg.loss = 'ResNet_GAN'",
-    )
-    record_parser_acc_val(
-        "SwinIRSplitTwoXLossParsingAccuracy", swinIR_split_loss_parser, "sg.scale = '2'"
-    )
-    record_parser_acc_val(
-        "SwinIRSplitFourXLossParsingAccuracy",
-        swinIR_split_loss_parser,
-        "sg.scale = '4'",
-    )
+    # swinIR_split_loss_parser = [
+    #     f"{classifier_type}_SISR_loss_parser_withholding_SwinIR"
+    # ]
+    # record_parser_acc_val(
+    #     "SwinIRSplitLoneLossParsingAccuracy", swinIR_split_loss_parser, "sg.loss = 'L1'"
+    # )
+    # record_parser_acc_val(
+    #     "SwinIRSplitVGGLossParsingAccuracy",
+    #     swinIR_split_loss_parser,
+    #     "sg.loss = 'VGG_GAN'",
+    # )
+    # record_parser_acc_val(
+    #     "SwinIRSplitResNetLossParsingAccuracy",
+    #     swinIR_split_loss_parser,
+    #     "sg.loss = 'ResNet_GAN'",
+    # )
+    # record_parser_acc_val(
+    #     "SwinIRSplitTwoXLossParsingAccuracy", swinIR_split_loss_parser, "sg.scale = '2'"
+    # )
+    # record_parser_acc_val(
+    #     "SwinIRSplitFourXLossParsingAccuracy",
+    #     swinIR_split_loss_parser,
+    #     "sg.scale = '4'",
+    # )
 
-    three_split_architecture_parser = [
-        f"{classifier_type}_SISR_architecture_parser_withholding_3"
-    ]
-    record_parser_acc_val(
-        "ThreeSplitTwoXArchitectureParsingAccuracy",
-        three_split_architecture_parser,
-        "sg.scale = '2'",
-    )
-    record_parser_acc_val(
-        "ThreeSplitFourXArchitectureParsingAccuracy",
-        three_split_architecture_parser,
-        "sg.scale = '4'",
-    )
-    record_parser_acc_val(
-        "ThreeSplitLOneArchitectureParsingAccuracy",
-        three_split_architecture_parser,
-        "sg.loss = 'L1'",
-    )
-    record_parser_acc_val(
-        "ThreeSplitVGGArchitectureParsingAccuracy",
-        three_split_architecture_parser,
-        "sg.loss = 'VGG_GAN'",
-    )
-    record_parser_acc_val(
-        "ThreeSplitResNetArchitectureParsingAccuracy",
-        three_split_architecture_parser,
-        "sg.loss = 'ResNet_GAN'",
-    )
+    # three_split_architecture_parser = [
+    #     f"{classifier_type}_SISR_architecture_parser_withholding_3"
+    # ]
+    # record_parser_acc_val(
+    #     "ThreeSplitTwoXArchitectureParsingAccuracy",
+    #     three_split_architecture_parser,
+    #     "sg.scale = '2'",
+    # )
+    # record_parser_acc_val(
+    #     "ThreeSplitFourXArchitectureParsingAccuracy",
+    #     three_split_architecture_parser,
+    #     "sg.scale = '4'",
+    # )
+    # record_parser_acc_val(
+    #     "ThreeSplitLOneArchitectureParsingAccuracy",
+    #     three_split_architecture_parser,
+    #     "sg.loss = 'L1'",
+    # )
+    # record_parser_acc_val(
+    #     "ThreeSplitVGGArchitectureParsingAccuracy",
+    #     three_split_architecture_parser,
+    #     "sg.loss = 'VGG_GAN'",
+    # )
+    # record_parser_acc_val(
+    #     "ThreeSplitResNetArchitectureParsingAccuracy",
+    #     three_split_architecture_parser,
+    #     "sg.loss = 'ResNet_GAN'",
+    # )
 
-    VGG_split_architecture_parser = [
-        f"{classifier_type}_SISR_architecture_parser_withholding_VGG_GAN"
-    ]
-    record_parser_acc_val(
-        "VGGSplitTwoXArchitectureParsingAccuracy",
-        VGG_split_architecture_parser,
-        "sg.scale = '2'",
-    )
-    record_parser_acc_val(
-        "VGGSplitFourXArchitectureParsingAccuracy",
-        VGG_split_architecture_parser,
-        "sg.scale = '4'",
-    )
+    # VGG_split_architecture_parser = [
+    #     f"{classifier_type}_SISR_architecture_parser_withholding_VGG_GAN"
+    # ]
+    # record_parser_acc_val(
+    #     "VGGSplitTwoXArchitectureParsingAccuracy",
+    #     VGG_split_architecture_parser,
+    #     "sg.scale = '2'",
+    # )
+    # record_parser_acc_val(
+    #     "VGGSplitFourXArchitectureParsingAccuracy",
+    #     VGG_split_architecture_parser,
+    #     "sg.scale = '4'",
+    # )
 
-    rcan_split_dataset_parser = [
-        f"{classifier_type}_SISR_dataset_parser_withholding_RCAN"
-    ]
-    # break down by sclae
-    record_parser_acc_val(
-        "RCANSplitTwoXDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.scale = '2' and sg.seed = 1",
-    )
-    record_parser_acc_val(
-        "RCANSplitFourXDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.scale = '4' and sg.seed = 1",
-    )
-    # break down by loss
-    record_parser_acc_val(
-        "RCANSplitLOneDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.loss = 'L1' and sg.seed = 1",
-    )
-    record_parser_acc_val(
-        "RCANSplitVGGDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.loss = 'VGG_GAN' and sg.seed = 1",
-    )
-    record_parser_acc_val(
-        "RCANSplitResNetDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.loss = 'ResNet_GAN' and sg.seed = 1",
-    )
+    # rcan_split_dataset_parser = [
+    #     f"{classifier_type}_SISR_dataset_parser_withholding_RCAN"
+    # ]
+    # # break down by sclae
+    # record_parser_acc_val(
+    #     "RCANSplitTwoXDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.scale = '2' and sg.seed = 1",
+    # )
+    # record_parser_acc_val(
+    #     "RCANSplitFourXDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.scale = '4' and sg.seed = 1",
+    # )
+    # # break down by loss
+    # record_parser_acc_val(
+    #     "RCANSplitLOneDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.loss = 'L1' and sg.seed = 1",
+    # )
+    # record_parser_acc_val(
+    #     "RCANSplitVGGDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.loss = 'VGG_GAN' and sg.seed = 1",
+    # )
+    # record_parser_acc_val(
+    #     "RCANSplitResNetDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.loss = 'ResNet_GAN' and sg.seed = 1",
+    # )
 
-    # break down by quarter/full dataset
-    record_parser_acc_val(
-        "RCANSplitQuarterDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.dataset like 'quarter%' and sg.seed = 1",
-    )
-    record_parser_acc_val(
-        "RCANSplitFullDatasetParsingAccuracy",
-        rcan_split_dataset_parser,
-        "sg.dataset not like 'quarter%' and sg.seed = 1",
-    )
+    # # break down by quarter/full dataset
+    # record_parser_acc_val(
+    #     "RCANSplitQuarterDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.dataset like 'quarter%' and sg.seed = 1",
+    # )
+    # record_parser_acc_val(
+    #     "RCANSplitFullDatasetParsingAccuracy",
+    #     rcan_split_dataset_parser,
+    #     "sg.dataset not like 'quarter%' and sg.seed = 1",
+    # )
 
     return values
 
@@ -436,6 +436,7 @@ def model_parsing_table():
     return model_parsing_table_for("ConvNext_CNN")
 
 
+@VALUES_REGISTRY.register()
 def model_parsing_table_across_seeds():
     return aggregate_across_seeds(
         [

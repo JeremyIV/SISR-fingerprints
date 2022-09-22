@@ -30,7 +30,12 @@ def latexify(string):
 
 
 def get_acc_val(query):
-    return fmt(db.read_sql_query(query).acc[0])
+    try:
+        return fmt(db.read_sql_query(query).acc[0])
+    except Exception as e:
+        print("Failed to get acc val from query:")
+        print(query)
+        raise e
 
 
 def aggregate_across_seeds(values_list):

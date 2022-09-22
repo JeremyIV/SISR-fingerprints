@@ -20,7 +20,7 @@ parser.add_argument(
     type=Path,
     help="Path to the yaml config file containing the options for how to "
     + "train and evaluate the classifier. e.g. "
-    + "classificaiton/options/Xception_CNN_SISR_all_models.yml",
+    + "classification/options/Xception_CNN_SISR_all_models.yml",
 )
 parser.add_argument(
     "--mode",

@@ -19,6 +19,12 @@ parser.add_argument(
     default="analysis/figures/pretrained_model_tsne_data.pt",
     help="Where to save and load the computed scatter plot data",
 )
+parser.add_argument(
+    "--classifier_prefix", default="", help="Either {'', 'seed_2_', or 'seed_3_'}"
+)
+parser.add_argument(
+    "--hide_legend", action="store_true", help="Don't show the legend on this plot"
+)
 args = parser.parse_args()
 
 if args.use_saved_data:
@@ -31,10 +37,10 @@ if args.use_saved_data:
     ) = torch.load(args.data_path)
 else:
     pretrained_clsfr_data = db.read_and_decode_sql_query(
-        """
+        f"""
         select actual, predicted, feature
         from sisr_analysis
-        where classifier_name = 'ConvNext_CNN_SISR_pretrained_models'"""
+        where classifier_name = '{args.classifier_prefix}ConvNext_CNN_SISR_pretrained_models'"""
     )
 
     accuracy = (pretrained_clsfr_data.actual == pretrained_clsfr_data.predicted).mean()
@@ -45,10 +51,10 @@ else:
     del features
 
     custom_clsfr_data = db.read_and_decode_sql_query(
-        '''
+        f'''
         select actual, predicted, feature
         from sisr_analysis
-        where classifier_name = 'ConvNext_CNN_SISR_custom_models'
+        where classifier_name = '{args.classifier_prefix}ConvNext_CNN_SISR_custom_models'
         and generator_name like "%-pretrained"'''
     )
     features = np.array(list(custom_clsfr_data.feature))
@@ -198,54 +204,53 @@ plot_pretrained_tnse(axs[1], ood_embedding, custom_clsfr_data_labels)
 plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.0, hspace=0.0)
 # TODO: need to manually set the markers, text in the legend,
 # so I can include explanation of the shapes.
-axs[1].legend(
-    loc="upper center",
-    fancybox=True,
-    bbox_to_anchor=(0, 0.01),
-    ncol=5,
-    shadow=True,
-    markerscale=2,
-    fontsize=13,
-    columnspacing=0.2,
-    handletextpad=0,
-)
-
-
-def marker_artist(marker):
-    # very hacky
-    return lines.Line2D(
-        [],
-        [],
-        marker=marker,
-        markerfacecolor=(0, 0, 0, 0),
-        markeredgecolor="black",
-        markeredgewidth=1,
-        markersize=4,
-        linestyle="None",
+if not args.hide_legend:
+    axs[1].legend(
+        loc="upper center",
+        fancybox=True,
+        bbox_to_anchor=(0, 0.01),
+        ncol=5,
+        shadow=True,
+        markerscale=2,
+        fontsize=13,
+        columnspacing=0.2,
+        handletextpad=0,
     )
 
+    def marker_artist(marker):
+        # very hacky
+        return lines.Line2D(
+            [],
+            [],
+            marker=marker,
+            markerfacecolor=(0, 0, 0, 0),
+            markeredgecolor="black",
+            markeredgewidth=1,
+            markersize=4,
+            linestyle="None",
+        )
 
-circle = marker_artist("o")
-diamond = marker_artist("D")
-triangle = marker_artist("^")
-square = marker_artist("s")
+    circle = marker_artist("o")
+    diamond = marker_artist("D")
+    triangle = marker_artist("^")
+    square = marker_artist("s")
 
-axs[0].legend(
-    handles=[circle, diamond, triangle, square],  # TODO
-    labels=["L₁-2X", "Adv-2X", "L₁-4X", "Adv-4X"],  # TODO
-    loc="upper center",
-    fancybox=True,
-    bbox_to_anchor=(0.2, -0.01),
-    ncol=1,
-    shadow=True,
-    markerscale=2,
-    fontsize=13,
-    columnspacing=0.2,
-    handletextpad=0,
-)
+    axs[0].legend(
+        handles=[circle, diamond, triangle, square],  # TODO
+        labels=["L₁-2X", "Adv-2X", "L₁-4X", "Adv-4X"],  # TODO
+        loc="upper center",
+        fancybox=True,
+        bbox_to_anchor=(0.2, -0.01),
+        ncol=1,
+        shadow=True,
+        markerscale=2,
+        fontsize=13,
+        columnspacing=0.2,
+        handletextpad=0,
+    )
 
 plt.savefig(
-    "paper/figures/pretrained-tsne.pdf",
+    f"paper/figures/{args.classifier_prefix}pretrained-tsne.pdf",
     format="pdf",
     bbox_inches="tight",
     pad_inches=0,

@@ -1,0 +1,956 @@
+[
+  {
+    "loss": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "ResNet_GAN": 51,
+        "VGG_GAN": 49
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "ResNet_GAN": 99,
+        "VGG_GAN": 1
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "L1": 1,
+        "ResNet_GAN": 43,
+        "VGG_GAN": 56
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "ResNet_GAN": 25,
+        "VGG_GAN": 75
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "ResNet_GAN": 10,
+        "VGG_GAN": 90
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "ResNet_GAN": 55,
+        "VGG_GAN": 45
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "ResNet_GAN": 37,
+        "VGG_GAN": 63
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "ResNet_GAN": 9,
+        "VGG_GAN": 91
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "L1": 100
+      }
+    },
+    "scale": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "2": 90,
+        "4": 10
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "4": 100
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "2": 84,
+        "4": 16
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "2": 98,
+        "4": 2
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "2": 55,
+        "4": 45
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "2": 1,
+        "4": 99
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "2": 96,
+        "4": 4
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "2": 89,
+        "4": 11
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "2": 7,
+        "4": 93
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "4": 100
+      }
+    },
+    "architecture": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 77,
+        "RDN": 21
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 8,
+        "RCAN": 57,
+        "RDN": 34,
+        "SwinIR": 1
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 3,
+        "RCAN": 62,
+        "RDN": 35
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 9,
+        "NLSN": 2,
+        "RCAN": 32,
+        "RDN": 55,
+        "SwinIR": 2
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "RCAN": 9,
+        "RDN": 89,
+        "SwinIR": 2
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "EDSR": 12,
+        "RCAN": 26,
+        "RDN": 59,
+        "SwinIR": 3
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 87,
+        "RDN": 11
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 13,
+        "RCAN": 70,
+        "RDN": 17
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 1,
+        "RCAN": 88,
+        "RDN": 11
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 10,
+        "RCAN": 54,
+        "RDN": 34,
+        "SwinIR": 2
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 1,
+        "RCAN": 70,
+        "RDN": 28
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 5,
+        "NLSN": 3,
+        "RCAN": 62,
+        "RDN": 28,
+        "SwinIR": 2
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "EDSR": 12,
+        "RCAN": 29,
+        "RDN": 55,
+        "SwinIR": 4
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 6,
+        "NLSN": 3,
+        "RCAN": 51,
+        "RDN": 31,
+        "SwinIR": 9
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 24,
+        "NLSN": 2,
+        "RCAN": 45,
+        "RDN": 25,
+        "SwinIR": 4
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "EDSR": 14,
+        "RCAN": 47,
+        "RDN": 36,
+        "SwinIR": 3
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 86,
+        "RDN": 12
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 3,
+        "RCAN": 47,
+        "RDN": 50
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "EDSR": 6,
+        "NLSN": 49,
+        "RCAN": 42,
+        "RDN": 3
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "EDSR": 26,
+        "NLSN": 10,
+        "RCAN": 26,
+        "RDN": 31,
+        "SwinIR": 7
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 4,
+        "NLSN": 3,
+        "RCAN": 71,
+        "RDN": 20,
+        "SwinIR": 2
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 6,
+        "NLSN": 3,
+        "RCAN": 63,
+        "RDN": 21,
+        "SwinIR": 7
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "NLSN": 4,
+        "RDN": 89,
+        "SwinIR": 7
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 13,
+        "RCAN": 12,
+        "RDN": 67,
+        "SwinIR": 8
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "NLSN": 3,
+        "RCAN": 60,
+        "RDN": 36,
+        "SwinIR": 1
+      }
+    }
+  },
+  {
+    "architecture": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 82,
+        "RDN": 16
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 6,
+        "RCAN": 72,
+        "RDN": 21,
+        "SwinIR": 1
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 76,
+        "RDN": 24
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 12,
+        "NLSN": 1,
+        "RCAN": 42,
+        "RDN": 45
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 5,
+        "RCAN": 8,
+        "RDN": 47,
+        "SwinIR": 39
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "EDSR": 20,
+        "RCAN": 61,
+        "RDN": 19
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 90,
+        "RDN": 10
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 14,
+        "RCAN": 74,
+        "RDN": 12
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 85,
+        "RDN": 13
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 3,
+        "NLSN": 1,
+        "RCAN": 56,
+        "RDN": 40
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "RCAN": 77,
+        "RDN": 23
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 2,
+        "RCAN": 70,
+        "RDN": 27,
+        "SwinIR": 1
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "EDSR": 7,
+        "RCAN": 63,
+        "RDN": 30
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 3,
+        "RCAN": 64,
+        "RDN": 32,
+        "SwinIR": 1
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 9,
+        "RCAN": 55,
+        "RDN": 35,
+        "SwinIR": 1
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "EDSR": 2,
+        "RCAN": 54,
+        "RDN": 44
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 95,
+        "RDN": 5
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 2,
+        "RCAN": 53,
+        "RDN": 45
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "EDSR": 4,
+        "NLSN": 55,
+        "RCAN": 38,
+        "RDN": 3
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "EDSR": 21,
+        "NLSN": 5,
+        "RCAN": 63,
+        "RDN": 10,
+        "SwinIR": 1
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 5,
+        "RCAN": 71,
+        "RDN": 21,
+        "SwinIR": 2
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 2,
+        "RCAN": 77,
+        "RDN": 17,
+        "SwinIR": 3
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 5,
+        "RCAN": 4,
+        "RDN": 89,
+        "SwinIR": 1
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 24,
+        "RCAN": 16,
+        "RDN": 57,
+        "SwinIR": 2
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 74,
+        "RDN": 24
+      }
+    },
+    "loss": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "L1": 1,
+        "ResNet_GAN": 33,
+        "VGG_GAN": 66
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "ResNet_GAN": 98,
+        "VGG_GAN": 2
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "ResNet_GAN": 30,
+        "VGG_GAN": 70
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "ResNet_GAN": 4,
+        "VGG_GAN": 96
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "ResNet_GAN": 6,
+        "VGG_GAN": 94
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "ResNet_GAN": 41,
+        "VGG_GAN": 59
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "ResNet_GAN": 16,
+        "VGG_GAN": 84
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "ResNet_GAN": 1,
+        "VGG_GAN": 99
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "L1": 100
+      }
+    },
+    "scale": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "2": 71,
+        "4": 29
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "4": 100
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "2": 67,
+        "4": 33
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "2": 97,
+        "4": 3
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "2": 41,
+        "4": 59
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "2": 88,
+        "4": 12
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "2": 68,
+        "4": 32
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "2": 2,
+        "4": 98
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "4": 100
+      }
+    }
+  },
+  {
+    "architecture": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 67,
+        "RDN": 33
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 54,
+        "RDN": 45,
+        "SwinIR": 1
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 49,
+        "RDN": 49
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 6,
+        "RCAN": 61,
+        "RDN": 28,
+        "SwinIR": 5
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "RCAN": 44,
+        "RDN": 50,
+        "SwinIR": 6
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "EDSR": 11,
+        "RCAN": 64,
+        "RDN": 25
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 74,
+        "RDN": 26
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 3,
+        "RCAN": 62,
+        "RDN": 33,
+        "SwinIR": 2
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "RCAN": 69,
+        "RDN": 31
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 1,
+        "RCAN": 53,
+        "RDN": 42,
+        "SwinIR": 4
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "EDSR": 1,
+        "RCAN": 89,
+        "RDN": 10
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "NLSN": 1,
+        "RCAN": 59,
+        "RDN": 36,
+        "SwinIR": 4
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "EDSR": 5,
+        "RCAN": 66,
+        "RDN": 29
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 3,
+        "RCAN": 52,
+        "RDN": 40,
+        "SwinIR": 5
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "EDSR": 14,
+        "NLSN": 1,
+        "RCAN": 37,
+        "RDN": 46,
+        "SwinIR": 2
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "EDSR": 2,
+        "RCAN": 41,
+        "RDN": 54,
+        "SwinIR": 3
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 1,
+        "RCAN": 71,
+        "RDN": 27,
+        "SwinIR": 1
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "EDSR": 3,
+        "RCAN": 73,
+        "RDN": 24
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "EDSR": 3,
+        "NLSN": 34,
+        "RCAN": 47,
+        "RDN": 16
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "EDSR": 17,
+        "RCAN": 72,
+        "RDN": 8,
+        "SwinIR": 3
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "NLSN": 1,
+        "RCAN": 63,
+        "RDN": 31,
+        "SwinIR": 5
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "NLSN": 1,
+        "RCAN": 66,
+        "RDN": 25,
+        "SwinIR": 8
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "EDSR": 1,
+        "NLSN": 2,
+        "RCAN": 8,
+        "RDN": 84,
+        "SwinIR": 5
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "NLSN": 6,
+        "RCAN": 7,
+        "RDN": 85,
+        "SwinIR": 2
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "NLSN": 2,
+        "RCAN": 49,
+        "RDN": 49
+      }
+    },
+    "loss": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "L1": 1,
+        "ResNet_GAN": 49,
+        "VGG_GAN": 50
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "ResNet_GAN": 99,
+        "VGG_GAN": 1
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "L1": 5,
+        "ResNet_GAN": 46,
+        "VGG_GAN": 49
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "ResNet_GAN": 27,
+        "VGG_GAN": 73
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "ResNet_GAN": 17,
+        "VGG_GAN": 83
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "L1": 1,
+        "ResNet_GAN": 54,
+        "VGG_GAN": 45
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "ResNet_GAN": 33,
+        "VGG_GAN": 67
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "ResNet_GAN": 4,
+        "VGG_GAN": 96
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "L1": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "L1": 100
+      }
+    },
+    "scale": {
+      "RCAN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "LIIF-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "RDN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SwinIR-div2k-x4-GAN-NA-pretrained": {
+        "2": 75,
+        "4": 25
+      },
+      "EnhanceNet-NA-x4-EnhanceNet-NA-pretrained": {
+        "2": 1,
+        "4": 99
+      },
+      "SPSR-div2k-x4-SPSR_GAN-NA-pretrained": {
+        "2": 82,
+        "4": 18
+      },
+      "DRN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NLSN-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SAN-div2k-x4-L1-NA-pretrained": {
+        "2": 1,
+        "4": 99
+      },
+      "RDN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "Real_ESRGAN-div2k-x2-GAN-NA-pretrained": {
+        "2": 97,
+        "4": 3
+      },
+      "RCAN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "ESRGAN-NA-x4-ESRGAN-NA-pretrained": {
+        "2": 57,
+        "4": 43
+      },
+      "LIIF-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "EDSR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SRFBN-NA-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x4-L1-NA-pretrained": {
+        "2": 1,
+        "4": 99
+      },
+      "Real_ESRGAN-div2k-x4-GAN-NA-pretrained": {
+        "2": 89,
+        "4": 11
+      },
+      "proSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "NCSR-div2k-x4-NCSR_GAN-NA-pretrained": {
+        "2": 88,
+        "4": 12
+      },
+      "NLSN-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "SwinIR-div2k-x2-L1-NA-pretrained": {
+        "2": 100
+      },
+      "proSR-div2k-x4-ProSRGAN-NA-pretrained": {
+        "2": 7,
+        "4": 93
+      },
+      "EDSR-div2k-x4-L1-NA-pretrained": {
+        "4": 100
+      },
+      "SRFBN-NA-x4-L1-NA-pretrained": {
+        "4": 100
+      }
+    }
+  }
+]
