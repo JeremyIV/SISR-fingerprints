@@ -82,11 +82,6 @@ def pretrained_acc_for(classifier_name):
 
 @VALUES_REGISTRY.register()
 def acc_by_param_val():
-    return acc_by_param_val_for("ConvNext_CNN_SISR_custom_models")
-
-
-@VALUES_REGISTRY.register()
-def acc_by_param_val_across_seeds():
     return aggregate_across_seeds(
         [
             acc_by_param_val_for("ConvNext_CNN_SISR_custom_models"),
@@ -104,11 +99,6 @@ def prnu_acc_by_param_val():
 
 @VALUES_REGISTRY.register()
 def pretrained_acc():
-    return pretrained_acc_for("ConvNext_CNN_SISR_pretrained_models")
-
-
-@VALUES_REGISTRY.register()
-def pretrained_acc_across_seeds():
     return aggregate_across_seeds(
         [
             pretrained_acc_for("ConvNext_CNN_SISR_pretrained_models"),
@@ -137,11 +127,6 @@ def get_seed_triplets():
 
 @VALUES_REGISTRY.register()
 def seed_distinction_acc_ConvNext():
-    return seed_distinction_acc("ConvNext_CNN")
-
-
-@VALUES_REGISTRY.register()
-def seed_distinction_acc_ConvNext_across_seeds():
     return aggregate_across_seeds(
         [
             seed_distinction_acc("ConvNext_CNN"),
@@ -158,7 +143,6 @@ def seed_distinction_acc_PRNU():
 
 
 def seed_distinction_acc(classifier_type):
-    # TODO: exclude the NLSN models
     seed_triplets = get_seed_triplets()
     ordered_labels = db.read_and_decode_sql_query(
         "select d.ordered_labels as ordered_labels"
@@ -174,8 +158,6 @@ def seed_distinction_acc(classifier_type):
     for triplet in seed_triplets:
         if triplet[0].startswith("NLSN"):
             continue
-        # if triplet[0].startswith("NLSN-div2k-x4-L1"):
-        #    continue
         loss_index = None
         for idx, loss in enumerate(losses):
             if loss in triplet[0]:
@@ -218,6 +200,4 @@ def seed_distinction_acc(classifier_type):
     values["DistinctionBetweenSeedFourXResNetAcc"] = get_acc_for(
         "ResNet_GAN", is_x4=True
     )
-    # values["DistinctionBetweenSeedTwoXGANAcc"] = get_acc_for(is_L1=False, is_x4=False)
-    # values["DistinctionBetweenSeedFourXGANAcc"] = get_acc_for(is_L1=False, is_x4=True)
     return values
