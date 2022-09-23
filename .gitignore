@@ -5,6 +5,7 @@
 *.sqlite3-journal
 .ipynb_checkpoints/
 __pycache__/
+analysis/figures/pretrained_model_parsing_table_data.json
 analysis/values/computed_values.yaml
 BasicSR/
 batch_crop_images.py

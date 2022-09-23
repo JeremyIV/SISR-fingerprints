@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "--reduction",
     default="TSNE",
-    help="Either TSNE or UMAP. UMAP is faster but less visually appealing.",
+    help="Either TSNE or UMAP. UMAP is faster but less visually compelling.",
 )
 parser.add_argument(
     "--classifier_prefix", default="", help="Either {'', 'seed_2_', or 'seed_3_'}"
