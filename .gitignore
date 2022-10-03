@@ -1,3 +1,4 @@
+
 *.npy
 *.pt
 *.pyc
@@ -18,4 +19,6 @@ README.html
 redo_analysis.py
 scratchwork.ipynb
 scratchwork/
+sweep/*
 wandb/*
+scripts/*
