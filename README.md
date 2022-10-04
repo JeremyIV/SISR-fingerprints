@@ -61,6 +61,9 @@ The `classification/train_classifier.py` script can both train and evaluate mode
 ```bash
 python classification/train_classifier.py -opt classification/options/path/to/options_file.yaml
 ```
+
+Descriptions of each classifier configuration file can be found in the `README.md` files in `classification/options/`.
+
  However, while training can be performed in parallel across many GPUs or machines, only one process may record results to the sqlite database at a time. Since training all of these classifiers takes almost 90 GPU days on Titan X gpus, we highly recommend training in parallel, and then evaluating serially afterwards. To train a model without evaluating it, run:
 
  ```bash

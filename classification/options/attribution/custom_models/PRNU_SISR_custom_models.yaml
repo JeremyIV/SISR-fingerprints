@@ -1,0 +1,25 @@
+classifier:
+  type: PRNU
+  name: PRNU_SISR_custom_models
+
+training_dataset:
+  type: SISR
+  name: SISR_custom_models_train_center_crop
+  random_crop: false
+  include_pretrained: false
+  include_custom_trained: true
+
+validation_dataset:
+  name: SISR_custom_models_val
+  type: SISR
+  random_crop: false
+  include_pretrained: true
+  include_custom_trained: false
+
+evaluation_datasets:
+  -
+    name: SISR_custom_models_test
+    type: SISR
+    random_crop: false
+    include_pretrained: true
+    include_custom_trained: false
