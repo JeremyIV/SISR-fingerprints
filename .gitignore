@@ -14,7 +14,13 @@ classification/classifiers/experiments/
 classification/classifiers/saved_noise_residuals/
 classification/datasets/data/*
 experiments/
-paper/
+paper/errors.txt
+paper/tmlr.aux
+paper/tmlr.bbl
+paper/tmlr.blg
+paper/tmlr.log
+paper/tmlr.out
+paper/tmlr.pdf
 README.html
 redo_analysis.py
 scratchwork.ipynb
