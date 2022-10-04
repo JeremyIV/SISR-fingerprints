@@ -22,7 +22,6 @@ custom_sisr_models = utils.get_sisr_model_names(
     dataset=["div2k"],
     seed=[1],
 )
-print(custom_sisr_models)
 
 pretrained_sisr_models = []
 for sisr_model_dir in dataset_dir.iterdir():

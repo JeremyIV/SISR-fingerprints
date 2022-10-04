@@ -69,7 +69,6 @@ for col, loss in enumerate(["L1", "Adv"]):
 
         mask = (data.scale == scale) & (is_l1 == (loss == "L1"))
         accuracy = correct[mask].mean()
-        print(f"scale: {scale}; loss: {loss}; acc: {accuracy}; count: {mask.sum()}")
         relevant_features = data.feature[mask]
         relevant_features = np.array(list(relevant_features))
         relevant_actual_labels = data.actual[mask]
