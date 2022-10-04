@@ -12,7 +12,7 @@ BasicSR/
 batch_crop_images.py
 classification/classifiers/experiments/
 classification/classifiers/saved_noise_residuals/
-classification/datasets/data/
+classification/datasets/data/*
 experiments/
 paper/
 README.html

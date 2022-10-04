@@ -202,8 +202,8 @@ def make_parser_opts(label_param, reserved_param, reserved_param_val):
     for seed in [None, 2, 3]:
         make_parser_opt(label_param, reserved_param, reserved_param_val, seed=seed)
     make_parser_opt_quick_test(label_param, reserved_param, reserved_param_val)
-    make_prnu_baseline_parser_opt(label_param, reserved_param, reserved_param_val)
-    make_fen_parser_opt(label_param, reserved_param, reserved_param_val)
+    # make_prnu_baseline_parser_opt(label_param, reserved_param, reserved_param_val)
+    # make_fen_parser_opt(label_param, reserved_param, reserved_param_val)
 
 
 make_parser_opts("scale", "loss", "L1")
