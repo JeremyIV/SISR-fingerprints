@@ -98,4 +98,5 @@ python analysis/figures/custom_model_tsne.py
 These figures will appear in `paper/figures/`.
 
 ### 5. Render the paper.
-coming soon...
+
+All of the resources to generate the paper, including the automatically generated figures and computed numerical values, should be in the directory `paper/`. Use your preferred LaTeX compiler to compile `paper/tmlr.tex` into a PDF.
