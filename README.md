@@ -76,7 +76,9 @@ Descriptions of each classifier configuration file can be found in the `README.m
  python classification/train_classifier.py -opt classification/options/path/to/classifier_config.yaml --mode train
  ```
 
- Then to evaluate that model, run:
+This will write the trained model to `classification/classifiers/experiments/(CNN|PRNU)/classifier_name/`. If you distributed training across multiple machines, you'll need to collect all of these trained models onto the same machine for evaluation.
+
+Then to evaluate that model, run:
 
   ```bash
  python classification/train_classifier.py -opt classification/options/path/to/classifier_config.yaml --mode test
