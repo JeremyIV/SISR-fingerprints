@@ -1,12 +1,11 @@
 classifier:
   type: CNN
   name: ConvNext_CNN_SISR_all_models
-  pretrained_path: classification/classifiers/experiments/CNN/ConvNext_CNN_SISR_all_models_OLD/model_best.pt
   cnn:
     type: 'ConvNext'
   train:
     num_pretrain_epochs: 3 
-    num_full_train_epochs: 3
+    num_full_train_epochs: 15
     batch_size: 16
     learning_rate_start: 0.0005
     learning_rate_end: 0.000004
