@@ -66,6 +66,7 @@ This can take a couple days on a Titan X GPU. To perform a quick test run to mak
 ```bash
 python classification/train_classifier.py -opt classification/options/attribution/all_models/ConvNext_CNN_SISR_all_models_quick_test.yaml
 ```
+This should take 2-3 minutes. If it completes without error, you're ready to train the real classifiers.
 
 Descriptions of each classifier configuration file can be found in the `README.md` files in `classification/options/`.
 
