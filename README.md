@@ -59,7 +59,12 @@ python database/create_database.py
 The `classification/train_classifier.py` script can both train and evaluate model attribution and parsing classifiers. The simplest way to train and evaluate these classifiers is to run:
 
 ```bash
-python classification/train_classifier.py -opt classification/options/path/to/options_file.yaml
+python classification/train_classifier.py -opt classification/options/path/to/classifier_config.yaml
+```
+
+This can take a couple days on a Titan X GPU. To perform a quick test run to make sure everything is working first, run:
+```bash
+python classification/train_classifier.py -opt classification/options/attribution/all_models/ConvNext_CNN_SISR_all_models_quick_test.yaml
 ```
 
 Descriptions of each classifier configuration file can be found in the `README.md` files in `classification/options/`.
