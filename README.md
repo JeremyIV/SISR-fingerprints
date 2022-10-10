@@ -1,7 +1,6 @@
 # Fingerprints of Super Resolution Networks
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-👷 **These instructions are under construction. They have not been tested. Check back soon for more thorough and reliable instructions.** 
 
 This is the official implementation of our TMLR paper [fingerprints of super resolution networks](https://openreview.net/forum?id=Jj0qSbtwdb).
 
@@ -104,7 +103,3 @@ python analysis/figures/custom_model_tsne.py
 ```
 
 These figures will appear in `paper/figures/`.
-
-### 5. Render the paper.
-
-All of the resources to generate the paper, including the automatically generated figures and computed numerical values, should be in the directory `paper/`. Use your preferred LaTeX compiler to compile `paper/tmlr.tex` into a PDF.
