@@ -103,3 +103,17 @@ python analysis/figures/custom_model_tsne.py
 ```
 
 These figures will appear in `paper/figures/`.
+
+### BibTeX Citation
+
+```
+@article{
+vonderfecht2022fingerprints,
+title={Fingerprints of Super Resolution Networks},
+author={Jeremy Vonderfecht and Feng Liu},
+journal={Transactions on Machine Learning Research},
+year={2022},
+url={https://openreview.net/forum?id=Jj0qSbtwdb},
+note={}
+}
+```
